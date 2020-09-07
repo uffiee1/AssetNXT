@@ -1,8 +1,6 @@
 # Ruuvi Smart Asset Tracking & Minitoring
 
-Our [Project plan](). 
-We are currently within the first sprint. 
-
+### Project plan 
 
 - [Client interview]()
 - [Improved Project plan based on feedback]()
@@ -20,3 +18,26 @@ We are currently within the first sprint.
 
 - [Process report]()
 - [Presentation]()
+
+ 
+
+##### Data sources
+
+```
+curl -X GET https://..../v1/sources
+```
+
+### Measurements
+
+#### Measurements response
+
+- temperature
+- humidity
+- air pressure
+- RSSI
+- Movement
+- Location
+
+### Useful links
+
+[https://ruuvi.com/](https://ruuvi.com/)
