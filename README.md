@@ -5,7 +5,7 @@
 
 - [Client interview]()
 - [Improved Project plan based on feedback]()
-- [User reqiurements structure]()
+- [User requirements structure]()
 - [Test cases]() 
 - [Software Development Agreement]()
 
@@ -32,9 +32,9 @@ curl -X GET https://..../v1/sources
 
 #### Measurements response
 
-- temperature
-- humidity
-- air pressure
+- Temperature
+- Humidity
+- Air Pressure
 - RSSI
 - Movement
 - Location
