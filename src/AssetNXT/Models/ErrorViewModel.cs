@@ -1,6 +1,6 @@
 using System;
 
-namespace Ruuvi_Application.Models
+namespace AssetNXT.Models
 {
     public class ErrorViewModel
     {

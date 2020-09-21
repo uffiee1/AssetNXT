@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>aspnet-Ruuvi_Application-0B33E041-9FE7-4200-97EF-9308CC55B3A3</UserSecretsId>
-    <RootNamespace>Ruuvi_Application</RootNamespace>
+    <UserSecretsId>aspnet-AssetNXT-0B33E041-9FE7-4200-97EF-9308CC55B3A3</UserSecretsId>
+    <RootNamespace>AssetNXT</RootNamespace>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
 

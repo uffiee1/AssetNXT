@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ruuvi_Application.Data
+namespace AssetNXT.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

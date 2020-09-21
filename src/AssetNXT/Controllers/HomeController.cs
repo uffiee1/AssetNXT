@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using AssetNXT.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Ruuvi_Application.Models;
 
-namespace Ruuvi_Application.Controllers
+namespace AssetNXT.Controllers
 {
     public class HomeController : Controller
     {

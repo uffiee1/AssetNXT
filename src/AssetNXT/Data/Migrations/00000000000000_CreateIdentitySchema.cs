@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Ruuvi_Application.Data.Migrations
+namespace AssetNXT.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
