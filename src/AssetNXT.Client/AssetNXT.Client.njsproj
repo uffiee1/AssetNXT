@@ -11,7 +11,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>5ccad274-2dbc-409f-b4b9-ba1349a16e63</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>server.js</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -20,6 +21,7 @@
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
     <NodejsPort>1337</NodejsPort>
     <StartWebBrowser>true</StartWebBrowser>
+    <EnableTypeScript>true</EnableTypeScript>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,12 +30,10 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include=".gitignore" />
     <Content Include="package-lock.json" />
     <Content Include="public\favicon.ico" />
     <Content Include="public\index.html" />
     <Content Include="public\manifest.json" />
-    <Content Include="server.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="src\App.js" />
