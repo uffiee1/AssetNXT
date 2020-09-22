@@ -1,11 +1,9 @@
-# RunTime
 # Ruuvi Smart Asset Tracking & Minitoring
 
 ### Project plan 
 
 - [Client interview]()
 - [Improved Project plan based on feedback]()
-- [User requirements structure]()
 - [Test cases]() 
 - [Software Development Agreement]()
 
@@ -21,7 +19,6 @@
 - [Presentation]()
 
 
-
 ##### Data sources
 
 ```
@@ -32,9 +29,6 @@ curl -X GET https://..../v1/sources
 
 #### Measurements response
 
-- Temperature
-- Humidity
-- Air Pressure
 - RSSI
 - Movement
 - Location
