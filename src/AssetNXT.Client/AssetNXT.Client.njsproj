@@ -41,6 +41,7 @@
     <Content Include="src\components\Counter.js" />
     <Content Include="src\components\FetchData.js" />
     <Content Include="src\components\Home.js" />
+    <Content Include="src\components\Map.js" />
     <Content Include="src\components\Layout.js" />
     <Content Include="src\components\NavMenu.css" />
     <Content Include="src\components\NavMenu.js" />
