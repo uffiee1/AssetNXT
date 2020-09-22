@@ -1,8 +1,0 @@
-<Project>
-
-  <PropertyGroup>
-    <HasCommonProperties>true</HasCommonProperties>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-  </PropertyGroup>
-
-</Project>
