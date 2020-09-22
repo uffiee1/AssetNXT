@@ -25,7 +25,7 @@ namespace AssetNXT
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/build";
+                configuration.RootPath = "../AssetNXT.Client/build";
             });
         }
 
@@ -58,7 +58,7 @@ namespace AssetNXT
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "../AssetNXT.Client";
 
                 if (env.IsDevelopment())
                 {
