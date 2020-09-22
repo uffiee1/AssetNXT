@@ -4,7 +4,6 @@
 
 - [Client interview]()
 - [Improved Project plan based on feedback]()
-- [User reqiurements structure]()
 - [Test cases]() 
 - [Software Development Agreement]()
 
@@ -19,7 +18,6 @@
 - [Process report]()
 - [Presentation]()
 
- 
 
 ##### Data sources
 
@@ -31,9 +29,6 @@ curl -X GET https://..../v1/sources
 
 #### Measurements response
 
-- temperature
-- humidity
-- air pressure
 - RSSI
 - Movement
 - Location
