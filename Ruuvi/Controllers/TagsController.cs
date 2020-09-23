@@ -55,9 +55,9 @@ namespace Ruuvi.Controllers
             _repository.SaveChanges();
 
             var tagReadDto = _mapper.Map<TagReadDto>(tagModel);
-
+            
+            // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
             return CreatedAtRoute(nameof(GetTagById), new {Id = tagReadDto.Id}, tagReadDto);
-            // return Ok(tagReadDto);
         }
 
     }
