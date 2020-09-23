@@ -33,7 +33,7 @@ namespace Ruuvi.Controllers
         }
 
         // GET api/tags/{id}
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name="GetTagById")]
         public ActionResult <TagReadDto> GetTagById(int id)
         {
             var tagItem = _repository.GetTagById(id);
@@ -45,5 +45,20 @@ namespace Ruuvi.Controllers
 
             return NotFound();
         }
+
+        // POST api/tags
+        [HttpPost]
+        public ActionResult <TagCreateDto> CreateTag(TagCreateDto tagCreateDto)
+        {
+            var tagModel = _mapper.Map<Tag>(tagCreateDto);
+            _repository.CreateTag(tagModel);
+            _repository.SaveChanges();
+
+            var tagReadDto = _mapper.Map<TagReadDto>(tagModel);
+
+            return CreatedAtRoute(nameof(GetTagById), new {Id = tagReadDto.Id}, tagReadDto);
+            // return Ok(tagReadDto);
+        }
+
     }
 }
