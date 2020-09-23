@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
+   <!-- AutoMapper Dependency Injection -->
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <!-- Entity Framework Core -->
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
     
     <!-- Entity Framework Core Design -->
