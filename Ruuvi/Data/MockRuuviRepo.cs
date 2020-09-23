@@ -5,6 +5,11 @@ namespace Ruuvi.Data
 {
     public class MockRuuviRepo : IRuuviRepo
     {
+        public void CreateTag(Tag tag)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerable<Tag> GetAllTags()
         {
             var tagItems = new List<Tag>
@@ -20,6 +25,11 @@ namespace Ruuvi.Data
         public Tag GetTagById(int id)
         {
             return new Tag{Id=0, HowTo="ss", Line="ss", Platform="Kettle"};
+        }
+
+        public bool SaveChanges()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

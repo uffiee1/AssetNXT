@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Ruuvi.Data;
 using Ruuvi.Models;
+using AutoMapper;
+using Ruuvi.Dtos;
 
 namespace Ruuvi.Controllers
 {
@@ -13,28 +15,35 @@ namespace Ruuvi.Controllers
     {
         
         private readonly IRuuviRepo _repository;
-        
-        public TagsController(IRuuviRepo repository)
+        private readonly IMapper _mapper;
+
+        public TagsController(IRuuviRepo repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         // GET api/tags
         [HttpGet]
-        public ActionResult <IEnumerable<Tag>> GetAllTags()
+        public ActionResult <IEnumerable<TagReadDto>> GetAllTags()
         {
             var tagItems = _repository.GetAllTags();
 
-            return Ok(tagItems);
+            return Ok(_mapper.Map<IEnumerable<TagReadDto>>(tagItems));
         }
 
         // GET api/tags/{id}
         [HttpGet("{id}")]
-        public ActionResult <IEnumerable<Tag>> GetTagById(int id)
+        public ActionResult <TagReadDto> GetTagById(int id)
         {
             var tagItem = _repository.GetTagById(id);
 
-            return Ok(tagItem);    
+            if(tagItem != null)
+            {
+                return Ok(_mapper.Map<TagReadDto>(tagItem));    
+            }
+
+            return NotFound();
         }
     }
 }

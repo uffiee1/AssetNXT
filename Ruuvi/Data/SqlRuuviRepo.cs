@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Ruuvi.Models;
@@ -12,6 +13,17 @@ namespace Ruuvi.Data
         {
             _context = context;
         }
+
+        public void CreateTag(Tag tag)
+        {
+            if(tag == null)
+            {
+                throw new ArgumentNullException(nameof(tag));
+            }
+
+            _context.Tags.Add(tag);
+        }
+
         public IEnumerable<Tag> GetAllTags()
         {
             return _context.Tags.ToList();
@@ -20,6 +32,11 @@ namespace Ruuvi.Data
         public Tag GetTagById(int id)
         {
             return _context.Tags.FirstOrDefault(p => p.Id == id);
+        }
+
+        public bool SaveChanges()
+        {
+            return ( _context.SaveChanges() >= 0);
         }
     }
 }
