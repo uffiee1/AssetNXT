@@ -60,5 +60,52 @@ namespace Ruuvi.Controllers
             return CreatedAtRoute(nameof(GetTagById), new {Id = tagReadDto.Id}, tagReadDto);
         }
 
+        // PUT api/tags/{id}
+        [HttpPut("{id}")]
+        public ActionResult UpdateCommand(int id, TagUpdateDto tagUpdateDto)
+        {
+            var tagItem = _repository.GetTagById(id);
+
+            if(tagItem != null)
+            {
+                // _mapper.Map<TagUpdateDto>(tagItem); 
+                _mapper.Map(tagUpdateDto, tagItem);
+
+                _repository.UpdateTag(tagItem);
+
+                _repository.SaveChanges();
+
+                return NoContent();  
+            }
+
+            return NotFound();
+        }
+
+        // POST api/tags/{id}
+        [HttpPost("{id}")]
+        public ActionResult <TagCreateDto> CreateOrUpdate(int id, TagCreateDto tagCreateDto)
+        {
+            
+            var tagItem = _repository.GetTagById(id);
+
+            if(tagItem != null)
+            {
+                _mapper.Map(tagCreateDto, tagItem);
+
+                _repository.CreateOrUpdateTag(tagItem);
+ 
+            } 
+            else
+            {
+                tagItem = _mapper.Map<Tag>(tagCreateDto);
+
+                _repository.CreateOrUpdateTag(tagItem);
+            }
+
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
     }
 }

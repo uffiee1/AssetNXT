@@ -24,6 +24,11 @@ namespace Ruuvi.Data
             _context.Tags.Add(tag);
         }
 
+        public void UpdateTag(Tag tag)
+        {
+            // Nonthing
+        }
+
         public IEnumerable<Tag> GetAllTags()
         {
             return _context.Tags.ToList();
@@ -38,5 +43,31 @@ namespace Ruuvi.Data
         {
             return ( _context.SaveChanges() >= 0);
         }
+
+        public void CreateOrUpdateTag(Tag tag)
+        {
+            var entry = _context.Entry(tag);
+
+            switch (entry.State)
+            {
+                case Microsoft.EntityFrameworkCore.EntityState.Detached:
+                    _context.Tags.Add(tag);
+                    break;
+                case Microsoft.EntityFrameworkCore.EntityState.Modified:
+                    _context.Tags.Update(tag);
+                    break;
+                case Microsoft.EntityFrameworkCore.EntityState.Added:
+                    _context.Tags.Add(tag);
+                    break;
+                case Microsoft.EntityFrameworkCore.EntityState.Unchanged:
+                    // tag's been already in the DB, no need to do anything
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(tag));
+            }
+        }
+
+        
     }
 }
