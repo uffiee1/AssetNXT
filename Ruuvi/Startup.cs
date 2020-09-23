@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MySqlConnector;
 using Ruuvi.Data;
+using Newtonsoft.Json.Serialization;
 
 namespace Ruuvi
 {
@@ -36,7 +37,9 @@ namespace Ruuvi
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
                       
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(s => {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
             
             // Configure dependeces injection system
             // services.AddScoped<IRuuviRepo, MockRuuviRepo>();

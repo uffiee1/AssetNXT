@@ -11,7 +11,7 @@ namespace Ruuvi.Profiles
             // Source -> Target
             CreateMap<Tag, TagReadDto>();
             CreateMap<TagCreateDto, Tag>();
-            CreateMap<TagUpdateDto, Tag>();
+            CreateMap<Tag,TagCreateDto>();
         }
     }
 }

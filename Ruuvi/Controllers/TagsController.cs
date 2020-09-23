@@ -4,6 +4,7 @@ using Ruuvi.Data;
 using Ruuvi.Models;
 using AutoMapper;
 using Ruuvi.Dtos;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace Ruuvi.Controllers
 {
@@ -27,20 +28,20 @@ namespace Ruuvi.Controllers
         [HttpGet]
         public ActionResult <IEnumerable<TagReadDto>> GetAllTags()
         {
-            var tagItems = _repository.GetAllTags();
+            var tagModelItemsFromRepo = _repository.GetAllTags();
 
-            return Ok(_mapper.Map<IEnumerable<TagReadDto>>(tagItems));
+            return Ok(_mapper.Map<IEnumerable<TagReadDto>>(tagModelItemsFromRepo));
         }
 
         // GET api/tags/{id}
         [HttpGet("{id}", Name="GetTagById")]
         public ActionResult <TagReadDto> GetTagById(int id)
         {
-            var tagItem = _repository.GetTagById(id);
+            var tagModelFromRepo = _repository.GetTagById(id);
 
-            if(tagItem != null)
+            if(tagModelFromRepo != null)
             {
-                return Ok(_mapper.Map<TagReadDto>(tagItem));    
+                return Ok(_mapper.Map<TagReadDto>(tagModelFromRepo));    
             }
 
             return NotFound();
@@ -60,51 +61,59 @@ namespace Ruuvi.Controllers
             return CreatedAtRoute(nameof(GetTagById), new {Id = tagReadDto.Id}, tagReadDto);
         }
 
-        // PUT api/tags/{id}
-        [HttpPut("{id}")]
-        public ActionResult UpdateCommand(int id, TagUpdateDto tagUpdateDto)
-        {
-            var tagItem = _repository.GetTagById(id);
-
-            if(tagItem != null)
-            {
-                // _mapper.Map<TagUpdateDto>(tagItem); 
-                _mapper.Map(tagUpdateDto, tagItem);
-
-                _repository.UpdateTag(tagItem);
-
-                _repository.SaveChanges();
-
-                return NoContent();  
-            }
-
-            return NotFound();
-        }
-
         // POST api/tags/{id}
         [HttpPost("{id}")]
-        public ActionResult <TagCreateDto> CreateOrUpdate(int id, TagCreateDto tagCreateDto)
+        public ActionResult CreateOrUpdate(int id, TagCreateDto tagCreateDto)
         {
             
-            var tagItem = _repository.GetTagById(id);
+            var tagModelFromRepo = _repository.GetTagById(id);
 
-            if(tagItem != null)
+            if(tagModelFromRepo != null)
             {
-                _mapper.Map(tagCreateDto, tagItem);
+                _mapper.Map(tagCreateDto, tagModelFromRepo);
 
-                _repository.CreateOrUpdateTag(tagItem);
+                _repository.CreateOrUpdateTag(tagModelFromRepo);
  
             } 
             else
             {
-                tagItem = _mapper.Map<Tag>(tagCreateDto);
+                tagModelFromRepo = _mapper.Map<Tag>(tagCreateDto);
 
-                _repository.CreateOrUpdateTag(tagItem);
+                _repository.CreateOrUpdateTag(tagModelFromRepo);
             }
 
             _repository.SaveChanges();
 
             return NoContent();
+        }
+
+        // PATCH api/tags/{id}
+        [HttpPatch("{id}")]
+        public ActionResult PartialUpdate(int id, JsonPatchDocument<TagCreateDto> jsonPatchDocument)
+        {
+            var tagModelFromRepo = _repository.GetTagById(id);
+
+            if(tagModelFromRepo != null)
+            {
+                var tagToPatch = _mapper.Map<TagCreateDto>(tagModelFromRepo);
+                jsonPatchDocument.ApplyTo(tagToPatch, ModelState);
+
+                if(!TryValidateModel(tagToPatch))
+                {
+                    return ValidationProblem(ModelState);
+                }
+
+                _mapper.Map(tagToPatch, tagModelFromRepo);
+
+                _repository.CreateOrUpdateTag(tagModelFromRepo);
+
+                _repository.SaveChanges();
+
+                return NoContent();
+ 
+            } 
+           
+            return NotFound();
         }
 
     }

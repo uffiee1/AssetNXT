@@ -7,6 +7,14 @@
   <ItemGroup>
     <!-- Entity Framework Core -->
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    
+    <!-- AspNetCore JsonPatch -->
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="3.1.8" />
+    
+    <!-- Serilizer For Json -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
+    
+    <!-- Entity Framework Core -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
     
     <!-- Entity Framework Core Design -->
@@ -14,8 +22,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    
-    <!-- Entity Framework Core SqlServer -->
 
     <!-- Entity Framework Core Tools -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">

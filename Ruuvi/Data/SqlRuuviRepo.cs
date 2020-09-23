@@ -24,11 +24,6 @@ namespace Ruuvi.Data
             _context.Tags.Add(tag);
         }
 
-        public void UpdateTag(Tag tag)
-        {
-            // Nonthing
-        }
-
         public IEnumerable<Tag> GetAllTags()
         {
             return _context.Tags.ToList();
