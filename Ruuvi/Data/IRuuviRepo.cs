@@ -12,5 +12,7 @@ namespace  Ruuvi.Data
         Tag GetTagById(int id);
         void CreateTag(Tag tag);
         void CreateOrUpdateTag(Tag tag);
+
+        void DeleteTag(Tag tag);
     }
 }

@@ -51,11 +51,11 @@ namespace Ruuvi.Controllers
         [HttpPost]
         public ActionResult <TagCreateDto> CreateTag(TagCreateDto tagCreateDto)
         {
-            var tagModel = _mapper.Map<Tag>(tagCreateDto);
-            _repository.CreateTag(tagModel);
+            var tagModelFromRepo = _mapper.Map<Tag>(tagCreateDto);
+            _repository.CreateTag(tagModelFromRepo);
             _repository.SaveChanges();
 
-            var tagReadDto = _mapper.Map<TagReadDto>(tagModel);
+            var tagReadDto = _mapper.Map<TagReadDto>(tagModelFromRepo);
             
             // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
             return CreatedAtRoute(nameof(GetTagById), new {Id = tagReadDto.Id}, tagReadDto);
@@ -89,7 +89,7 @@ namespace Ruuvi.Controllers
 
         // PATCH api/tags/{id}
         [HttpPatch("{id}")]
-        public ActionResult PartialUpdate(int id, JsonPatchDocument<TagCreateDto> jsonPatchDocument)
+        public ActionResult PartialTagUpdate(int id, JsonPatchDocument<TagCreateDto> jsonPatchDocument)
         {
             var tagModelFromRepo = _repository.GetTagById(id);
 
@@ -113,6 +113,26 @@ namespace Ruuvi.Controllers
  
             } 
            
+            return NotFound();
+        }
+
+        // DELETE api/tags/{id}
+        [HttpDelete("{id}")]
+        public ActionResult DeleteTag(int id)
+        {
+            var tagModelFromRepo = _repository.GetTagById(id);
+
+            if(tagModelFromRepo != null)
+            {
+                
+                _repository.DeleteTag(tagModelFromRepo);
+
+                _repository.SaveChanges();
+
+                return NoContent();
+ 
+            } 
+
             return NotFound();
         }
 

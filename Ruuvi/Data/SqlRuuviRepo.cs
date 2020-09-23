@@ -63,6 +63,14 @@ namespace Ruuvi.Data
             }
         }
 
-        
+        public void DeleteTag(Tag tag)
+        {
+             if(tag == null)
+            {
+                throw new ArgumentNullException(nameof(tag));
+            }
+
+            _context.Tags.Remove(tag);
+        }
     }
 }
