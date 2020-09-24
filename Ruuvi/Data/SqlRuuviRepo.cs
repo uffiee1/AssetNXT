@@ -31,7 +31,7 @@ namespace Ruuvi.Data
 
         public Tag GetTagById(int id)
         {
-            return _context.Tags.FirstOrDefault(p => p.Id == id);
+            return _context.Tags.FirstOrDefault(p => p.IdTag == id);
         }
 
         public bool SaveChanges()
