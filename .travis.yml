@@ -2,10 +2,8 @@ language: csharp
 mono: none
 dotnet: 3.1
 
-sudo: required
-dist: trusty
-solution: Ruuvi.csprj
+install:
+  - dotnet restore Ruuvi.csprj
 
 script:
-  - dotnet restore ./Ruuvi.csprj
   - dotnet build
