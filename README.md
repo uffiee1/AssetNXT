@@ -1,6 +1,6 @@
 # Ruuvi Smart Asset Tracking & Minitoring
 
-[![CircleCI](https://circleci.com/gh/circleci/circleci-docs/tree/teesloane-patch-5.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs/tree/teesloane-patch-5)
+[![Build Status](https://travis-ci.com/constantimi/Ruuvi-Distributed-System.svg?branch=v-0.1.dev)](https://travis-ci.com/constantimi/Ruuvi-Distributed-System)
 
 ## Server-Side API
 #### FIRST 2 API ENDPOINTS (GET / READ)
