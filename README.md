@@ -1,6 +1,9 @@
 # Ruuvi Smart Asset Tracking & Minitoring
 
-### FIRST 2 API ENDPOINTS (GET / READ)
+[![CircleCI](https://circleci.com/gh/circleci/circleci-docs/tree/teesloane-patch-5.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs/tree/teesloane-patch-5)
+
+## Server-Side API
+#### FIRST 2 API ENDPOINTS (GET / READ)
 - Project Setup
 - Create our Domain Model
 - Build Our Repository Interface
@@ -8,7 +11,7 @@
 - Create our Controller
 - Dependency Injection
 
-### ENTITY FRAMEWORK & SQL SERVER
+#### ENTITY FRAMEWORK & SQL SERVER
 - Architecture Checkpoint
 - Set Up SQL Server App Login
 - Entityframework Packages
@@ -23,7 +26,7 @@
 - Add Data to Database
 - Revist Our Repository to use DB Context
 
-### DATA TRANSFER OBJECTS & CREATE ENDPOINT
+#### DATA TRANSFER OBJECTS & CREATE ENDPOINT
 - Architecture Checkpoint
 - Why Data Transfer Objects?
 - AutoMapper Package & Startup Registration
@@ -31,7 +34,7 @@
 - Creating a mapping Profile
 - Updating Our Action Results to use DTOs
 
-### PUT, PATCH & DELETE API ENDPOINTS
+#### PUT, PATCH & DELETE API ENDPOINTS
 - Architecture Checkpoint
 - Updating our Repository for Creating Resources
 - Create a New DTO (for Creating)
@@ -49,12 +52,12 @@
 - Add 5th API Endpoint for Updating (PATCH Request)
 - Add 6th API Endpoint for Deleting (DELETE Request)
 
-### Runin Docker with HTTPS
+#### Runin Docker with HTTPS
 - Create a Certificate for HTTPS
 - Create a Docker file
 - Update Docker Composer
 - AutoMapper Packages
+- Kubernetes services
+- Kubernetes pods & Ingress
 
-### Useful links
-
-[https://ruuvi.com/](https://ruuvi.com/)
+#### Secure the API
