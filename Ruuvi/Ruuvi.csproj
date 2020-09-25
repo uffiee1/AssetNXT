@@ -2,6 +2,7 @@
    <!-- AutoMapper Dependency Injection -->
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>ruvi-cecb2b77-7cdd-41cf-aace-ce3e561e1c58</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
