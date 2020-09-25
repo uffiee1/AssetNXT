@@ -3,7 +3,7 @@ mono: none
 dotnet: 3.1
 
 install:
-  - dotnet restore Ruuvi.csprj
+- dotnet restore .\Ruuvi.csproj
 
 script:
-  - dotnet build
+ - dotnet build
