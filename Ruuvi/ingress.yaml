@@ -1,0 +1,8 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ruuvi-ingress
+spec:
+  backend:
+    serviceName: ruuvi-ingress 
+    servicePort: 80
