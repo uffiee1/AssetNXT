@@ -1,26 +1,6 @@
 # Ruuvi Smart Asset Tracking & Minitoring
 
-### Project plan 
-
-- [Client interview]()
-- [Improved Project plan based on feedback]()
-- [Test cases]() 
-- [Software Development Agreement]()
-
-
-- [Split tasks]()
-- [Split tasks Last iteration]()
-
-
-- [Functional requirements and Use cases]()
-- [User reqiurements structure]()
-
-- [Process report]()
-- [Presentation]()
-
-
-### Solution plan
-FIRST 2 API ENDPOINTS (GET / READ)
+### FIRST 2 API ENDPOINTS (GET / READ)
 - Project Setup
 - Create our Domain Model
 - Build Our Repository Interface
@@ -28,7 +8,7 @@ FIRST 2 API ENDPOINTS (GET / READ)
 - Create our Controller
 - Dependency Injection
 
-ENTITY FRAMEWORK & SQL SERVER
+### ENTITY FRAMEWORK & SQL SERVER
 - Architecture Checkpoint
 - Set Up SQL Server App Login
 - Entityframework Packages
@@ -43,7 +23,7 @@ ENTITY FRAMEWORK & SQL SERVER
 - Add Data to Database
 - Revist Our Repository to use DB Context
 
-DATA TRANSFER OBJECTS & CREATE ENDPOINT
+### DATA TRANSFER OBJECTS & CREATE ENDPOINT
 - Architecture Checkpoint
 - Why Data Transfer Objects?
 - AutoMapper Package & Startup Registration
@@ -51,7 +31,7 @@ DATA TRANSFER OBJECTS & CREATE ENDPOINT
 - Creating a mapping Profile
 - Updating Our Action Results to use DTOs
 
-PUT, PATCH & DELETE API ENDPOINTS
+### PUT, PATCH & DELETE API ENDPOINTS
 - Architecture Checkpoint
 - Updating our Repository for Creating Resources
 - Create a New DTO (for Creating)
@@ -69,6 +49,11 @@ PUT, PATCH & DELETE API ENDPOINTS
 - Add 5th API Endpoint for Updating (PATCH Request)
 - Add 6th API Endpoint for Deleting (DELETE Request)
 
+### Runin Docker with HTTPS
+- Create a Certificate for HTTPS
+- Create a Docker file
+- Update Docker Composer
+- AutoMapper Packages
 
 ### Useful links
 
