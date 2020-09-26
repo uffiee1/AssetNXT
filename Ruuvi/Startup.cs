@@ -36,7 +36,7 @@ namespace Ruuvi
             services.AddDbContext<RuuviDbContext>(options => options.UseMySql(Configuration.GetConnectionString("Default")));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-                      
+
             services.AddControllers().AddNewtonsoftJson(s => {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
