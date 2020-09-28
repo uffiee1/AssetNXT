@@ -1,7 +1,5 @@
 # Ruuvi Smart Asset Tracking & Minitoring
 
-[![Build Status](https://travis-ci.com/constantimi/Ruuvi-Distributed-System.svg?branch=v-0.1.dev)](https://travis-ci.com/constantimi/Ruuvi-Distributed-System)
-
 ## Server-Side API
 #### FIRST 2 API ENDPOINTS (GET / READ)
 - Project Setup
