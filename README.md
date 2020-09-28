@@ -122,3 +122,7 @@ If the 2 points are fulfilled the app will POST background scanning results to t
 | longitude | Double | degrees | longitude |
 | time | String | yyyy-MM-dd'T'HH:mm:ssZ | Gateway request send date |
 
+##### 3.2 Ruuvi Station gateway API Server
+
+Open source gateway server can be found at: [https://github.com/ruuvi/ruuvi-station-influx-gateway](https://github.com/ruuvi/ruuvi-station-influx-gateway)
+More resources about the firmware: [https://docs.ruuvi.com/ruuvi-station-app](https://docs.ruuvi.com/ruuvi-station-app)
