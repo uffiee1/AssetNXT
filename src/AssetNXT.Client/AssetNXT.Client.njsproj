@@ -45,6 +45,9 @@
     <Content Include="src\components\Layout.js" />
     <Content Include="src\components\NavMenu.css" />
     <Content Include="src\components\NavMenu.js" />
+    <Content Include="src\components\Tooltip.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\custom.css" />
     <Content Include="src\index.js" />
     <Content Include="src\registerServiceWorker.js" />
