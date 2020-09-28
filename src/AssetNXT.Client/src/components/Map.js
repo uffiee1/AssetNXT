@@ -8,9 +8,9 @@ export class MapNXT extends Component {
 		const position = [state.lat, state.lng]
 
 		return (
-			<div className="map-container">
+			<div className="col p-0 map-container">
 				<Map center={position} zoom={state.zoom}
-					style={{ height: '800px' }}>
+					className="h-100">
 					<TileLayer
 						tileSize={ 512 }
 						zoomOffset={ -1 }
