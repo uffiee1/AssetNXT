@@ -5,6 +5,7 @@ namespace Ruuvi.Models
 {
     public class Tag
     {
+
         [Key]
         public int IdTag  { get; set; }
 
@@ -59,7 +60,7 @@ namespace Ruuvi.Models
 
         [Required]
         [DataType(DataType.Date)]
-        public  DateTime UpdateAt { get; set; }
+        public DateTime UpdateAt { get; set; }
         
         [Required]
         public double Voltage { get; set; }

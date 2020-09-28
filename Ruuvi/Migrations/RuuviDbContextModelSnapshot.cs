@@ -17,6 +17,58 @@ namespace Ruuvi.Migrations
                 .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("Ruuvi.Models.Location", b =>
+                {
+                    b.Property<int>("IdLocation")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<double>("Accuracy")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double");
+
+                    b.HasKey("IdLocation");
+
+                    b.ToTable("Location");
+                });
+
+            modelBuilder.Entity("Ruuvi.Models.RuuviStation", b =>
+                {
+                    b.Property<int>("IdStation")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("BatteryLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DeviceId")
+                        .IsRequired()
+                        .HasColumnType("varchar(250) CHARACTER SET utf8mb4")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("EventId")
+                        .IsRequired()
+                        .HasColumnType("varchar(250) CHARACTER SET utf8mb4")
+                        .HasMaxLength(250);
+
+                    b.Property<int>("LocationIdLocation")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("IdStation");
+
+                    b.HasIndex("LocationIdLocation");
+
+                    b.ToTable("RuuviStations");
+                });
+
             modelBuilder.Entity("Ruuvi.Models.Tag", b =>
                 {
                     b.Property<int>("IdTag")
@@ -67,6 +119,9 @@ namespace Ruuvi.Migrations
                     b.Property<int>("Rssi")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RuuviStationIdStation")
+                        .HasColumnType("int");
+
                     b.Property<double>("Temperature")
                         .HasColumnType("double");
 
@@ -81,7 +136,25 @@ namespace Ruuvi.Migrations
 
                     b.HasKey("IdTag");
 
-                    b.ToTable("Tags");
+                    b.HasIndex("RuuviStationIdStation");
+
+                    b.ToTable("Tag");
+                });
+
+            modelBuilder.Entity("Ruuvi.Models.RuuviStation", b =>
+                {
+                    b.HasOne("Ruuvi.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationIdLocation")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Ruuvi.Models.Tag", b =>
+                {
+                    b.HasOne("Ruuvi.Models.RuuviStation", null)
+                        .WithMany("Tags")
+                        .HasForeignKey("RuuviStationIdStation");
                 });
 #pragma warning restore 612, 618
         }

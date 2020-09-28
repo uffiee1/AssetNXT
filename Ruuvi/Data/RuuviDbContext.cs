@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Ruuvi.Models;
 
@@ -10,6 +11,6 @@ namespace Ruuvi.Data
             
         }
 
-        public DbSet<Tag> Tags{ get; set;}
+        public DbSet<RuuviStation> RuuviStations{ get; set; }
     }
 }

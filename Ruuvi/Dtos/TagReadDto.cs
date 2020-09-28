@@ -4,7 +4,7 @@ namespace Ruuvi.Dtos
 {
     public class TagReadDto
     {
-        
+    
         public int IdTag  { get; set; }
         public double AccelX { get; set; }
         public double AccelY { get; set; }

@@ -8,7 +8,6 @@ namespace Ruuvi.Profiles
     {
         public TagsProfile()
         {
-            // Source -> Target
             CreateMap<Tag, TagReadDto>();
             CreateMap<TagCreateDto, Tag>();
             CreateMap<Tag,TagCreateDto>();

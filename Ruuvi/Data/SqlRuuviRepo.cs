@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Ruuvi.Models;
 
 namespace Ruuvi.Data
@@ -14,24 +15,24 @@ namespace Ruuvi.Data
             _context = context;
         }
 
-        public void CreateTag(Tag tag)
+        public void CreateRuuviStation(RuuviStation ruuviStation)
         {
-            if(tag == null)
+            if(ruuviStation == null)
             {
-                throw new ArgumentNullException(nameof(tag));
+                throw new ArgumentNullException(nameof(ruuviStation));
             }
 
-            _context.Tags.Add(tag);
+            _context.RuuviStations.Add(ruuviStation);
         }
 
-        public IEnumerable<Tag> GetAllTags()
+        public IEnumerable<RuuviStation> GetAllRuuviStations()
         {
-            return _context.Tags.ToList();
+            return _context.RuuviStations.Include(r => r.Tags).Include(r => r.Location).ToList();
         }
 
-        public Tag GetTagById(int id)
+        public RuuviStation GetRuuviStationById(int id)
         {
-            return _context.Tags.FirstOrDefault(p => p.IdTag == id);
+            return _context.RuuviStations.FirstOrDefault(p => p.IdStation == id);
         }
 
         public bool SaveChanges()
@@ -39,38 +40,39 @@ namespace Ruuvi.Data
             return ( _context.SaveChanges() >= 0);
         }
 
-        public void CreateOrUpdateTag(Tag tag)
+        public void CreateOrUpdateRuuviStation(RuuviStation ruuviStation)
         {
-            var entry = _context.Entry(tag);
+            var entry = _context.Entry(ruuviStation);
 
             switch (entry.State)
             {
                 case Microsoft.EntityFrameworkCore.EntityState.Detached:
-                    _context.Tags.Add(tag);
+                    _context.RuuviStations.Add(ruuviStation);
                     break;
                 case Microsoft.EntityFrameworkCore.EntityState.Modified:
-                    _context.Tags.Update(tag);
+                    _context.RuuviStations.Update(ruuviStation);
                     break;
                 case Microsoft.EntityFrameworkCore.EntityState.Added:
-                    _context.Tags.Add(tag);
+                    _context.RuuviStations.Add(ruuviStation);
                     break;
                 case Microsoft.EntityFrameworkCore.EntityState.Unchanged:
-                    // tag's been already in the DB, no need to do anything
+                    // station's been already in the DB, no need to do anything
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(tag));
+                    throw new ArgumentOutOfRangeException(nameof(ruuviStation));
             }
         }
 
-        public void DeleteTag(Tag tag)
+        public void DeleteRuuviStation(RuuviStation ruuviStation)
         {
-             if(tag == null)
+             if(ruuviStation == null)
             {
-                throw new ArgumentNullException(nameof(tag));
+                throw new ArgumentNullException(nameof(ruuviStation));
             }
 
-            _context.Tags.Remove(tag);
+            _context.RuuviStations.Remove(ruuviStation);
+
         }
     }
 }

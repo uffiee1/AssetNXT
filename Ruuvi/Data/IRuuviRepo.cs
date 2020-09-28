@@ -8,11 +8,11 @@ namespace  Ruuvi.Data
     {
         bool SaveChanges();
 
-        IEnumerable<Tag> GetAllTags();
-        Tag GetTagById(int id);
-        void CreateTag(Tag tag);
-        void CreateOrUpdateTag(Tag tag);
+        IEnumerable<RuuviStation> GetAllRuuviStations();
+        RuuviStation GetRuuviStationById(int id);
+        void CreateRuuviStation(RuuviStation ruuviStation);
+        void CreateOrUpdateRuuviStation(RuuviStation ruuviStation);
 
-        void DeleteTag(Tag tag);
+        void DeleteRuuviStation(RuuviStation ruuviStation);
     }
 }
