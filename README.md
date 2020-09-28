@@ -47,7 +47,7 @@ For the value-driven telemetry parameters, the current value can be monitored/ c
       "id": "E5:F1:98:34:C0:0F",
       "measurementSequenceNumber": 62865,
       "movementCounter": 21,
-      "name": "Kitchen"
+      "name": "NYC",
       "pressure": 98702,
       "rssi": -43,
       "temperature": 25.58,
