@@ -9,23 +9,23 @@ As an example, the target company is a small business that delivers packages. Th
 
 ### 2. Solution outline
 
-##### 2.1. Ruuvi Data Collection
+#### 2.1. Ruuvi Data Collection
 
 The Ruuvi tag will be located in the loading part of the truck. The standard Ruuvi Mobile App will be used to connect the Ruuvi tag and send the collected data as a gateway to a cloud database. The Ruuvi tag can collect telemetry data like temperature, humidity and pressure. The mobile phone is used to collect GPS data.
 
-##### 2.2. Cloud
+#### 2.2. Cloud
 The raw Ruuvi data will be collected in an unstructured cloud database such as MongoDB. The technology will be Cloud independent and able to run on Microsoft Azure Service. The development project will use DockerHub for creating an image and container where we are going to store our version of the project.
 
-##### 2.3. Web Application
+#### 2.3. Web Application
 To visualize and control the data we are going to use React.js as a front-end development technology.
 
-##### 2.4. Use cases
+#### 2.4. Use cases
 Use cases are defined around two types of telemetry data: GPS/ Positions and value-driven telemetry parameters (temperature, humidity, pressure). Both types added value to the business case from the perspective of tracking and monitoring.
 
-##### a) Tracking/ Visibility
+#### a) Tracking/ Visibility
 Tracking is about visualizing the current and past values. For GPS/ Position visibility is about showing current and past positions on a map. For value-driven telemetry parameters visibility is about showing the current numeric values as past values in a graph.
 
-##### b) Monitoring/ Control
+#### b) Monitoring/ Control
 Monitoring is about managing/ safeguarding values with preset boundaries and alerts on breaches.
 
 For GPS/ Position, this could mean that a current position is mapped against the geographic area, corridor, waypoints & timeslots which can be defined as paths.
@@ -72,12 +72,12 @@ For the value-driven telemetry parameters, the current value can be monitored/ c
 
 With this feature you can let the app act as a gateway, forwarding RuuviTag measurements to a http endpoint using POST requests.
 
-##### 3.1 Setup
+#### 3.1 Setup
 The app will act as a gateway when:
 - Background scanning is enabled
 - A valid URL has been set in app settings
 
-##### 3.1 Data format
+#### 3.1 Data format
 
 Every POST contains 2 blocks: tags data and device information. Tags data can contain one or few tag scan results after "tags". 
 If the 2 points are fulfilled the app will POST background scanning results to the URL. The app only sends measurements for tags added in the app
@@ -86,7 +86,7 @@ If the 2 points are fulfilled the app will POST background scanning results to t
     "tags":[{tagdata1},{tagdata2}, ... ,{tagdataN}]
 ``
 
-##### 3.2 Ruuvi Station gateway API Server
+#### 3.2 Ruuvi Station gateway API Server
 
 Open source gateway server can be found at: [https://github.com/ruuvi/ruuvi-station-influx-gateway](https://github.com/ruuvi/ruuvi-station-influx-gateway)
 
