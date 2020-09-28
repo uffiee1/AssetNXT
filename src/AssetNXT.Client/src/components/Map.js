@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Tooltip from './Tooltip';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 
 export class MapNXT extends Component {
@@ -19,7 +20,7 @@ export class MapNXT extends Component {
 					/>
 					<Marker position={position}>
 						<Popup>
-							It's a secret to everybody
+							<Tooltip/>
 						</Popup>
 					</Marker>
 				</Map>
