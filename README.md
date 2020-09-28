@@ -1,6 +1,8 @@
 
 ## SMART ASSET TRACKING & MONITORING
+
 ---
+
 
 ### 1. Introduction
 There is a lot of complex IoT and mobile solutions available in the market which are out of reach for small and even mid-sized companies. The goal with the development of "Smart Asset Tracking & Monitoring" is to create conceptual functionality which manages the assets.
