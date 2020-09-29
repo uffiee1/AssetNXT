@@ -13,25 +13,24 @@ namespace AssetNXT.Logic
         private List<PointModel> Points { get; set; }
 
         // Temporary hard-coded, will be replaced later
-        private int _radius = 250;
+        private double _radius;
         private PointModel _middleCircle;
         private PointModel _markerPoint;
         private AssetModel _assetModel;
 
-        public OutOfBounds()
+        public OutOfBounds(AssetModel asset, PointModel middleCircle, double radius, PointModel markerPoint)
         {
-            _assetModel = new AssetModel();
-            _middleCircle = new PointModel(51.121110, 51.111110);
-            _markerPoint = new PointModel(51.233331, 51.233333);
-            Points = new List<PointModel>
-            {
-                // Point A
-                new PointModel(51.123456, 51.222100),
-                // Point B
-                new PointModel(51.112233, 51.222300),
-                // Point C
-                new PointModel(51.123444, 51.222500)
-            };
+            _assetModel = asset;
+            _middleCircle = middleCircle;
+            _radius = radius;
+            _markerPoint = markerPoint;
+        }
+
+        public OutOfBounds(AssetModel asset, PointModel markerPoint, List<PointModel> points)
+        {
+            _assetModel = asset;
+            _markerPoint = markerPoint;
+            Points = points;
         }
 
         public AssetModel PointInCircle()
@@ -45,12 +44,12 @@ namespace AssetNXT.Logic
             // >  Outside of the circle (returns true)
             if (result <= _radius)
             {
-                _assetModel.OutOfBounds = true;
+                _assetModel.OutOfBounds = false;
                 return _assetModel;
             }
             else
             {
-                _assetModel.OutOfBounds = false;
+                _assetModel.OutOfBounds = true;
                 return _assetModel;
             }
         }
