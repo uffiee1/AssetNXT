@@ -9,7 +9,7 @@ using Ruuvi.Data;
 namespace Ruuvi.Migrations
 {
     [DbContext(typeof(RuuviDbContext))]
-    [Migration("20200928224238_InitialCreate")]
+    [Migration("20201001091312_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

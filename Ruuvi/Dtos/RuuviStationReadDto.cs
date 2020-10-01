@@ -16,6 +16,7 @@ namespace Ruuvi.Dtos
         public string DeviceId { get; set; }
 
         public string EventId { get; set; }
+        
         public Location Location { get; set; }
 
         public DateTime Time { get; set;}
