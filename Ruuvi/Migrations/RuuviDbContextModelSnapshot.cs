@@ -138,7 +138,7 @@ namespace Ruuvi.Migrations
 
                     b.HasIndex("RuuviStationIdStation");
 
-                    b.ToTable("Tag");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Ruuvi.Models.RuuviStation", b =>

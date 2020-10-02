@@ -44,6 +44,7 @@ namespace Ruuvi
             // Configure dependeces injection system
             // services.AddScoped<IRuuviRepo, MockRuuviRepo>();
             services.AddScoped<IRuuviRepo, SqlRuuviRepo>();
+            services.AddScoped<ITagRepo, SqlTagRepo>();
             
         }
 

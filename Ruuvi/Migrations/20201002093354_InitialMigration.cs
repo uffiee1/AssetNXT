@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Ruuvi.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,7 +47,7 @@ namespace Ruuvi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tag",
+                name: "Tags",
                 columns: table => new
                 {
                     IdTag = table.Column<int>(nullable: false)
@@ -74,9 +74,9 @@ namespace Ruuvi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tag", x => x.IdTag);
+                    table.PrimaryKey("PK_Tags", x => x.IdTag);
                     table.ForeignKey(
-                        name: "FK_Tag_RuuviStations_RuuviStationIdStation",
+                        name: "FK_Tags_RuuviStations_RuuviStationIdStation",
                         column: x => x.RuuviStationIdStation,
                         principalTable: "RuuviStations",
                         principalColumn: "IdStation",
@@ -89,15 +89,15 @@ namespace Ruuvi.Migrations
                 column: "LocationIdLocation");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tag_RuuviStationIdStation",
-                table: "Tag",
+                name: "IX_Tags_RuuviStationIdStation",
+                table: "Tags",
                 column: "RuuviStationIdStation");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Tag");
+                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "RuuviStations");

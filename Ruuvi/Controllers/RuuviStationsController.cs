@@ -14,7 +14,6 @@ namespace Ruuvi.Controllers
     [ApiController]
     public class RuuviStationsController : ControllerBase
     {
-        
         private readonly IRuuviRepo _repository;
         private readonly IMapper _mapper;
 
@@ -30,7 +29,11 @@ namespace Ruuvi.Controllers
         {
             var stationModelItemsFromRepo = _repository.GetAllRuuviStations();
 
-            return Ok(_mapper.Map<IEnumerable<RuuviStationReadDto>>(stationModelItemsFromRepo));
+            if(stationModelItemsFromRepo != null){
+                return Ok(_mapper.Map<IEnumerable<RuuviStationReadDto>>(stationModelItemsFromRepo));
+            }
+
+            return NotFound();
         }
 
         // GET api/ruuvistations/{id}
