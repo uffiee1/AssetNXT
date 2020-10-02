@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Entity Framework Core -->
+    <!-- Entity Framework Core Dependecy Injection-->
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
     
     <!-- AspNetCore JsonPatch -->
