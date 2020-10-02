@@ -32,7 +32,7 @@ namespace Ruuvi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // DB dependencies
+            // MySQL dependencies
             services.AddDbContext<RuuviDbContext>(options => options.UseMySql(Configuration.GetConnectionString("Default")));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
