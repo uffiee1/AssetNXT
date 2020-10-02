@@ -9,7 +9,7 @@ using Ruuvi.Data;
 namespace Ruuvi.Migrations
 {
     [DbContext(typeof(RuuviDbContext))]
-    [Migration("20201002093354_InitialMigration")]
+    [Migration("20201002100613_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,7 @@ namespace Ruuvi.Migrations
 
                     b.HasKey("IdLocation");
 
-                    b.ToTable("Location");
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("Ruuvi.Models.RuuviStation", b =>

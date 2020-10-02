@@ -34,7 +34,7 @@ namespace Ruuvi.Migrations
 
                     b.HasKey("IdLocation");
 
-                    b.ToTable("Location");
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("Ruuvi.Models.RuuviStation", b =>

@@ -12,5 +12,7 @@ namespace Ruuvi.Data
 
         public DbSet<RuuviStation> RuuviStations{ get; set; }
         public DbSet<Tag> Tags { get; set; }
+
+        public DbSet<Location> Locations { get; set; }
     }
 }

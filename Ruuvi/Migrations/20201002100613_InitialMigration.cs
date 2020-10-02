@@ -9,7 +9,7 @@ namespace Ruuvi.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Location",
+                name: "Locations",
                 columns: table => new
                 {
                     IdLocation = table.Column<int>(nullable: false)
@@ -20,7 +20,7 @@ namespace Ruuvi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Location", x => x.IdLocation);
+                    table.PrimaryKey("PK_Locations", x => x.IdLocation);
                 });
 
             migrationBuilder.CreateTable(
@@ -39,9 +39,9 @@ namespace Ruuvi.Migrations
                 {
                     table.PrimaryKey("PK_RuuviStations", x => x.IdStation);
                     table.ForeignKey(
-                        name: "FK_RuuviStations_Location_LocationIdLocation",
+                        name: "FK_RuuviStations_Locations_LocationIdLocation",
                         column: x => x.LocationIdLocation,
-                        principalTable: "Location",
+                        principalTable: "Locations",
                         principalColumn: "IdLocation",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -103,7 +103,7 @@ namespace Ruuvi.Migrations
                 name: "RuuviStations");
 
             migrationBuilder.DropTable(
-                name: "Location");
+                name: "Locations");
         }
     }
 }

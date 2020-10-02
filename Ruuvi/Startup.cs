@@ -45,6 +45,7 @@ namespace Ruuvi
             // services.AddScoped<IRuuviRepo, MockRuuviRepo>();
             services.AddScoped<IRuuviRepo, SqlRuuviRepo>();
             services.AddScoped<ITagRepo, SqlTagRepo>();
+            services.AddScoped<ILocationRepo, SqlLocationRepo>();
             
         }
 

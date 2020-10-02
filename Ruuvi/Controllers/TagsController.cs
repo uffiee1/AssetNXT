@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Ruuvi.Data;
-using Ruuvi.Models;
 using AutoMapper;
 using Ruuvi.Dtos;
-using Microsoft.AspNetCore.JsonPatch;
 
 namespace Ruuvi.Controllers
 {
@@ -29,7 +27,9 @@ namespace Ruuvi.Controllers
             var tagModelItemsFromRepo = _repository.GetAllTags();
 
             if(tagModelItemsFromRepo != null){
+
                return Ok(_mapper.Map<IEnumerable<TagReadDto>>(tagModelItemsFromRepo));
+               
             }
 
             return NotFound();
@@ -48,6 +48,7 @@ namespace Ruuvi.Controllers
 
             return NotFound();
         }
+
     }
 
 }
