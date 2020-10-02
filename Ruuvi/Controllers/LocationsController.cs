@@ -6,6 +6,7 @@ using Ruuvi.Dtos;
 
 namespace Ruuvi.Controllers
 {
+    
     // api/locations
     [Route("api/[controller]")]
     // decorator gives some default behaviour

@@ -11,7 +11,7 @@ As an example, the target company is a small business that delivers packages. Th
 
 #### 2.1. Ruuvi Data Collection
 
-The Ruuvi tag will be located in the loading part of the truck. The standard Ruuvi Mobile App will be used to connect the Ruuvi tag and send the collected data as a gateway to a cloud database. The Ruuvi tag can collect telemetry data like temperature, humidity and pressure. The mobile phone is used to collect GPS data.
+The Ruuvi tag will be located sidewise on the package. The standard Ruuvi Mobile App will be used to connect the Ruuvi tag and send the collected data as a gateway to a cloud database. The Ruuvi tag can collect telemetry data like temperature, humidity and pressure. The mobile phone is used to collect GPS data.
 
 #### 2.2. Cloud
 The raw Ruuvi data will be collected in an unstructured cloud database such as MongoDB. The technology will be Cloud independent and able to run on Microsoft Azure Service. The development project will use DockerHub for creating an image and container where we are going to store our version of the project.

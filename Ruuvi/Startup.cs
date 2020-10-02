@@ -46,6 +46,18 @@ namespace Ruuvi
             services.AddScoped<IRuuviRepo, SqlRuuviRepo>();
             services.AddScoped<ITagRepo, SqlTagRepo>();
             services.AddScoped<ILocationRepo, SqlLocationRepo>();
+
+            // Swagger
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1",
+                new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "Ruuvi Rest API",
+                    Description = "## SMART ASSET TRACKING & MONITORING",
+                    Version = "v1"
+                });
+            });
             
         }
 
@@ -67,6 +79,13 @@ namespace Ruuvi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ruuvi Rest API");
             });
         }
     }

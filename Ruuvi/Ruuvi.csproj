@@ -32,6 +32,9 @@
 
     <!-- Pomelo Entity Framework Core MySql -->
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.0" />
+    
+    <!-- Swagger dotnet core -->
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
 </Project>
