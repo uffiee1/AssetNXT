@@ -10,7 +10,6 @@ namespace Ruuvi.Controllers
 {
     // api/ruuvistations
     [Route("api/[controller]")]
-    // decorator gives some default behaviour
     [ApiController]
     public class RuuviStationsController : ControllerBase
     {
