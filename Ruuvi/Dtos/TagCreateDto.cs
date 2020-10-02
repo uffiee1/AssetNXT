@@ -63,4 +63,5 @@ namespace Ruuvi.Dtos
         [Required]
         public double Voltage { get; set; }
     }
+
 }

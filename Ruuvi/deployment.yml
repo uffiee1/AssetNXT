@@ -30,4 +30,3 @@ spec:
           httpGet:
             path: /api/tags 
             port: 80
-
