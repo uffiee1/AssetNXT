@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import { NavMenu } from './NavMenu';
 import { MapNXT } from './Map';
 
 export class Layout extends Component {

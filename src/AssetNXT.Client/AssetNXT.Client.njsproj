@@ -38,17 +38,11 @@
     <Content Include="README.md" />
     <Content Include="src\App.js" />
     <Content Include="src\App.test.js" />
-    <Content Include="src\components\Counter.js" />
-    <Content Include="src\components\FetchData.js" />
-    <Content Include="src\components\Home.js" />
     <Content Include="src\components\Map.js" />
     <Content Include="src\components\Layout.js" />
-    <Content Include="src\components\NavMenu.css" />
-    <Content Include="src\components\NavMenu.js" />
     <Content Include="src\components\Tooltip.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\custom.css" />
     <Content Include="src\index.js" />
     <Content Include="src\registerServiceWorker.js" />
   </ItemGroup>
