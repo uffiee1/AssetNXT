@@ -1,0 +1,15 @@
+.asset-icon-container {
+    display:flex;
+    align-items: center;
+    padding-left: 0 !important;
+}
+
+.asset-contents-label {
+    margin: 0 !important;
+    font-size: 1.0rem;
+    font-weight: bold;
+}
+
+.asset-contents-description {
+    margin: 0 !important;
+}

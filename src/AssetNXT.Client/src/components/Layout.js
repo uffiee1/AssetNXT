@@ -1,76 +1,77 @@
-import React, { Component } from 'react';
-import { Container } from 'reactstrap';
-import { MapNXT } from './Map';
+import React, { Component } from "react";
+import { Container, Row, Col } from 'reactstrap';
+
+import './Layout.css'
+import { AssetList } from './assets/AssetList';
+import { Mapper } from './assets/map/Mapper';
+import { Banner } from "./Banner";
 
 export class Layout extends Component {
-  static displayName = Layout.name;
 
-  render () {
-    return (
-      <div className="container-fluid">
-        <div className="row vh-100">
+  state = {
+    tags: [
+      { name:"Asset #001", description:"Boschdijktunnel, Eindhoven", position:[51.4417378, 5.4750301] },
+      { name:"Asset #002", description:"Rachelsmolen, Eindhoven", position:[51.451093, 5.4802048] },
+    ],
 
-          <div className="d-flex flex-column h-100
-               col-12 col-sm-5 col-lg-3 col-xl-2">
+    zoom: 14,
+    position: [51.4417378, 5.4750301]
+  }
 
-            { /* AssetNXT Logo */ }
-            <div className="row d-flex flex-row
-                 align-items-center bg-white" style={{ height: '64px', minHeight: '64px' }}>
+  async componentDidMount() {
 
-              <div className="flex-grow-1 p-1 h-100">
-              <img className="h-100 img-fluid" src="images/logo.png" /></div>
+    var tags = this.state.tags;
+    await Promise.all(tags.map(async (tag) => {
 
-              <label for="toggle" className="m-0 mr-3">
-                <i className="fa-lg fas fa-chevron-left" style={{ cursor: "pointer" }}></i>
-                <i className="fa-lg fas fa-chevron-left" style={{ cursor: "pointer" }}></i>
-              </label>
+      // Request new State from API endpoint
+      const request = "https://ruuvi-api.herokuapp.com/";
+      const response = await fetch(request);
+      const data = await response.json();
 
-            </div>
+      // Update properties to new response data
+      tag.temperature = Math.round(data.tags.temperature);
+      tag.humidity = Math.round(data.tags.humidity);
+      tag.pressure = Math.round(data.tags.pressure);
 
-            { /* AssetNXT Asset List */ }
-            <div className="row d-flex flex-column flex-grow-1 h-100
-                 align-items-center overflow-hidden bg-white p-2">
+    }));
 
-              { /* AssetNXT Asset Item */}
-              <div className="container-fluid p-2 bg-white border">
-                <div className="d-flex flex-row align-items-center">
+    // Update state
+    this.setState({ tags: tags});
+  }
 
-                  <div className="position-relative p-2 mr-3">
-                    <i style={{ color: "#3F3F3F" }} className="fas fa-2x fas fa-truck"></i>
-                  </div>
+  render() {
+    return(
 
-                  <div className="d-flex flex-column flex-grow-1 overflow-hidden">
-                    <h5 style={{ color: "#3F3F3F" }} className="text-turncate m-0"> <b>Asset #001</b></h5>
-                    <h6 style={{ color: "#3F3F3F" }} className="text-turncate m-0">Boschdijktunnel, Eindhoven</h6> 
-                  </div>
+      <Container fluid className="layout-container">
+        <Row className="layout-container-row">
 
-                </div>
-              </div>
+          <Col xs="12" sm="5" lg="3" xl="2"
+               className="layout-sidepanel">
+            
+            <Row className="layout-sidepanel-banner">
+              <Banner src="images/logo.png"/>
+            </Row>
 
-            </div>
+            <Row className="layout-sidepanel-contents">
+              <AssetList tags={this.state.tags} />
+            </Row>
 
-          </div>
+          </Col>
 
-          <div className="d-none d-sm-flex flex-column
-               h-100 col-12 col-sm-7 col-lg-9 col-xl-10">
+          <Col xs="12" sm="7" lg="9" xl="10"
+               className="layout-container-contents
+                          d-none d-sm-flex flex-column">
 
-            { /* AssetNXT Navigation Bar */}
-            <div className="row d-flex flex-row
-                 align-items-center bg-white" style={{ height: '0px', minHeight: '0px' }}>
-              { /* <h2 className="m-auto">[Navigation Bar]</h2> */ }
-            </div>
+            <Mapper zoom={this.state.zoom} 
+                    tags={this.state.tags} 
+                    position={this.state.position} />
 
-            { /* AssetNXT Map */}
-            <div className="row d-flex flex-column flex-grow-1 h-100
-                 align-items-center overflow-hidden bg-white">
-              <MapNXT />
-            </div>
+          </Col>
 
-          </div>
+        </Row>
+      </Container>
 
-
-        </div>
-      </div>
     );
   }
+
 }
