@@ -14,7 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\AssetNXT\AssetNXT.csproj" />
+    <ProjectReference Include="..\AssetNXT\AssetNXT.csproj" />
   </ItemGroup>
+
+  <Import Project="..\..\common.props" />
+  <Import Project="..\..\stylecop.props" />
 
 </Project>
