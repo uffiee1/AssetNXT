@@ -16,7 +16,8 @@ export class AssetList extends Component {
           <Col className="asset-list-column">
 
             {this.props.tags.map(tag => 
-              <AssetListItem name={tag.name}
+               <AssetListItem name={tag.name}
+               icon={tag.icon}
                description={tag.description} />
             )}
 

@@ -4,10 +4,12 @@ import { Tooltip } from './Tooltip';
 
 import "./Mapper.css";
 
+
 export class Mapper extends Component {
 
   render() {
-    return(
+
+      return(
 
       <Map zoom={this.props.zoom}
            center={this.props.position || [
@@ -36,6 +38,8 @@ export class Mapper extends Component {
           fillOpacity={0.300}
           radius={500}>
         </Circle>
+
+        
 
       </Map>
     );

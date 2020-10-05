@@ -13,10 +13,9 @@ export class AssetListItem extends Component {
       <Container className="asset-item-container">
         <Row className="asset-item-row">
           <Col className="asset-item-col">
-
             <Asset name={this.props.name}
+             icon={this.props.icon}
              description={this.props.description} />
-
           </Col>
         </Row>
       </Container>
