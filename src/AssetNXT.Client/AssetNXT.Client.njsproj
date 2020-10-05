@@ -38,14 +38,20 @@
     <Content Include="README.md" />
     <Content Include="src\App.js" />
     <Content Include="src\App.test.js" />
-    <Content Include="src\components\Counter.js" />
-    <Content Include="src\components\FetchData.js" />
-    <Content Include="src\components\Home.js" />
-    <Content Include="src\components\Map.js" />
+    <Content Include="src\components\assets\Asset.css"/>
+    <Content Include="src\components\assets\Asset.js"/>
+    <Content Include="src\components\assets\AssetList.css"/>
+    <Content Include="src\components\assets\AssetList.js"/>
+    <Content Include="src\components\assets\AssetListItem.css"/>
+    <Content Include="src\components\assets\AssetListItem.js"/>
+    <Content Include="src\components\assets\map\Mapper.css"/>
+    <Content Include="src\components\assets\map\Mapper.js"/>
+    <Content Include="src\components\assets\map\Tooltip.css"/>
+    <Content Include="src\components\assets\map\Tooltip.js"/>
+    <Content Include="src\components\Banner.css"/>
+    <Content Include="src\components\Banner.js"/>
+    <Content Include="src\components\Layout.css"/>
     <Content Include="src\components\Layout.js" />
-    <Content Include="src\components\NavMenu.css" />
-    <Content Include="src\components\NavMenu.js" />
-    <Content Include="src\custom.css" />
     <Content Include="src\index.js" />
     <Content Include="src\registerServiceWorker.js" />
   </ItemGroup>
@@ -53,6 +59,8 @@
     <Folder Include="public\" />
     <Folder Include="src\" />
     <Folder Include="src\components\" />
+    <Folder Include="src\components\assets\" />
+    <Folder Include="src\components\assets\map\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
