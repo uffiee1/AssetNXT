@@ -53,7 +53,7 @@ namespace AssetNXT.Tests
         {
             // Arrange
             var point = new Point { X = x, Y = y };
-            var triangle = new Triangle { A = (-5, 3), B = (0, 3), C = (3, -3) };
+            var triangle = new Triangle { A = (-5, -3), B = (0, 3), C = (3, -3) };
 
             // Act
             var result = triangle.IntersectsWith(point);
@@ -69,7 +69,7 @@ namespace AssetNXT.Tests
         {
             // Arrange
             var point = new Point { X = x, Y = y };
-            var triangle = new Triangle { A = (-5, 3), B = (0, 3), C = (3, -3) };
+            var triangle = new Triangle { A = (-5, -3), B = (0, 3), C = (3, -3) };
 
             // Act
             var result = triangle.IntersectsWith(point);
