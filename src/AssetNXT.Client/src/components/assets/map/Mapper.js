@@ -1,19 +1,37 @@
 import React, { Component } from "react";
 import { Map, TileLayer, Popup, Marker, Circle } from 'react-leaflet';
-import { Tooltip } from './Tooltip';
 
 import "./Mapper.css";
-
+import { Tooltip } from './Tooltip';
 
 export class Mapper extends Component {
+  
+  state = {
+    zoom: this.props.zoom,
+    position: this.props.position ||
+      [this.props.lat, this.props.lng]
+  }
+
+  constructor(props) {
+    super(props)
+    this.updatePosition = this.updatePosition.bind(this);
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState({ position: 
+      props.position || [props.lat, props.lng]});
+  }
+
+  updatePosition(ev) {
+    this.setState({ position: ev.target.center});
+  }
 
   render() {
-
-      return(
-
-      <Map zoom={this.props.zoom}
-           center={this.props.position || [
-                   this.props.lat, this.props.lng] }
+    return(
+    
+      <Map zoom={this.state.zoom}
+           center={this.state.position}
+           ondrag={this.updatePosition}
            className="asset-map-container">
 
         <TileLayer url='https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=HfiQgsMsSnorjEs2Sxek'
@@ -39,7 +57,6 @@ export class Mapper extends Component {
           radius={500}>
         </Circle>
 
-        
 
       </Map>
     );
