@@ -4,11 +4,12 @@ import { Container, Row, Col } from 'reactstrap';
 import './Asset.css';
 
 
-function OobTrue() {
+function OutOfBoundsTrue() {
     return <i class="fas fa-exclamation-triangle"></i>
 }
 
-function OobFalse() {
+//
+function OutOfBoundsFalse() {
 
     return <i class="fas fa-check-circle"></i>
 }
@@ -16,9 +17,9 @@ function OobFalse() {
 function OutOfBoundsIcon(props) {
     const outOfBounds = props.outOfBounds;
     if (outOfBounds) {
-        return <OobTrue/>;
+        return <OutOfBoundsTrue/>;
     }
-    return <OobFalse />;
+    return <OutOfBoundsFalse />;
 }
 
 

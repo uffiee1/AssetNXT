@@ -2,3 +2,12 @@
     padding: 0.5rem 1rem;
     border-bottom: 1px solid whitesmoke;
 }
+
+    .asset-item-col:hover {
+        background-color: #f0f0f0;
+    }
+
+
+    .asset-item-col:active {
+        background-color: #dbdbd9;
+    }

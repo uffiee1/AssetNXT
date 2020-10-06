@@ -20,7 +20,7 @@ export class Layout extends Component {
 
   constructor() {
     super();
-    this.doSomething = this.doSomething.bind(this);
+    this.zoomInMark = this.zoomInMark.bind(this);
   }
 
 
@@ -45,9 +45,9 @@ export class Layout extends Component {
     this.setState({ tags: tags});
   }
 
-  doSomething(assetState) {
+  zoomInMark(assetState) {
 
-    this.setState({ position: assetState.position});
+    this.setState({position: assetState.position});
   }
 
   render() {
@@ -65,7 +65,7 @@ export class Layout extends Component {
 
             <Row className="layout-sidepanel-contents">
               <AssetList tags={this.state.tags}
-                         onAssetClicked={this.doSomething}/>
+                         onAssetClicked={this.zoomInMark}/>
             </Row>
 
           </Col>
