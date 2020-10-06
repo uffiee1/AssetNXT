@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AssetNXT.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
     public class IntersectorsController : Controller
     {
-        [Route("api/[controller]/Triangles")]
-        [HttpGet]
+        [HttpGet("Triangles")]
         public IActionResult Triangles()
         {
             var point = new Point { X = 5, Y = 8 };
@@ -30,13 +30,12 @@ namespace AssetNXT.Controllers
                 Triangles = intersectors.Select(triangle => new
                 {
                     Triangle = triangle,
-                    IntersectsWith = triangle.IntersectsWith(point)
+                    OutOfBounds = !triangle.IntersectsWith(point)
                 })
             });
         }
 
-        [Route("api/[controller]/Circles")]
-        [HttpGet]
+        [HttpGet("Circles")]
         public IActionResult Circles()
         {
             var point = new Point { X = 5, Y = 8 };
@@ -52,7 +51,7 @@ namespace AssetNXT.Controllers
                 Circles = intersectors.Select(circle => new
                 {
                     Circle = circle,
-                    IntersectsWith = circle.IntersectsWith(point)
+                    OutOfBounds = !circle.IntersectsWith(point)
                 })
             });
         }
