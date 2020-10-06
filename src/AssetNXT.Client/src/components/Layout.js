@@ -18,6 +18,12 @@ export class Layout extends Component {
     position: [51.4417378, 5.4750301]
   }
 
+  constructor(props) {
+    super(props);
+    this.doSomething = this.doSomething.bind(this);
+    this.doSomething2 = this.doSomething2.bind(this);
+  }
+
   async componentDidMount() {
 
     var tags = this.state.tags;
@@ -37,6 +43,14 @@ export class Layout extends Component {
 
     // Update state
     this.setState({ tags: tags});
+  }
+
+  doSomething() {
+    this.setState({ zoom: 3, position: [0,0]});
+  }
+
+  doSomething2() {
+    this.setState({ zoom: 14, position: [51.4417378, 5.4750301] });
   }
 
   render() {
@@ -65,6 +79,9 @@ export class Layout extends Component {
             <Mapper zoom={this.state.zoom} 
                     tags={this.state.tags} 
                     position={this.state.position} />
+
+            <button onClick={this.doSomething}>Click me!</button>
+            <button onClick={this.doSomething2}>Click me!</button>
 
           </Col>
 

@@ -17,7 +17,6 @@ export class AssetList extends Component {
 
             {this.props.tags.map(tag => 
                <AssetListItem name={tag.name}
-               icon={tag.icon}
                description={tag.description} />
             )}
 

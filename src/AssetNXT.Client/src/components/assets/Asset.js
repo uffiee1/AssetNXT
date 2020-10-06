@@ -41,7 +41,6 @@ export class Asset extends Component {
 
               <label>
                 <OutOfBoundsIcon outOfBounds={false}/>
-                {this.props.icon}
               </label>
             </Row>
 
