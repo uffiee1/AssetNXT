@@ -1,3 +1,4 @@
+using AssetNXT.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -21,7 +22,7 @@ namespace AssetNXT
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            services.AddSingleton<IIntersectionService, IntersectionService>();
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
