@@ -13,7 +13,7 @@ export class AssetListItem extends Component {
   }
 
   onClick() {
-    console.log("Clicked!");
+    this.props.onAssetClicked(this.props);
   }
 
   render() {
@@ -24,7 +24,6 @@ export class AssetListItem extends Component {
           <Col className="asset-item-col"
                onClick={this.onClick}>
             <Asset name={this.props.name}
-             icon={this.props.icon}
              description={this.props.description} />
           </Col>
         </Row>

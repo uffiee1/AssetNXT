@@ -18,11 +18,11 @@ export class Layout extends Component {
     position: [51.4417378, 5.4750301]
   }
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.doSomething = this.doSomething.bind(this);
-    this.doSomething2 = this.doSomething2.bind(this);
   }
+
 
   async componentDidMount() {
 
@@ -45,12 +45,9 @@ export class Layout extends Component {
     this.setState({ tags: tags});
   }
 
-  doSomething() {
-    this.setState({ zoom: 3, position: [0,0]});
-  }
+  doSomething(assetState) {
 
-  doSomething2() {
-    this.setState({ zoom: 14, position: [51.4417378, 5.4750301] });
+    this.setState({ position: assetState.position});
   }
 
   render() {
@@ -67,7 +64,8 @@ export class Layout extends Component {
             </Row>
 
             <Row className="layout-sidepanel-contents">
-              <AssetList tags={this.state.tags} />
+              <AssetList tags={this.state.tags}
+                         onAssetClicked={this.doSomething}/>
             </Row>
 
           </Col>
@@ -79,10 +77,7 @@ export class Layout extends Component {
             <Mapper zoom={this.state.zoom} 
                     tags={this.state.tags} 
                     position={this.state.position} />
-
-            <button onClick={this.doSomething}>Click me!</button>
-            <button onClick={this.doSomething2}>Click me!</button>
-
+    
           </Col>
 
         </Row>

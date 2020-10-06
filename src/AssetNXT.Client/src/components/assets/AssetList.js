@@ -9,6 +9,15 @@ import { AssetListItem } from './AssetListItem';
 
 export class AssetList extends Component {
 
+  constructor(props) {
+    super(props);
+    this.assetHandler = this.assetHandler.bind(this);
+  }
+
+  assetHandler(assetState) {
+    this.props.onAssetClicked(assetState);
+  }
+
   render() {
     return(
       <Container className="asset-list-container">
@@ -17,7 +26,9 @@ export class AssetList extends Component {
 
             {this.props.tags.map(tag => 
                <AssetListItem name={tag.name}
-               description={tag.description} />
+               description={tag.description}
+               position={tag.position}
+               onAssetClicked={this.assetHandler}/>
             )}
 
           </Col>
