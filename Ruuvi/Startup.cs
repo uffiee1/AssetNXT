@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MySqlConnector;
-using Ruuvi.Data;
+using Ruuvi.Models.Data;
 using Newtonsoft.Json.Serialization;
 
 namespace Ruuvi
@@ -32,20 +33,12 @@ namespace Ruuvi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // MySQL dependencies
-            services.AddDbContext<RuuviDbContext>(options => options.UseMySql(Configuration.GetConnectionString("Default")));
-
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddControllers().AddNewtonsoftJson(s => {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
             
-            // Configure dependeces injection system
-            // services.AddScoped<IRuuviRepo, MockRuuviRepo>();
-            services.AddScoped<IRuuviRepo, SqlRuuviRepo>();
-            services.AddScoped<ITagRepo, SqlTagRepo>();
-            services.AddScoped<ILocationRepo, SqlLocationRepo>();
 
             // Swagger
             services.AddSwaggerGen(options =>

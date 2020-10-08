@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Ruuvi.Models
+namespace Ruuvi.Models.Data
 {
    public class RuuviStation 
    {

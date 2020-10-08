@@ -1,5 +1,5 @@
 using System;
-using Ruuvi.Models;
+using Ruuvi.Models.Data;
 using System.Collections.Generic;
 
 

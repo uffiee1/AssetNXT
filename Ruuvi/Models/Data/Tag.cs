@@ -1,11 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Ruuvi.Dtos
+namespace Ruuvi.Models.Data
 {
-    public class TagCreateDto
+    public class Tag
     {
-        
+
+        [Key]
+        public int IdTag  { get; set; }
+
         [Required]
         public double AccelX { get; set; }
 
@@ -19,7 +22,6 @@ namespace Ruuvi.Dtos
         [DataType(DataType.Date)]
         public DateTime CreateDate { get; set; }
 
-        [Required]
         public int DataFormat { get; set; }
 
         [Required]
@@ -58,10 +60,9 @@ namespace Ruuvi.Dtos
 
         [Required]
         [DataType(DataType.Date)]
-        public  DateTime UpdateAt { get; set; }
+        public DateTime UpdateAt { get; set; }
         
         [Required]
         public double Voltage { get; set; }
     }
-
 }

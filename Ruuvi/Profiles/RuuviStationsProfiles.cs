@@ -1,6 +1,6 @@
 using AutoMapper;
 using Ruuvi.Dtos;
-using Ruuvi.Models;
+using Ruuvi.Models.Data;
 
 namespace Ruuvi.Profiles
 {

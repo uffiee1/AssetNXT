@@ -1,10 +1,13 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Ruuvi.Dtos
+namespace Ruuvi.Models.Data
 {
-    public class LocationCreateDto
+    public class Location
     {
+    
+        [Key]
+        public int IdLocation  { get; set; }
 
         [Required]
         public double Accuracy { get; set; }
@@ -14,5 +17,6 @@ namespace Ruuvi.Dtos
 
         [Required]
         public double Longitude { get; set; }
+
     }
 }
