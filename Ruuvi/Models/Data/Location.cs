@@ -1,21 +1,20 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Ruuvi.Models.Data
 {
-    public class Location
+    public class Location 
     {
-    
-        [Key]
-        public int IdLocation  { get; set; }
 
-        [Required]
+        [BsonElement]
         public double Accuracy { get; set; }
         
-        [Required]
+        [BsonElement]
         public double Latitude { get; set; }
 
-        [Required]
+        [BsonElement]
         public double Longitude { get; set; }
 
     }

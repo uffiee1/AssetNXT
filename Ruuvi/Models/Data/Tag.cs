@@ -1,68 +1,67 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Ruuvi.Models.Data
 {
-    public class Tag
+    public class Tag 
     {
 
-        [Key]
-        public int IdTag  { get; set; }
-
-        [Required]
+        [BsonElement]
         public double AccelX { get; set; }
 
-        [Required]
+        [BsonElement]
         public double AccelY { get; set; }
 
-        [Required]
+        [BsonElement]
         public double AccelZ { get; set; }
 
-        [Required]
+        [BsonElement]
         [DataType(DataType.Date)]
         public DateTime CreateDate { get; set; }
 
         public int DataFormat { get; set; }
 
-        [Required]
+        [BsonElement]
         public int DefaultBackground { get; set; }
 
-        [Required]
+        [BsonElement]
         public bool Favorite { get; set; }
 
-        [Required]
+        [BsonElement]
         public double Humidity { get; set; }
 
-        [Required]
+        [BsonElement]
         public double HumidityOffset { get; set; }
 
-        [Required]
+        [BsonElement]
         [MaxLength(250)]
         public string Id { get; set;}
 
-        [Required]
+        [BsonElement]
         public int MeasurementSequenceNumber {get; set; }
 
-        [Required]
+        [BsonElement]
         public int MovementCounter  {get; set; }
 
-        [Required]
+        [BsonElement]
         public long Pressure { get; set; }
 
-        [Required]
+        [BsonElement]
         public int Rssi { get; set; }
 
-        [Required]
+        [BsonElement]
         public double Temperature { get; set; }
 
-        [Required]
+        [BsonElement]
         public int txPower { get; set; }
 
-        [Required]
+        [BsonElement]
         [DataType(DataType.Date)]
         public DateTime UpdateAt { get; set; }
         
-        [Required]
+        [BsonElement]
         public double Voltage { get; set; }
     }
 }

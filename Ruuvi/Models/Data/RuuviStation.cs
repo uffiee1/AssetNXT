@@ -1,32 +1,35 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Ruuvi.Repository;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
 
 namespace Ruuvi.Models.Data
 {
-   public class RuuviStation 
+   [BsonCollection("ruuvistations")]
+   public class RuuviStation : Document
    {
-        [Key]
-        public int IdStation  { get; set; }
         
-        [Required]
+        [BsonElement]
         public List<Tag> Tags { get; set; }
 
-        [Required]
+        [BsonElement]
         public int BatteryLevel { get; set; }
 
-        [Required]
+        [BsonElement]
         [MaxLength(250)]
         public string DeviceId { get; set; }
 
-        [Required]
+        [BsonElement]
         [MaxLength(250)]
         public string EventId { get; set; }
 
-        [Required]
+        [BsonElement]
         public Location Location { get; set; }
 
-        [Required]
+        [BsonElement]
         [DataType(DataType.Date)]
         public DateTime Time { get; set;}
 

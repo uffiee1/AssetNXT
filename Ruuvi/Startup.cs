@@ -16,6 +16,9 @@ using Microsoft.Extensions.Logging;
 using MySqlConnector;
 using Ruuvi.Models.Data;
 using Newtonsoft.Json.Serialization;
+using Ruuvi.Settings;
+using Microsoft.Extensions.Options;
+using Ruuvi.Repository;
 
 namespace Ruuvi
 {
@@ -27,17 +30,25 @@ namespace Ruuvi
         }
 
         
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // MongoDb Configurations
+            services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
+
+            services.AddSingleton<IMongoDbSettings>(serviceProvider =>
+                serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            services.AddScoped(typeof(IMongoRepo<>), typeof(MongoRepo<>));
+
+            // Controllers Serialization
             services.AddControllers().AddNewtonsoftJson(s => {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            });
+            });  
             
 
             // Swagger
@@ -47,7 +58,6 @@ namespace Ruuvi
                 new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Title = "Ruuvi Rest API",
-                    Description = "## SMART ASSET TRACKING & MONITORING",
                     Version = "v1"
                 });
             });
