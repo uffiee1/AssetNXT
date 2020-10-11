@@ -10,8 +10,8 @@ export class Layout extends Component {
 
   state = {
     tags: [
-      { name:"Asset #001", description:"Boschdijktunnel, Eindhoven", position:[51.4417378, 5.4750301] },
-      { name:"Asset #002", description:"Rachelsmolen, Eindhoven", position:[51.451093, 5.4802048] },
+      { name:"Asset #001", description:"Boschdijktunnel, Eindhoven", position:[51.4417378, 5.4750301], outofbounds:false },
+      { name:"Asset #002", description:"Rachelsmolen, Eindhoven", position:[51.451093, 5.4802048], outofbounds:true },
     ],
 
     zoom: 14,
@@ -65,7 +65,7 @@ export class Layout extends Component {
 
             <Row className="layout-sidepanel-contents">
               <AssetList tags={this.state.tags}
-                         onAssetClicked={this.zoomInMark}/>
+                         onAssetSelected={this.zoomInMark}/>
             </Row>
 
           </Col>

@@ -11,11 +11,11 @@ export class AssetList extends Component {
 
   constructor(props) {
     super(props);
-    this.assetHandler = this.assetHandler.bind(this);
+    this.onAssetSelected = this.onAssetSelected.bind(this);
   }
 
-  assetHandler(assetState) {
-    this.props.onAssetClicked(assetState);
+  onAssetSelected(assetState) {
+    this.props.onAssetSelected(assetState);
   }
 
   render() {
@@ -27,8 +27,9 @@ export class AssetList extends Component {
             {this.props.tags.map(tag => 
                <AssetListItem name={tag.name}
                description={tag.description}
+               outofbounds={tag.outofbounds}
                position={tag.position}
-               onAssetClicked={this.assetHandler}/>
+               onAssetSelected={this.onAssetSelected}/>
             )}
 
           </Col>

@@ -43,6 +43,7 @@ export class Mapper extends Component {
             <Popup>
               <Tooltip name={tag.name}
                 description={tag.description}
+                outofbounds={tag.outofbounds}
                 temperature={tag.temperature}
                 humidity={tag.humidity}
                 pressure={tag.pressure}/>

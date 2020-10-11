@@ -9,22 +9,29 @@ export class AssetListItem extends Component {
 
   constructor(props) {
     super(props);
-    this.onClick = this.onClick.bind(this);
+    this.onAssetSelected = this.onAssetSelected.bind(this);
   }
 
-  onClick() {
-    this.props.onAssetClicked(this.props);
+  onAssetSelected() {
+    this.props.onAssetSelected(this.props);
   }
 
   render() {
     return (
 
       <Container className="asset-item-container">
-        <Row className="asset-item-row">
-          <Col className="asset-item-col"
-               onClick={this.onClick}>
+        <Row className="asset-item-row"
+             onClick={this.onAssetSelected}>
+
+          <Col className="asset-item-col">
             <Asset name={this.props.name}
              description={this.props.description} />
+          </Col>
+
+          <Col className="asset-item-col" xs="auto">
+            { this.props.outofbounds && 
+              <i className="fa fa-exclamation-triangle fa-lg text-warning"/>
+            }
           </Col>
         </Row>
       </Container>

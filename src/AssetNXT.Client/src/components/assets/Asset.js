@@ -4,25 +4,6 @@ import { Container, Row, Col } from 'reactstrap';
 import './Asset.css';
 
 
-function OutOfBoundsTrue() {
-    return <i class="fas fa-exclamation-triangle"></i>
-}
-
-//
-function OutOfBoundsFalse() {
-
-    return <i class="fas fa-check-circle"></i>
-}
-
-function OutOfBoundsIcon(props) {
-    const outOfBounds = props.outOfBounds;
-    if (outOfBounds) {
-        return <OutOfBoundsTrue/>;
-    }
-    return <OutOfBoundsFalse />;
-}
-
-
 export class Asset extends Component {
 
   render() {
@@ -40,9 +21,6 @@ export class Asset extends Component {
                 {this.props.name}
               </label>
 
-              <label>
-                <OutOfBoundsIcon outOfBounds={false}/>
-              </label>
             </Row>
 
             <Row className="asset-contents-row">

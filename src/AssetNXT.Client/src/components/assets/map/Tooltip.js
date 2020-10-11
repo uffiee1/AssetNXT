@@ -34,7 +34,10 @@ export class Tooltip extends Component {
 
         <Row className="tooltip-row">
           <Col className="tooltip-icon" xs="auto">
-            <i className="fa fa-exclamation-triangle fa-2x text-warning"/>
+            {this.props.outofbounds 
+              ? <i className="fa fa-exclamation-triangle fa-2x text-warning"/>
+              : <i className="fa fa-check-circle fa-2x text-success"/>
+            }
           </Col>
           <Col className="tooltip-link">
             <a className="text-primary" href="#">More Info</a>
