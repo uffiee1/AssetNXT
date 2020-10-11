@@ -1,11 +1,6 @@
-﻿using System;
-
-using AssetNXT;
-using AssetNXT.Logic;
-
-namespace AssetNXT.Models
+﻿namespace AssetNXT.Models.Geometry.Shapes
 {
-    public class Triangle : IIntersector
+    public class Triangle
     {
         public Point A { get; set; }
 

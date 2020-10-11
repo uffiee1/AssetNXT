@@ -1,4 +1,4 @@
-﻿namespace AssetNXT.Models
+﻿namespace AssetNXT.Models.Geometry
 {
     public struct Point
     {
@@ -6,7 +6,7 @@
 
         public double Y { get; set; }
 
-        public static implicit operator Point((double X, double Y)point)
+        public static implicit operator Point((double X, double Y) point)
         {
             return new Point { X = point.X, Y = point.Y };
         }
