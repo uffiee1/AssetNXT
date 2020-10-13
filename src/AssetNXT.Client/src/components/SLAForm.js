@@ -17,7 +17,7 @@ export class SLAForm extends Component {
     }
     async postData() {
         console.log(JSON.stringify(this.state));
-        fetch('https://localhost:44376/api/SLA', {
+        await fetch('https://localhost:44376/api/SLA', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
