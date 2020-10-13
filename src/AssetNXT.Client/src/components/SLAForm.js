@@ -17,13 +17,14 @@ export class SLAForm extends Component {
     }
     async postData() {
         console.log(JSON.stringify(this.state));
-        await fetch('api/SLA',
-            {
-                method: 'POST',
-                headers: { contentType: "text/plain" },
-                body: JSON.stringify(this.state),
-            });
-
+        fetch('https://localhost:44376/api/SLA', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.state)
+        })
     }
     render() {
         return (

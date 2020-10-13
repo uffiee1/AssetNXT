@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Models;
-using AssetNXT.Models.SLA;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,22 +10,18 @@ namespace AssetNXT.Controllers
     [ApiController]
     public class SLAController : ControllerBase
     {
-        // GET: api/SLA
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpPost]
+        [ValidateModel]
+        public async Task<IActionResult> Post(TestModel test)
         {
-            return new string[] { "value1", "value2" };
+            await MockWritingToDatabase(test);
+            Console.WriteLine("Succes!");
+            return Ok(new { Status = "Succes" });
         }
 
-        // POST: api/SLA
-        [HttpPost]
-        public string Post([FromBody] dynamic body)
+        private Task<bool> MockWritingToDatabase(TestModel test)
         {
-            if (body == null)
-            {
-                return "fout";
-            }
-            return "goed";
+            return Task.FromResult(true);
         }
     }
 }
