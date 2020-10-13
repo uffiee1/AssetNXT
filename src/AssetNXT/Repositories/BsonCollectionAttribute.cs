@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 
-namespace Ruuvi.Repository
+namespace AssetNXT.Repositories
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public class BsonCollectionAttribute : Attribute
+    internal class BsonCollectionAttribute : Attribute
     {
         public string CollectionName { get; }
 

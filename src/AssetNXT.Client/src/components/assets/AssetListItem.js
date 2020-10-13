@@ -13,7 +13,7 @@ export class AssetListItem extends Component {
   }
 
   onAssetSelected() {
-    this.props.onAssetSelected(this.props);
+    this.props.assetSelected(this.props);
   }
 
   render() {

@@ -1,15 +1,17 @@
-using System;
-using Ruuvi.Models.Data;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using AssetNXT;
+using AssetNXT.Models;
 
-namespace Ruuvi.Dtos
+namespace AssetNXT.Data
 {
     public class RuuviStationCreateDto
     {
         [Required]
-        public List<Tag> Tags { get; set; }
+        public List<RuuviStationTag> Tags { get; set; }
 
         [Required]
         public int BatteryLevel { get; set; }
@@ -27,6 +29,6 @@ namespace Ruuvi.Dtos
 
         [Required]
         [DataType(DataType.Date)]
-        public DateTime Time { get; set;}
+        public DateTime Time { get; set; }
     }
 }

@@ -15,7 +15,7 @@ export class AssetList extends Component {
   }
 
   onAssetSelected(assetState) {
-    this.props.onAssetSelected(assetState);
+    this.props.assetSelected(assetState);
   }
 
   render() {
@@ -24,12 +24,14 @@ export class AssetList extends Component {
         <Row className="asset-list-row">
           <Col className="asset-list-column">
 
-            {this.props.tags.map(tag => 
-               <AssetListItem name={tag.name}
-               description={tag.description}
-               outofbounds={tag.outofbounds}
-               position={tag.position}
-               onAssetSelected={this.onAssetSelected}/>
+            {this.props.assets.map(asset => 
+              asset.tags.map(tag => { return(
+                  <AssetListItem name={tag.id}
+                    location={asset.location}
+                    description={tag.id}
+                    assetSelected={this.onAssetSelected}/>
+                );
+              })
             )}
 
           </Col>

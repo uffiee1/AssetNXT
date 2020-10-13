@@ -1,8 +1,9 @@
-namespace Ruuvi.Settings
+﻿namespace AssetNXT.Settings
 {
     public class MongoDbSettings : IMongoDbSettings
     {
-        public string DatabaseName { get; set; }
+        public string Name { get; set; }
+
         public string ConnectionString { get; set; }
     }
 }

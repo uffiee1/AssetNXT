@@ -4,3 +4,11 @@
     justify-content: right;
     padding-right: 0 !important;
 }
+
+.tooltip-property {
+    padding-right: 0.5rem;
+}
+
+.tooltip-property-value {
+    min-width: 50px;
+}

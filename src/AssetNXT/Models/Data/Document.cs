@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using MongoDB.Bson;
 
-namespace Ruuvi.Models
+namespace AssetNXT.Models.Data
 {
     public abstract class Document : IDocument
     {
