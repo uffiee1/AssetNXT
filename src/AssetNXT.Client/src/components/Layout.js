@@ -10,7 +10,6 @@ export class Layout extends Component {
 
   state = {
     zoom : this.props.zoom || 14,
-    current: this.props.current || null,
     position: [this.props.assets[0].location.latitude,
                this.props.assets[0].location.longitude]
   }

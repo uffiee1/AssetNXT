@@ -8,6 +8,13 @@ export class Mapper extends Component {
 
   componentDidMount() {
     this.map = this.mapInstance.leafletElement;
+    const bounds = this.map.getBounds();
+    this.props.assets.forEach((asset) => {
+      bounds.extend([asset.location.latitude,
+                     asset.location.longitude]);
+      });
+
+    this.map.fitBounds(bounds);
   }
 
   componentWillReceiveProps(props) {
