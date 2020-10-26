@@ -51,6 +51,8 @@ export class Layout extends Component {
                     position={this.state.position}/>
 
           </Col>
+        </Row>
+      </Container>
     );
   }
 }
