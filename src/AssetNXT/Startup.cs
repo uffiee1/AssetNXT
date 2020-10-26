@@ -1,3 +1,11 @@
+using System;
+using System.Text.Json;
+
+using AssetNXT.Repositories;
+using AssetNXT.Services;
+using AssetNXT.Settings;
+
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,50 +13,63 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace AssetNXT
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddJsonOptions(options => options.JsonSerializerOptions
+                .PropertyNamingPolicy = JsonNamingPolicy.CamelCase);
 
-            // In production, the React files will be served from this directory
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "../AssetNXT.Client/build";
             });
+
+            ConfigureDatabaseServices(services);
+            // services.AddSingleton<IRuuviStationService, MockRuuviStationService>();
+            services.AddSingleton<IRuuviStationService, MongoRuuviStationService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        private void ConfigureDatabaseServices(IServiceCollection services)
+        {
+            // MongoDB Section
+            var mongoDbSectionName = nameof(MongoDbSettings);
+            var mongoDbSection = Configuration.GetSection(mongoDbSectionName);
+
+            // MongoDB Configuration
+            services.Configure<MongoDbSettings>(mongoDbSection);
+            services.AddSingleton<IMongoDbSettings>(serviceProvider =>
+                serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+
+            // MongoDB Repositories
+            services.AddSingleton(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
+        }
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseStaticFiles();
 
             app.UseRouting();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -59,7 +80,6 @@ namespace AssetNXT
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "../AssetNXT.Client";
-
                 if (env.IsDevelopment())
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");

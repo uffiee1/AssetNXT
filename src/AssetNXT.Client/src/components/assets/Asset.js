@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'reactstrap';
 
 import './Asset.css';
 
+
 export class Asset extends Component {
 
   render() {
@@ -19,6 +20,7 @@ export class Asset extends Component {
               <label className="asset-contents-label">
                 {this.props.name}
               </label>
+
             </Row>
 
             <Row className="asset-contents-row">

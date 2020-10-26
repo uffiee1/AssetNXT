@@ -1,33 +1,53 @@
 import React, { Component } from "react";
 import { Map, TileLayer, Popup, Marker, Circle } from 'react-leaflet';
-import { Tooltip } from './Tooltip';
 
 import "./Mapper.css";
+import { Tooltip } from './Tooltip';
 
 export class Mapper extends Component {
 
+  componentDidMount() {
+    this.map = this.mapInstance.leafletElement;
+    const bounds = this.map.getBounds();
+    this.props.assets.forEach((asset) => {
+      bounds.extend([asset.location.latitude,
+                     asset.location.longitude]);
+      });
+
+    this.map.fitBounds(bounds);
+  }
+
+  componentWillReceiveProps(props) {
+    this.map.closePopup();
+    this.map.panTo(props.position);
+  }
+
   render() {
     return(
-
+    
       <Map zoom={this.props.zoom}
-           center={this.props.position || [
-                   this.props.lat, this.props.lng] }
+           center={this.props.position}
+           ref={e => this.mapInstance = e}
            className="asset-map-container">
 
         <TileLayer url='https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=HfiQgsMsSnorjEs2Sxek'
                    attribution='&amp;copy <a href="https://www.maptiler.com/copyright/">Maptiler</a> contributors'
                    className="asset-map-tiler" tileSize={512} zoomOffset={-1}/>
 
-        {this.props.tags.map(tag => 
-          <Marker position={tag.position}>
-            <Popup>
-              <Tooltip name={tag.name}
-                description={tag.description}
-                temperature={tag.temperature}
-                humidity={tag.humidity}
-                pressure={tag.pressure}/>
-            </Popup>
-          </Marker>
+         {this.props.assets.map(asset => 
+          asset.tags.map(tag => { return(
+               <Marker position={[asset.location.latitude, asset.location.longitude]}
+                       onClick={e => this.map.panTo(e.target.getLatLng())}>
+                <Popup>
+                  <Tooltip name={tag.id}
+                    description={tag.id}
+                    temperature={Math.round(tag.temperature)}
+                    humidity={Math.round(tag.humidity)}
+                    pressure={Math.round(tag.pressure)}/>
+                </Popup>
+              </Marker>
+            );
+          })
         )}
 
         <Circle center={[51.4423204, 5.4777961]}
@@ -36,6 +56,7 @@ export class Mapper extends Component {
           fillOpacity={0.300}
           radius={500}>
         </Circle>
+
 
       </Map>
     );

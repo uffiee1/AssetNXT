@@ -10,6 +10,15 @@
 }
 
 .layout-sidepanel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout-sidepanel-contents{
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
 }
 
 .layout-sidepanel-banner {

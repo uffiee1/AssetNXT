@@ -1,4 +1,19 @@
-.asset-item-col {
-    padding: 0.5rem;
+.asset-item-row {
+    padding: 0.5rem 1rem;
     border-bottom: 1px solid whitesmoke;
+}
+
+  .asset-item-row:hover {
+      background-color: #f0f0f0;
+  }
+
+
+  .asset-item-row:active {
+      background-color: #dbdbd9;
+  }
+
+.asset-item-col{
+    display: flex;
+    align-items: center;
+    padding: 0px !important;
 }
