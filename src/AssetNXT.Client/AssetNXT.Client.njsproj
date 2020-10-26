@@ -38,20 +38,23 @@
     <Content Include="README.md" />
     <Content Include="src\App.js" />
     <Content Include="src\App.test.js" />
-    <Content Include="src\components\assets\Asset.css"/>
-    <Content Include="src\components\assets\Asset.js"/>
-    <Content Include="src\components\assets\AssetList.css"/>
-    <Content Include="src\components\assets\AssetList.js"/>
-    <Content Include="src\components\assets\AssetListItem.css"/>
-    <Content Include="src\components\assets\AssetListItem.js"/>
-    <Content Include="src\components\assets\map\Mapper.css"/>
-    <Content Include="src\components\assets\map\Mapper.js"/>
-    <Content Include="src\components\assets\map\Tooltip.css"/>
-    <Content Include="src\components\assets\map\Tooltip.js"/>
-    <Content Include="src\components\Banner.css"/>
-    <Content Include="src\components\Banner.js"/>
-    <Content Include="src\components\Layout.css"/>
+    <Content Include="src\components\assets\Asset.css" />
+    <Content Include="src\components\assets\Asset.js" />
+    <Content Include="src\components\assets\AssetList.css" />
+    <Content Include="src\components\assets\AssetList.js" />
+    <Content Include="src\components\assets\AssetListItem.css" />
+    <Content Include="src\components\assets\AssetListItem.js" />
+    <Content Include="src\components\assets\map\Mapper.css" />
+    <Content Include="src\components\assets\map\Mapper.js" />
+    <Content Include="src\components\assets\map\Tooltip.css" />
+    <Content Include="src\components\assets\map\Tooltip.js" />
+    <Content Include="src\components\Banner.css" />
+    <Content Include="src\components\Banner.js" />
+    <Content Include="src\components\Layout.css" />
     <Content Include="src\components\Layout.js" />
+    <Content Include="src\components\SLAForm.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\index.js" />
     <Content Include="src\registerServiceWorker.js" />
   </ItemGroup>
