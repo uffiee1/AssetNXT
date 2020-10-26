@@ -39,7 +39,8 @@ namespace AssetNXT
             });
 
             ConfigureDatabaseServices(services);
-            services.AddSingleton<IRuuviStationService, MockRuuviStationService>();
+            // services.AddSingleton<IRuuviStationService, MockRuuviStationService>();
+            services.AddSingleton<IRuuviStationService, MongoRuuviStationService>();
         }
 
         private void ConfigureDatabaseServices(IServiceCollection services)
