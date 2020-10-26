@@ -1,66 +1,109 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
-
+using AssetNXT.Data;
 using AssetNXT.Models;
-using AssetNXT.Models.Geometry;
-using AssetNXT.Models.Geometry.Shapes;
+using MongoDB.Bson;
 
 namespace AssetNXT.Services
 {
     public class MockRuuviStationService : IRuuviStationService
     {
-        private readonly List<RuuviStation> _fakeStations = new List<RuuviStation>
-        {
-            new RuuviStation() { StationId = 1, Position = (51.4417378, 5.4750301), Location = "Boschdijktunnel, Eindhoven" },
-            new RuuviStation() { StationId = 2, Position = (51.4510930, 5.4802048), Location = "Rachelsmolen, Eindhoven" },
-        };
+        private readonly HttpClient _http;
 
         public MockRuuviStationService()
         {
-            foreach (var fakeStation in _fakeStations)
+            _http = new HttpClient();
+        }
+
+        public List<RuuviStation> GetAllRuuviStations()
+        {
+            return GetAllRuuviStationsAsync().Result;
+        }
+
+        public async Task<List<RuuviStation>> GetAllRuuviStationsAsync()
+        {
+            var rnd = new Random();
+            var stations = new List<RuuviStation>();
+
+            for (int i = 0; i < rnd.Next(50, 100); i++)
             {
-                fakeStation.Tags = new List<RuuviStationTag>
-                {
-                    GetRuuviTagAsync().Result
-                };
+                var request = "https://ruuvi-api.herokuapp.com/";
+                var response = await _http.GetAsync(new Uri(request));
+
+                response.EnsureSuccessStatusCode();
+                var data = await response.Content.ReadAsStringAsync();
+
+                stations.Add(JsonSerializer.Deserialize<RuuviStation>(
+                    data, new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    }));
             }
+
+            return stations;
         }
 
-        public Task<List<RuuviStation>> GetRuuviStationsAsync()
+        public RuuviStation GetRuuviStationById(string stationId)
         {
-            return Task.FromResult(_fakeStations);
+            return GetRuuviStationByIdAsync(stationId).Result;
         }
 
-        public Task<RuuviStation> GetRuuviStationAsync(int stationId)
+        public async Task<RuuviStation> GetRuuviStationByIdAsync(string stationId)
         {
-            return Task.FromResult(_fakeStations.First(x => x.StationId == stationId));
-        }
-
-        private async Task<RuuviStationTag> GetRuuviTagAsync()
-        {
-            using HttpClient http = new HttpClient();
             var request = "https://ruuvi-api.herokuapp.com/";
-            var response = await http.GetAsync(new Uri(request));
+            var response = await _http.GetAsync(new Uri(request));
 
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
 
-            var jsonObject = JsonDocument.Parse(data).RootElement;
-            var tagsProperty = jsonObject.GetProperty("tags");
-            var tagsPropertyText = tagsProperty.GetRawText();
-
-            return JsonSerializer.Deserialize<RuuviStationTag>(
-                tagsPropertyText, options: new JsonSerializerOptions
+            return JsonSerializer.Deserialize<RuuviStation>(
+                data, new JsonSerializerOptions
                 {
-                    PropertyNameCaseInsensitive = true,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 });
+        }
+
+        public void CreateRuuviStation(RuuviStation ruuviStation)
+        {
+            CreateRuuviStationAsync(ruuviStation).Wait();
+        }
+
+        public Task CreateRuuviStationAsync(RuuviStation ruuviStation)
+        {
+            throw new NotSupportedException();
+        }
+
+        public void UpdateRuuviStation(string stationId, RuuviStation ruuviStation)
+        {
+            UpdateRuuviStationAsync(stationId, ruuviStation).Wait();
+        }
+
+        public Task UpdateRuuviStationAsync(string stationId, RuuviStation ruuviStation)
+        {
+            throw new NotSupportedException();
+        }
+
+        public void DeleteRuuviStation(RuuviStation ruuviStation)
+        {
+            DeleteRuuviStationAsync(ruuviStation).Wait();
+        }
+
+        public Task DeleteRuuviStationAsync(RuuviStation ruuviStation)
+        {
+            throw new NotSupportedException();
+        }
+
+        public void DeleteRuuviStationById(string stationId)
+        {
+            DeleteRuuviStationByIdAsync(stationId).Wait();
+        }
+
+        public Task DeleteRuuviStationByIdAsync(string stationId)
+        {
+            throw new NotSupportedException();
         }
     }
 }

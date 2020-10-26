@@ -5,50 +5,49 @@ import "./Mapper.css";
 import { Tooltip } from './Tooltip';
 
 export class Mapper extends Component {
-  
-  state = {
-    zoom: this.props.zoom,
-    position: this.props.position ||
-      [this.props.lat, this.props.lng]
-  }
 
-  constructor(props) {
-    super(props)
-    this.updatePosition = this.updatePosition.bind(this);
+  componentDidMount() {
+    this.map = this.mapInstance.leafletElement;
+    const bounds = this.map.getBounds();
+    this.props.assets.forEach((asset) => {
+      bounds.extend([asset.location.latitude,
+                     asset.location.longitude]);
+      });
+
+    this.map.fitBounds(bounds);
   }
 
   componentWillReceiveProps(props) {
-    this.setState({ position: 
-      props.position || [props.lat, props.lng]});
-  }
-
-  updatePosition(ev) {
-    this.setState({ position: ev.target.center});
+    this.map.closePopup();
+    this.map.panTo(props.position);
   }
 
   render() {
     return(
     
-      <Map zoom={this.state.zoom}
-           center={this.state.position}
-           ondrag={this.updatePosition}
+      <Map zoom={this.props.zoom}
+           center={this.props.position}
+           ref={e => this.mapInstance = e}
            className="asset-map-container">
 
         <TileLayer url='https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=HfiQgsMsSnorjEs2Sxek'
                    attribution='&amp;copy <a href="https://www.maptiler.com/copyright/">Maptiler</a> contributors'
                    className="asset-map-tiler" tileSize={512} zoomOffset={-1}/>
 
-        {this.props.tags.map(tag => 
-          <Marker position={tag.position}>
-            <Popup>
-              <Tooltip name={tag.name}
-                description={tag.description}
-                outofbounds={tag.outofbounds}
-                temperature={tag.temperature}
-                humidity={tag.humidity}
-                pressure={tag.pressure}/>
-            </Popup>
-          </Marker>
+         {this.props.assets.map(asset => 
+          asset.tags.map(tag => { return(
+               <Marker position={[asset.location.latitude, asset.location.longitude]}
+                       onClick={e => this.map.panTo(e.target.getLatLng())}>
+                <Popup>
+                  <Tooltip name={tag.id}
+                    description={tag.id}
+                    temperature={Math.round(tag.temperature)}
+                    humidity={Math.round(tag.humidity)}
+                    pressure={Math.round(tag.pressure)}/>
+                </Popup>
+              </Marker>
+            );
+          })
         )}
 
         <Circle center={[51.4423204, 5.4777961]}
