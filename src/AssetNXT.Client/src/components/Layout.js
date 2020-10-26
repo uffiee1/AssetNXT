@@ -5,7 +5,6 @@ import './Layout.css'
 import { AssetList } from './assets/AssetList';
 import { Mapper } from './assets/map/Mapper';
 import { Banner } from "./Banner";
-import { SLAForm } from "./SLAForm";
 
 export class Layout extends Component {
 
