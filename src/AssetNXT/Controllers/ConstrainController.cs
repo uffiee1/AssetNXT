@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AssetNXT.Controllers
 {
     [Route("api/constrains")]
-    public class ConstrainController
+    public class ConstrainController : Controller
     {
         private readonly IMongoDataRepository<Constrain> _repository;
         private readonly IMapper _mapper;

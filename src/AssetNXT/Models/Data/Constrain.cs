@@ -7,8 +7,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace AssetNXT.Models.Data
 {
-    [BsonCollection("configurations")]
-    public class SLAsConstrain : Document
+    [BsonCollection("constrains")]
+    public class Constrain : Document
     {
         [BsonElement]
         public double TemperatureMin { get; set; }

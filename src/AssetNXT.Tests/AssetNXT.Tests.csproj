@@ -17,6 +17,10 @@
     <ProjectReference Include="..\AssetNXT\AssetNXT.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
   <Import Project="..\..\common.props" />
   <Import Project="..\..\stylecop.props" />
 
