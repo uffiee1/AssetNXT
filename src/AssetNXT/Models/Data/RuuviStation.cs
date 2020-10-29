@@ -1,32 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
-using AssetNXT.Models;
-using AssetNXT.Models.Data;
 using AssetNXT.Repositories;
-
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace AssetNXT.Models
+namespace AssetNXT.Models.Data
 {
     [BsonCollection("ruuvistations")]
     public class RuuviStation : Document
     {
         [BsonElement]
-        public List<RuuviStationTag> Tags { get; set; }
+        public List<Tag> Tags { get; set; }
 
         [BsonElement]
         public int BatteryLevel { get; set; }
-
-        [BsonElement]
-        [MaxLength(250)]
-        public string DeviceId { get; set; }
 
         [BsonElement]
         [MaxLength(250)]
@@ -36,7 +24,7 @@ namespace AssetNXT.Models
         public Location Location { get; set; }
 
         [BsonElement]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         public DateTime Time { get; set; }
     }
 }

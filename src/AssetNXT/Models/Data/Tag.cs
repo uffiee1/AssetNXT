@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace AssetNXT.Models
+namespace AssetNXT.Models.Data
 {
-    public class RuuviStationTag
+    public class Tag
     {
         [BsonElement]
         public double AccelX { get; set; }
@@ -24,7 +20,6 @@ namespace AssetNXT.Models
         [DataType(DataType.Date)]
         public DateTime CreateDate { get; set; }
 
-        [BsonElement]
         public int DataFormat { get; set; }
 
         [BsonElement]
@@ -48,9 +43,6 @@ namespace AssetNXT.Models
 
         [BsonElement]
         public int MovementCounter { get; set; }
-
-        [BsonElement]
-        public string Name { get; set; }
 
         [BsonElement]
         public long Pressure { get; set; }
