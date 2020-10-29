@@ -51,13 +51,11 @@ namespace AssetNXT.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRuuviStation(RuuviStationCreateDto ruuviStationCreateDto)
         {
-            var stationModel = _mapper.Map<RuuviStation>(ruuviStationCreateDto);
+            var station = _mapper.Map<RuuviStation>(ruuviStationCreateDto);
 
-            stationModel.CreatedAt = DateTime.UtcNow;
-            stationModel.UpdatedAt = DateTime.UtcNow;
-            await _repository.CreateObjectAsync(stationModel);
+            await _repository.CreateObjectAsync(station);
 
-            var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(stationModel);
+            var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(station);
 
             // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
             return CreatedAtRoute(nameof(GetRuuviStationById), new { Id = ruuviStationReadDto.Id }, ruuviStationReadDto);

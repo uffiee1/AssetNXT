@@ -21,5 +21,44 @@ namespace AssetNXT.Controllers
             _mapper = mapper;
             _repository = repository;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllConstrains()
+        {
+            var constrains = await _repository.GetAllLatestAsyc();
+
+            if (constrains != null)
+            {
+                return Ok(_mapper.Map<IEnumerable<ConstrainReadDto>>(constrains));
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("{id}", Name = "GetConstrainById")]
+        public async Task<IActionResult> GetConstrainById(string id)
+        {
+            var constrain = await _repository.GetObjectByIdAsync(id);
+
+            if (constrain != null)
+            {
+                return Ok(_mapper.Map<ConstrainReadDto>(constrain));
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateConstrain(ConstrainCreateDto constrainCreateDto)
+        {
+            var constrain = _mapper.Map<Constrain>(constrainCreateDto);
+
+            await _repository.CreateObjectAsync(constrain);
+
+            var constrainReadDto = _mapper.Map<ConstrainReadDto>(constrain);
+
+            // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
+            return CreatedAtRoute(nameof(GetConstrainById), new { Id = constrainReadDto.Id }, constrainReadDto);
+        }
     }
 }

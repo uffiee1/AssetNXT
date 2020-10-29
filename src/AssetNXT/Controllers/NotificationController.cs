@@ -51,10 +51,8 @@ namespace AssetNXT.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateNotification(NotificationCreateDto notificationCreateDto)
         {
-            var notification = _mapper.Map<RuuviStation>(notificationCreateDto);
+            var notification = _mapper.Map<Notification>(notificationCreateDto);
 
-            notification.CreatedAt = DateTime.UtcNow;
-            notification.UpdatedAt = DateTime.UtcNow;
             await _repository.CreateObjectAsync(notification);
 
             var notificationReadDto = _mapper.Map<NotificationReadDto>(notification);
