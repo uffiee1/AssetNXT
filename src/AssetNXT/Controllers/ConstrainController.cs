@@ -10,13 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AssetNXT.Controllers
 {
-    [Route("api/notifications")]
-    public class NotificationController
+    [Route("api/constrains")]
+    public class ConstrainController
     {
-        private readonly IMongoDataRepository<Notification> _repository;
+        private readonly IMongoDataRepository<Constrain> _repository;
         private readonly IMapper _mapper;
 
-        public NotificationController(IMongoDataRepository<Notification> repository, IMapper mapper)
+        public ConstrainController(IMongoDataRepository<Constrain> repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
