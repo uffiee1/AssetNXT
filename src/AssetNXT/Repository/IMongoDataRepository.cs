@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 using AssetNXT.Models;
 
-namespace AssetNXT.Repositories
+namespace AssetNXT.Repository
 {
     public interface IMongoDataRepository<TDocument>
     where TDocument : IDocument

@@ -1,6 +1,6 @@
 using System;
 
-using AssetNXT.Repositories;
+using AssetNXT.Repository;
 using AssetNXT.Settings;
 
 using AutoMapper;
@@ -36,7 +36,7 @@ namespace AssetNXT
 
             // Scope CHANGE ME HERE
             services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            //services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>));
+            /* services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>)); */
 
             // MongoDb Configurations
             services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));

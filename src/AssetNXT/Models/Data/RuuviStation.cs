@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using AssetNXT.Repositories;
+using AssetNXT.Repository;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 

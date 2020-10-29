@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AssetNXT.Models;
 using AssetNXT.Settings;
 
-namespace AssetNXT.Repositories
+namespace AssetNXT.Repository
 {
     public class MockDataRepository<TDocument> : IMongoDataRepository<TDocument>
     where TDocument : IDocument
