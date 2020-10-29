@@ -34,9 +34,9 @@ namespace AssetNXT
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            // Scope MockDb & MongoDb
-            //services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>));
+            // Scope CHANGE ME HERE
+            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
+            //services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>));
 
             // MongoDb Configurations
             services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
@@ -88,6 +88,7 @@ namespace AssetNXT
             app.UseStaticFiles();
 
             app.UseRouting();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -95,6 +96,7 @@ namespace AssetNXT
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
+            // Client SPA
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "../AssetNXT.Client";
@@ -104,6 +106,7 @@ namespace AssetNXT
                 }
             });
 
+            // Swagger config
             app.UseSwagger(options =>
             {
                 options.RouteTemplate = "swagger/{documentname}/swagger.json";

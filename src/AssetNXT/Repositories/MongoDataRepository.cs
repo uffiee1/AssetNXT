@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AssetNXT.Models;
@@ -100,6 +101,29 @@ namespace AssetNXT.Repositories
         private static string GetCollectionName(Type type)
         {
             return type.GetCustomAttribute<BsonCollectionAttribute>().CollectionName;
+        }
+
+        public List<TDocument> GetAllLatest()
+        {
+            // CreatedAt should be changed to UpdatedAt
+            return _collection.Find(doc => true).ToList().OrderByDescending(doc => doc.CreatedAt).GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();
+        }
+
+        public async Task<List<TDocument>> GetAllLatestAsyc()
+        {
+            // CreatedAt should be changed to UpdatedAt
+            var matches = await _collection.Find(doc => true).ToListAsync();
+            return matches.OrderByDescending(doc => doc.CreatedAt).GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();
+        }
+
+        public List<TDocument> GetAllToday()
+        {
+            return _collection.Find<TDocument>(doc => doc.CreatedAt > DateTime.UtcNow.AddDays(-1)).ToList();
+        }
+
+        public async Task<List<TDocument>> GetAllTodayAsyc()
+        {
+            return await _collection.Find<TDocument>(doc => doc.CreatedAt > DateTime.UtcNow.AddDays(-1)).ToListAsync();
         }
     }
 }
