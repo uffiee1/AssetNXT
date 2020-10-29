@@ -13,6 +13,14 @@ namespace AssetNXT.Repositories
 
         Task<List<TDocument>> GetAllAsync();
 
+        List<TDocument> GetAllLatest();
+
+        Task<List<TDocument>> GetAllLatestAsyc();
+
+        List<TDocument> GetAllToday();
+
+        Task<List<TDocument>> GetAllTodayAsyc();
+
         TDocument GetObjectById(string id);
 
         Task<TDocument> GetObjectByIdAsync(string id);

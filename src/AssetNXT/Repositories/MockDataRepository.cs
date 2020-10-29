@@ -105,5 +105,25 @@ namespace AssetNXT.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public List<TDocument> GetAllLatest()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<TDocument>> GetAllLatestAsyc()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<TDocument> GetAllToday()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<TDocument>> GetAllTodayAsyc()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
