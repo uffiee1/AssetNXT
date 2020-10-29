@@ -23,7 +23,7 @@ namespace AssetNXT.Repositories
         public MongoDataRepository(IMongoDbSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.Name);
+            var database = client.GetDatabase(settings.DatabaseName);
 
             _collection = database.GetCollection<TDocument>(GetCollectionName(typeof(TDocument)));
         }

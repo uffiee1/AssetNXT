@@ -1,7 +1,6 @@
 using System;
 
 using AssetNXT.Repositories;
-using AssetNXT.Services;
 using AssetNXT.Settings;
 
 using AutoMapper;
@@ -35,17 +34,15 @@ namespace AssetNXT
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddSingleton<IMongoDbSettings>(serviceProvider =>
-                serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+            // Scope MockDb & MongoDb 
+            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
+            //services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>));
 
             // MongoDb Configurations
             services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
 
-
-
-            // Change Scope
-            // services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
-            // services.AddSingleton<IRuuviStationService, MockRuuviStationService>();
+            // Provider
+            services.AddSingleton<IMongoDbSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
             // Swagger
             services.AddSwaggerGen(options =>
