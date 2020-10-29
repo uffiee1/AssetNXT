@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using AssetNXT.Models.Data;
 
-using AssetNXT;
-using AssetNXT.Models;
-
-namespace AssetNXT.Data
+namespace AssetNXT.Dtos
 {
     public class RuuviStationReadDto
     {
-        public List<RuuviStationTag> Tags { get; set; }
+        public List<Tag> Tags { get; set; }
 
         public int BatteryLevel { get; set; }
 

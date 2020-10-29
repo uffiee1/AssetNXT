@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
-using AssetNXT;
-using AssetNXT.Models;
+using AssetNXT.Models.Data;
 
 namespace AssetNXT.Data
 {
     public class RuuviStationCreateDto
     {
         [Required]
-        public List<RuuviStationTag> Tags { get; set; }
+        public List<Tag> Tags { get; set; }
 
         [Required]
         public int BatteryLevel { get; set; }
