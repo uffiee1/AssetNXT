@@ -7,14 +7,42 @@
   <ItemGroup>
 
     <!-- AutoMapper -->
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    
+    <!-- AspNetCore JsonPatch -->
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="3.1.9" />
+    
+    <!-- Entity Framework Core -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
+    
+    <!-- Entity Framework Core Design -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.9">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+    <!-- Entity Framework Core Tools -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
 
     <!-- MongoDB packages-->
-    <PackageReference Include="MongoDB.Bson" Version="2.11.2" />
     <PackageReference Include="MongoDB.Driver" Version="2.11.2" />
+    <PackageReference Include="MongoDB.Bson" Version="2.11.2" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.11.2" />
     
     <!-- Single page application packages-->
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.8" />
+     
+    <!-- Serilizer For Json -->
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    
+    <!-- Pomelo Entity Framework Core MySql -->
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.3" />
+    
+    <!-- Swagger dotnet core -->
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     
   </ItemGroup>
 

@@ -8,7 +8,6 @@ using AssetNXT.Settings;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,13 +18,16 @@ namespace AssetNXT
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; set; }
+        private IConfiguration _configuration;
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
+        public IConfiguration Configuration { get => _configuration; set => _configuration = value; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews()
@@ -33,14 +35,36 @@ namespace AssetNXT
                 .PropertyNamingPolicy = JsonNamingPolicy.CamelCase);
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "../AssetNXT.Client/build";
             });
 
             ConfigureDatabaseServices(services);
+
+            // MongoDb Configurations
+            services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
+
+            services.AddSingleton<IMongoDbSettings>(serviceProvider =>
+                serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            // services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+
             // services.AddSingleton<IRuuviStationService, MockRuuviStationService>();
             services.AddSingleton<IRuuviStationService, MongoRuuviStationService>();
+
+            // Swagger
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v", new Microsoft.OpenApi.Models.OpenApiInfo
+                    {
+                        Title = "Ruuvi Rest API",
+                        Version = "v1"
+                    });
+                });
         }
 
         private void ConfigureDatabaseServices(IServiceCollection services)
@@ -84,6 +108,13 @@ namespace AssetNXT
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
+            });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ruuvi Rest API");
             });
         }
     }
