@@ -61,21 +61,6 @@ namespace AssetNXT
             });
         }
 
-        private void ConfigureDatabaseServices(IServiceCollection services)
-        {
-            // MongoDB Section
-            var mongoDbSectionName = nameof(MongoDbSettings);
-            var mongoDbSection = Configuration.GetSection(mongoDbSectionName);
-
-            // MongoDB Configuration
-            services.Configure<MongoDbSettings>(mongoDbSection);
-            services.AddSingleton<IMongoDbSettings>(serviceProvider =>
-                serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
-
-            // MongoDB Repositories
-            services.AddSingleton(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-        }
-
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
