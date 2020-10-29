@@ -3,7 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace AssetNXT.Models.Data
+namespace AssetNXT.Models
 {
     public interface IDocument
     {
@@ -14,5 +14,8 @@ namespace AssetNXT.Models.Data
         DateTime CreatedAt { get; set; }
 
         DateTime UpdatedAt { get; set; }
+
+        [BsonElement]
+        string DeviceId { get; set; }
     }
 }

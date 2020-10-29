@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using AssetNXT.Models.Data;
 
-namespace AssetNXT.Data
+namespace AssetNXT.Dtos
 {
     public class RuuviStationCreateDto
     {

@@ -5,7 +5,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace AssetNXT.Models
+namespace AssetNXT.Models.Data
 {
     public class Location
     {

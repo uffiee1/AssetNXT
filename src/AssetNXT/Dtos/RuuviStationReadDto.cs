@@ -6,6 +6,8 @@ namespace AssetNXT.Dtos
 {
     public class RuuviStationReadDto
     {
+        public string Id { get; set; }
+
         public List<Tag> Tags { get; set; }
 
         public int BatteryLevel { get; set; }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AssetNXT.Data;
 using AssetNXT.Dtos;
 using AssetNXT.Models.Data;
 using AssetNXT.Repositories;
@@ -24,9 +23,9 @@ namespace AssetNXT.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllRuuviStations(string jsonQuery)
+        public async Task<IActionResult> GetAllRuuviStations()
         {
-            var stations = jsonQuery == string.Empty ? await _repository.GetAllAsync() : await _repository.FilterAsync(jsonQuery);
+            var stations = await _repository.GetAllAsync();
 
             if (stations != null)
             {

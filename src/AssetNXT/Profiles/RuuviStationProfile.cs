@@ -1,5 +1,5 @@
-﻿using AssetNXT.Data;
-using AssetNXT.Models;
+﻿using AssetNXT.Dtos;
+using AssetNXT.Models.Data;
 
 using AutoMapper;
 

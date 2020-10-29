@@ -34,9 +34,9 @@ namespace AssetNXT
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            // Scope MockDb & MongoDb 
-            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            //services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>));
+            // Scope MockDb & MongoDb
+            //services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
+            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>));
 
             // MongoDb Configurations
             services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));

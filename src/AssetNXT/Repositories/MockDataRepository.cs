@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using AssetNXT.Data;
 using AssetNXT.Models;
 using AssetNXT.Settings;
-using MongoDB.Bson;
 
 namespace AssetNXT.Repositories
 {
     public class MockDataRepository<TDocument> : IMongoDataRepository<TDocument>
-    where TDocument : RuuviStation
+    where TDocument : IDocument
     {
         private readonly HttpClient _http;
 

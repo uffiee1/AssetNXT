@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-
-using AssetNXT.Models.Data;
+using AssetNXT.Models;
 using AssetNXT.Settings;
 
 using MongoDB.Bson;
