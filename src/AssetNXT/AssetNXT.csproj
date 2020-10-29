@@ -11,6 +11,9 @@
     
     <!-- AspNetCore JsonPatch -->
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="3.1.9" />
+
+    <!-- Serilizer For Json -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.9" />
     
     <!-- Entity Framework Core -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
@@ -33,11 +36,8 @@
     <PackageReference Include="MongoDB.Driver.Core" Version="2.11.2" />
     
     <!-- Single page application packages-->
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.9" />
      
-    <!-- Serilizer For Json -->
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    
     <!-- Pomelo Entity Framework Core MySql -->
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.3" />
     
