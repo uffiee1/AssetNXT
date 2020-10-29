@@ -4,10 +4,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using AssetNXT.Data;
 using AssetNXT.Models;
+using AssetNXT.Repositories;
 using AssetNXT.Services;
 
 using AutoMapper;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssetNXT.Controllers
@@ -15,27 +15,39 @@ namespace AssetNXT.Controllers
     [Route("api/stations")]
     public class RuuviStationsController : Controller
     {
+        private readonly IMongoDataRepository<RuuviStation> _repository;
         private readonly IMapper _mapper;
-        private readonly IRuuviStationService _service;
 
-        public RuuviStationsController(IRuuviStationService service, IMapper mapper)
+        public RuuviStationsController(IMongoDataRepository<RuuviStation> repository, IMapper mapper)
         {
             _mapper = mapper;
-            _service = service;
+            _repository = repository;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllRuuviStations()
+        public async Task<IActionResult> GetAllRuuviStations(string jsonQuery)
         {
-            var stations = await _service.GetAllRuuviStationsAsync();
-            return Json(_mapper.Map<List<RuuviStationReadDto>>(stations));
+            var stations = jsonQuery == string.Empty ? await _repository.GetAllAsync() : await _repository.FilterAsync(jsonQuery);
+
+            if (stations != null)
+            {
+                return Ok(_mapper.Map<IEnumerable<RuuviStationReadDto>>(stations));
+            }
+
+            return NotFound();
         }
 
-        [HttpGet("{stationId}")]
-        public async Task<IActionResult> GetRuuviStationsById(string stationId)
+        [HttpGet("{id}", Name="GetRuuviStationById")]
+        public async Task<IActionResult> GetRuuviStationsById(string id)
         {
-            var station = await _service.GetRuuviStationByIdAsync(stationId);
-            return Json(_mapper.Map<RuuviStationReadDto>(station));
+            var station = await _repository.GetObjectByIdAsync(id);
+
+            if (station != null)
+            {
+                return Ok(_mapper.Map<RuuviStationReadDto>(station));
+            }
+
+            return NotFound();
         }
 
         [HttpPost]
