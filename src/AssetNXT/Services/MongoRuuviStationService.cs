@@ -24,6 +24,13 @@ namespace AssetNXT.Services
             return _repository.GetAll();
         }
 
+        public List<RuuviStation> GetLatestRuuviStations()
+        {
+            List<RuuviStation> ruuviStations = new List<RuuviStation>();
+
+            return ruuviStations;
+        }
+
         public Task<List<RuuviStation>> GetAllRuuviStationsAsync()
         {
             return _repository.GetAllAsync();
