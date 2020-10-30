@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AssetNXT.Controllers
 {
+    [Produces("application/json")]
     [Route("api/notifications")]
     public class NotificationController : Controller
     {

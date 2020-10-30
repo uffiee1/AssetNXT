@@ -4,6 +4,11 @@ namespace AssetNXT.Dtos
 {
     public class ConstrainCreateDto
     {
+        [MaxLength(250)]
+        [Required(AllowEmptyStrings = false)]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
+        public string DeviceId { get; set; }
+
         [Required]
         public double TemperatureMin { get; set; }
 

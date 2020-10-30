@@ -35,8 +35,8 @@ namespace AssetNXT
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // Scope CHANGE ME HERE
-            // services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>));
+            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
+            /* services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>)); */
 
             // MongoDb Configurations
             services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
@@ -47,9 +47,9 @@ namespace AssetNXT
             // Swagger
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v", new Microsoft.OpenApi.Models.OpenApiInfo
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
-                    Title = "Ruuvi Rest API",
+                    Title = "API",
                     Version = "v1"
                 });
             });
@@ -94,12 +94,13 @@ namespace AssetNXT
             // Swagger config
             app.UseSwagger(options =>
             {
-                options.RouteTemplate = "swagger/{documentname}/swagger.json";
+                options.RouteTemplate = "{documentname}/swagger.json";
             });
 
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("swagger/v1/swagger.json", "Ruuvi Rest API");
+                options.SwaggerEndpoint("v1/swagger.json", "API");
+                options.RoutePrefix = string.Empty;
             });
         }
     }

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,6 +38,7 @@
     <PackageReference Include="MongoDB.Driver.Core" Version="2.11.2" />
     
     <!-- Single page application packages-->
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.9" />
      
     <!-- Pomelo Entity Framework Core MySql -->

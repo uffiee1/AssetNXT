@@ -13,12 +13,14 @@ namespace AssetNXT.Dtos
         [Required]
         public int BatteryLevel { get; set; }
 
-        [Required]
         [MaxLength(250)]
+        [Required(AllowEmptyStrings = false)]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string DeviceId { get; set; }
 
-        [Required]
         [MaxLength(250)]
+        [Required(AllowEmptyStrings = false)]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string EventId { get; set; }
 
         [Required]

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AssetNXT.Controllers
 {
+    [Produces("application/json")]
     [Route("api/stations")]
     public class RuuviStationsController : Controller
     {
