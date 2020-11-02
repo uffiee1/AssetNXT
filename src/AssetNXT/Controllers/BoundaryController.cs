@@ -12,8 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AssetNXT.Controllers
 {
     [Produces("application/json")]
-
-    // [Route("api/")]
+    [Route("api/boundaries")]
     public class BoundaryController : Controller
     {
         private readonly IMongoDataRepository<Circle> _repository;
@@ -58,7 +57,7 @@ namespace AssetNXT.Controllers
 
             await _repository.CreateObjectAsync(boundary);
 
-            var boundaryCircleReadDto = _mapper.Map<ConstrainReadDto>(boundary);
+            var boundaryCircleReadDto = _mapper.Map<BoundaryCircleReadDto>(boundary);
 
             // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
             return CreatedAtRoute(nameof(GetBoundaryById), new { Id = boundaryCircleReadDto.Id }, boundaryCircleReadDto);

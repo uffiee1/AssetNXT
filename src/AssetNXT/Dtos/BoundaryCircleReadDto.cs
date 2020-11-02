@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AssetNXT.Models.Data;
 
 namespace AssetNXT.Dtos
 {
@@ -9,15 +7,13 @@ namespace AssetNXT.Dtos
     {
         public string Id { get; set; }
 
+        public string DeviceId { get; set; }
+
         public double Radius { get; set; }
 
         public string Colour { get; set; }
 
-        public double Accuracy { get; set; }
-
-        public double Latitude { get; set; }
-
-        public double Longitude { get; set; }
+        public Location Location { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
