@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 
 import "./Tooltip.css";
 import { Asset } from "../Asset";
+import { LineChart } from "../../graphs/LineChart";
 
 export class Tooltip extends Component {
 
@@ -40,7 +42,7 @@ export class Tooltip extends Component {
             }
           </Col>
           <Col className="tooltip-link">
-            <a className="text-primary" href="#">More Info</a>
+            <Link to={`/details/${this.props.deviceId}/`}>More info</Link>
           </Col>
         </Row>
 
