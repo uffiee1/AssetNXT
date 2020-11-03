@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from 'reactstrap';
+import { SLAConfig } from './SLAConfig';
 
 import './Layout.css'
 import { AssetList } from './assets/AssetList';
@@ -26,32 +27,33 @@ export class Layout extends Component {
 
   render() {
     return(
-      <Container fluid className="layout-container">
-        <Row className="layout-container-row">
+      //<Container fluid className="layout-container">
+      //  <Row className="layout-container-row">
 
-          <Col xs="12" sm="5" lg="3" xl="2"
-               className="layout-sidepanel">
+      //    <Col xs="12" sm="5" lg="3" xl="2"
+      //         className="layout-sidepanel">
             
-            <Row className="layout-sidepanel-banner">
-              <Banner src="images/logo.png" />
-            </Row>
-            <Row className="layout-sidepanel-contents">
-              <AssetList assets={this.props.assets}
-                         assetSelected={this.zoomInMark}/>
-            </Row>
+      //      <Row className="layout-sidepanel-banner">
+      //        <Banner src="images/logo.png" />
+      //      </Row>
+      //      <Row className="layout-sidepanel-contents">
+      //        <AssetList assets={this.props.assets}
+      //                   assetSelected={this.zoomInMark}/>
+      //      </Row>
 
-          </Col>
-          <Col xs="12" sm="7" lg="9" xl="10"
-               className="layout-container-contents
-                          d-none d-sm-flex flex-column">
+      //    </Col>
+      //    <Col xs="12" sm="7" lg="9" xl="10"
+      //         className="layout-container-contents
+      //                    d-none d-sm-flex flex-column">
             
-            <Mapper zoom={this.state.zoom}
-                    assets={this.props.assets}
-                    position={this.state.position}/>
+      //      <Mapper zoom={this.state.zoom}
+      //              assets={this.props.assets}
+      //              position={this.state.position}/>
 
-          </Col>
-        </Row>
-      </Container>
+      //    </Col>
+      //  </Row>
+        //</Container>
+        <SLAConfig/>
     );
   }
 }
