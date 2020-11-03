@@ -128,12 +128,14 @@ namespace AssetNXT.Repository
 
         public TDocument GetObjectByDeviceId(string id)
         {
-            throw new NotImplementedException();
+            var matches = _collection.Find(doc => doc.DeviceId == id);
+            return matches.FirstOrDefault();
         }
 
-        public Task<TDocument> GetObjectByDeviceIdAsync(string id)
+        public async Task<TDocument> GetObjectByDeviceIdAsync(string id)
         {
-            throw new NotImplementedException();
+            var matches = await _collection.FindAsync(doc => doc.DeviceId == id);
+            return await matches.FirstOrDefaultAsync();
         }
     }
 }
