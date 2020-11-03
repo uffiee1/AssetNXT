@@ -125,5 +125,15 @@ namespace AssetNXT.Repository
         {
             return await _collection.Find<TDocument>(doc => doc.CreatedAt > DateTime.UtcNow.AddDays(-1)).ToListAsync();
         }
+
+        public TDocument GetObjectByDeviceId(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TDocument> GetObjectByDeviceIdAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

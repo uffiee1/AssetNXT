@@ -17,32 +17,31 @@ namespace AssetNXT
 {
     public class Startup
     {
-        private IConfiguration _configuration;
-
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get => _configuration; set => _configuration = value; }
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Controllers Serialization
-            services.AddControllers().AddNewtonsoftJson(s => { s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
+            // MongoDb Configurations
+            services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
 
+            // Provider
+            services.AddSingleton<IMongoDbSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+
+            // Mapping
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // Scope CHANGE ME HERE
             services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
             /* services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>)); */
 
-            // MongoDb Configurations
-            services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
-
-            // Provider
-            services.AddSingleton<IMongoDbSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+            // Controllers Serialization
+            services.AddControllers().AddNewtonsoftJson(s => { s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
 
             // Swagger
             services.AddSwaggerGen(options =>
@@ -69,19 +68,18 @@ namespace AssetNXT
             }
 
             app.UseHttpsRedirection();
-            app.UseSpaStaticFiles();
-            app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
 
             // Client SPA
+            app.UseSpaStaticFiles();
+            app.UseStaticFiles();
+
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "../AssetNXT.Client";
@@ -92,15 +90,11 @@ namespace AssetNXT
             });
 
             // Swagger config
-            app.UseSwagger(options =>
-            {
-                options.RouteTemplate = "{documentname}/swagger.json";
-            });
+            app.UseSwagger();
 
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("v1/swagger.json", "API");
-                options.RoutePrefix = string.Empty;
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
             });
         }
     }

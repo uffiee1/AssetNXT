@@ -5,9 +5,9 @@ using AutoMapper;
 
 namespace AssetNXT.Profiles
 {
-    public class NotificationProfile : Profile
+    public class NotificationsProfile : Profile
     {
-        public NotificationProfile()
+        public NotificationsProfile()
         {
             CreateMap<Notification, NotificationReadDto>();
             CreateMap<NotificationCreateDto, Notification>();

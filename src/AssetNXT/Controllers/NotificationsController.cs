@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AssetNXT.Dtos;
 using AssetNXT.Models.Data;
@@ -12,12 +11,12 @@ namespace AssetNXT.Controllers
 {
     [Produces("application/json")]
     [Route("api/notifications")]
-    public class NotificationController : Controller
+    public class NotificationsController : Controller
     {
         private readonly IMongoDataRepository<Notification> _repository;
         private readonly IMapper _mapper;
 
-        public NotificationController(IMongoDataRepository<Notification> repository, IMapper mapper)
+        public NotificationsController(IMongoDataRepository<Notification> repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
@@ -26,7 +25,7 @@ namespace AssetNXT.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllNotifications()
         {
-            var notifications = await _repository.GetAllAsync();
+            var notifications = await _repository.GetAllLatestAsync();
 
             if (notifications != null)
             {

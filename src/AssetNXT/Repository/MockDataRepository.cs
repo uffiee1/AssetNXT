@@ -125,5 +125,15 @@ namespace AssetNXT.Repository
         {
             throw new NotImplementedException();
         }
+
+        public TDocument GetObjectByDeviceId(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TDocument> GetObjectByDeviceIdAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

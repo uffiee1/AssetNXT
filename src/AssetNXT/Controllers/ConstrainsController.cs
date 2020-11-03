@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AssetNXT.Dtos;
 using AssetNXT.Models.Data;
@@ -10,14 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AssetNXT.Controllers
 {
-    [Produces("application/json")]
     [Route("api/constrains")]
-    public class ConstrainController : Controller
+    public class ConstrainsController : Controller
     {
         private readonly IMongoDataRepository<Constrain> _repository;
         private readonly IMapper _mapper;
 
-        public ConstrainController(IMongoDataRepository<Constrain> repository, IMapper mapper)
+        public ConstrainsController(IMongoDataRepository<Constrain> repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
@@ -26,7 +24,7 @@ namespace AssetNXT.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllConstrains()
         {
-            var constrains = await _repository.GetAllAsync();
+            var constrains = await _repository.GetAllLatestAsync();
 
             if (constrains != null)
             {
