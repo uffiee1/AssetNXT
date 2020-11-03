@@ -11,7 +11,8 @@ namespace AssetNXT.Controllers
 {
     [Produces("application/json")]
     [Route("api/notifications")]
-    public class NotificationsController : Controller
+    [ApiController]
+    public class NotificationsController : ControllerBase
     {
         private readonly IMongoDataRepository<Notification> _repository;
         private readonly IMapper _mapper;

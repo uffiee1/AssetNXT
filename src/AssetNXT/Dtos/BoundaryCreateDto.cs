@@ -3,7 +3,7 @@ using AssetNXT.Models.Data;
 
 namespace AssetNXT.Dtos
 {
-    public class BoundaryCircleCreateDto
+    public class BoundaryCreateDto
     {
         [MaxLength(250)]
         [Required(AllowEmptyStrings = false)]

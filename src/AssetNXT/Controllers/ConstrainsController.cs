@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AssetNXT.Controllers
 {
+    [Produces("application/json")]
     [Route("api/constrains")]
-    public class ConstrainsController : Controller
+    [ApiController]
+    public class ConstrainsController : ControllerBase
     {
         private readonly IMongoDataRepository<Constrain> _repository;
         private readonly IMapper _mapper;

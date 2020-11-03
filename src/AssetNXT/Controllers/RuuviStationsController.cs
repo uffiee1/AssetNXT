@@ -12,7 +12,8 @@ namespace AssetNXT.Controllers
 {
     [Produces("application/json")]
     [Route("api/stations")]
-    public class RuuviStationsController : Controller
+    [ApiController]
+    public class RuuviStationsController : ControllerBase
     {
         private readonly IMongoDataRepository<RuuviStation> _repository;
         private readonly IMapper _mapper;

@@ -1,5 +1,5 @@
 using System;
-
+using AssetNXT.Profiles;
 using AssetNXT.Repository;
 using AssetNXT.Settings;
 
@@ -34,6 +34,7 @@ namespace AssetNXT
             services.AddSingleton<IMongoDbSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
             // Mapping
+            // https://stackoverflow.com/questions/40275195/how-to-set-up-automapper-in-asp-net-core
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // Scope CHANGE ME HERE

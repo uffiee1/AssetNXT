@@ -11,7 +11,8 @@ namespace AssetNXT.Controllers
 {
     [Produces("application/json")]
     [Route("api/configurations")]
-    public class ConfigurationsController : Controller
+    [ApiController]
+    public class ConfigurationsController : ControllerBase
     {
         private readonly IMongoDataRepository<Constrain> _repositoryConstrain;
         private readonly IMongoDataRepository<RuuviStation> _repositoryRuuviStation;
