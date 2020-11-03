@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Input, Button } from 'reactstrap';
 import { AssetList } from "../AssetList";
 
 import "./Searchbar.css";
@@ -17,9 +17,23 @@ export class Searchbar extends Component {
 
     render() {
         return (
-            <Container fluid className="searchbar">
-                <label>test123</label>
-                <input type="text" onInput={this.onSearchQuery} />
+            <Container fluid>
+              <Row>
+                <Col xs="auto" className="searchbar p-0 d-flex align-items-center">
+                  
+                  <Input
+                            type="search"
+                            name="search"
+                            placeholder="search..."
+                            onChange={this.onSearchQuery}
+                        />
+                        <div className="input-group-btn">
+                            <Button color="primary" disabled>
+                                <i className="fa fa-search"></i>
+                            </Button>
+                        </div>
+                </Col>
+              </Row>
             </Container>
         )
     }
