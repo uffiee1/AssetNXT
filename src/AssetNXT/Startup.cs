@@ -1,4 +1,6 @@
 using System;
+using AssetNXT.Configuration;
+using AssetNXT.Models.Data;
 using AssetNXT.Profiles;
 using AssetNXT.Repository;
 using AssetNXT.Settings;
@@ -37,7 +39,7 @@ namespace AssetNXT
             // https://stackoverflow.com/questions/40275195/how-to-set-up-automapper-in-asp-net-core
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            // Scope CHANGE ME HERE
+            // Scope
             services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
             /* services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>)); */
 

@@ -36,10 +36,10 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
-        [HttpGet("{id}", Name = "GetConstrainById")]
-        public async Task<IActionResult> GetConstrainById(string id)
+        [HttpGet("{id}", Name = "GetConstrainByDeviceId")]
+        public async Task<IActionResult> GetConstrainByDeviceId(string id)
         {
-            var constrain = await _repository.GetObjectByIdAsync(id);
+            var constrain = await _repository.GetObjectByDeviceIdAsync(id);
 
             if (constrain != null)
             {
@@ -59,7 +59,7 @@ namespace AssetNXT.Controllers
             var constrainReadDto = _mapper.Map<ConstrainReadDto>(constrain);
 
             // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
-            return CreatedAtRoute(nameof(GetConstrainById), new { Id = constrainReadDto.Id }, constrainReadDto);
+            return CreatedAtRoute(nameof(GetConstrainByDeviceId), new { Id = constrainReadDto.Id }, constrainReadDto);
         }
     }
 }

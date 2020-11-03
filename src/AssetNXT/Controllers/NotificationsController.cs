@@ -36,10 +36,10 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
-        [HttpGet("{id}", Name = "GetNotificationById")]
-        public async Task<IActionResult> GetNotificationById(string id)
+        [HttpGet("{id}", Name = "GetNotificationByDeviceId")]
+        public async Task<IActionResult> GetNotificationByDeviceId(string id)
         {
-            var notification = await _repository.GetObjectByIdAsync(id);
+            var notification = await _repository.GetObjectByDeviceIdAsync(id);
 
             if (notification != null)
             {
@@ -59,7 +59,7 @@ namespace AssetNXT.Controllers
             var notificationReadDto = _mapper.Map<NotificationReadDto>(notification);
 
             // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
-            return CreatedAtRoute(nameof(GetNotificationById), new { Id = notificationReadDto.Id }, notificationReadDto);
+            return CreatedAtRoute(nameof(GetNotificationByDeviceId), new { Id = notificationReadDto.Id }, notificationReadDto);
         }
     }
 }

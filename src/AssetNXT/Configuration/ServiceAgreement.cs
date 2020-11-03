@@ -1,36 +1,48 @@
-﻿using AssetNXT.Models.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AssetNXT.Models;
+using AssetNXT.Models.Data;
 
 namespace AssetNXT.Configuration
 {
-    public class ServiceAgreement<TAgreement> : IServiceAgreement<TAgreement> where TAgreement : ITag
+    public class ServiceAgreement : IServiceAgreement
     {
-        private RangeAgreement<Constrain> _humidityAgreement;
+        private List<Dictionary<string, bool>> _collection;
+        private List<Tag> _tags;
+        private Constrain _constrain;
 
-        private RangeAgreement<Constrain> _pressureAgreement;
-
-        private RangeAgreement<Constrain> _temperatureAgreement;
-
-        public ServiceAgreement(Constrain constrain)
+        public ServiceAgreement(RuuviStation station, Constrain constrain)
         {
-            this._humidityAgreement.MaxValue = constrain.HumidityMax;
-            this._humidityAgreement.MinValue = constrain.HumidityMin;
-            this._pressureAgreement.MaxValue = constrain.PressureMax;
-            this._pressureAgreement.MinValue = constrain.PressureMin;
-            this._temperatureAgreement.MaxValue = constrain.PressureMax;
-            this._temperatureAgreement.MinValue = constrain.PressureMin;
+            this.Constrain = constrain;
+            this.Collection = new List<Dictionary<string, bool>>();
+            this.Tags = station.Tags.ToList().OrderByDescending(doc => doc.CreateDate)
+                .GroupBy(doc => new { doc.Id }, (key, group) => group.First()).ToList();
         }
 
-        public RangeAgreement<Constrain> HumidityAgreement { get => _humidityAgreement; set => _humidityAgreement = value; }
+        public List<Dictionary<string, bool>> Collection { get => _collection; set => _collection = value; }
 
-        public RangeAgreement<Constrain> PressureAgreement { get => _pressureAgreement; set => _pressureAgreement = value; }
+        public List<Tag> Tags { get => _tags; set => _tags = value; }
 
-        public RangeAgreement<Constrain> TemperatureAgreement { get => _temperatureAgreement; set => _temperatureAgreement = value; }
+        public Constrain Constrain { get => _constrain; set => _constrain = value; }
 
-        public bool CheckBreach(TAgreement agreement)
+        public List<Dictionary<string, bool>> Check()
         {
-            return HumidityAgreement.Breached(agreement.Humidity)
-                   && PressureAgreement.Breached(agreement.Pressure)
-                   && TemperatureAgreement.Breached(agreement.Temperature);
+            foreach (var tag in this.Tags)
+            {
+                Dictionary<string, bool> record = new Dictionary<string, bool>();
+
+                record.Add(tag.Id, this.Breached(tag));
+                this.Collection.Add(record);
+            }
+
+            return this.Collection;
+        }
+
+        public bool Breached(Tag tag)
+        {
+            return (tag.Humidity >= this.Constrain.HumidityMin && tag.Humidity <= Constrain.HumidityMax) &&
+                   (tag.Pressure >= this.Constrain.PressureMin && tag.Pressure <= Constrain.PressureMax) &&
+                   (tag.Temperature >= this.Constrain.TemperatureMin && tag.Humidity <= Constrain.TemperatureMax);
         }
     }
 }

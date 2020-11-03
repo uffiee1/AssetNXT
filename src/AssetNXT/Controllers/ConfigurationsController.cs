@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AssetNXT.Configuration;
 using AssetNXT.Models.Data;
 using AssetNXT.Repository;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -16,11 +17,9 @@ namespace AssetNXT.Controllers
     {
         private readonly IMongoDataRepository<Constrain> _repositoryConstrain;
         private readonly IMongoDataRepository<RuuviStation> _repositoryRuuviStation;
-        private ServiceAgreement<Tag> _serviceAgreement;
 
-        public ConfigurationsController(IMongoDataRepository<Constrain> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation, ServiceAgreement<Tag> serviceAgreeement)
+        public ConfigurationsController(IMongoDataRepository<Constrain> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation)
         {
-            this._serviceAgreement = serviceAgreeement;
             this._repositoryConstrain = repositoryConstrain;
             this._repositoryRuuviStation = repositoryRuuviStation;
         }
@@ -28,26 +27,14 @@ namespace AssetNXT.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValadatedTagById(string id)
         {
-            var constrains = await _repositoryConstrain.GetObjectByIdAsync(id);
-            var station = await _repositoryRuuviStation.GetObjectByIdAsync(id);
+            var constrain = await _repositoryConstrain.GetObjectByDeviceIdAsync(id);
+            var station = await _repositoryRuuviStation.GetObjectByDeviceIdAsync(id);
 
-            if (constrains != null && station != null)
+            if (constrain != null && station != null)
             {
-                var tags = station.Tags.ToList().OrderByDescending(doc => doc.CreateDate).GroupBy(doc => new { doc.Id }, (key, group) => group.First()).ToList();
+                var serviceAgreement = new ServiceAgreement(station, constrain);
 
-                List<Dictionary<string, bool>> collection = new List<Dictionary<string, bool>>();
-
-                foreach (var tag in tags)
-                {
-                    this._serviceAgreement = new ServiceAgreement<Tag>(constrains);
-
-                    Dictionary<string, bool> record = new Dictionary<string, bool>();
-
-                    record.Add(tag.Id, this._serviceAgreement.CheckBreach(tag));
-                    collection.Add(record);
-                }
-
-                var json = JsonConvert.SerializeObject(collection);
+                var json = JsonConvert.SerializeObject(serviceAgreement.Check());
 
                 return Ok(json);
             }

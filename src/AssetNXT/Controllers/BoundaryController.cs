@@ -38,10 +38,10 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
-        [HttpGet("{id}", Name = "GetBoundaryById")]
-        public async Task<IActionResult> GetBoundaryById(string id)
+        [HttpGet("{id}", Name = "GetBoundaryByDeviceId")]
+        public async Task<IActionResult> GetBoundaryByDeviceId(string id)
         {
-            var boundary = await _repository.GetObjectByIdAsync(id);
+            var boundary = await _repository.GetObjectByDeviceIdAsync(id);
 
             if (boundary != null)
             {
@@ -61,7 +61,7 @@ namespace AssetNXT.Controllers
             var boundaryCircleReadDto = _mapper.Map<BoundaryReadDto>(boundary);
 
             // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
-            return CreatedAtRoute(nameof(GetBoundaryById), new { Id = boundaryCircleReadDto.Id }, boundaryCircleReadDto);
+            return CreatedAtRoute(nameof(GetBoundaryByDeviceId), new { Id = boundaryCircleReadDto.Id }, boundaryCircleReadDto);
         }
     }
 }
