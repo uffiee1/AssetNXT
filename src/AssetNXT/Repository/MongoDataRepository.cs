@@ -109,7 +109,7 @@ namespace AssetNXT.Repository
             return _collection.Find(doc => true).ToList().OrderByDescending(doc => doc.CreatedAt).GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();
         }
 
-        public async Task<List<TDocument>> GetAllLatestAsyc()
+        public async Task<List<TDocument>> GetAllLatestAsync()
         {
             // CreatedAt should be changed to UpdatedAt
             var matches = await _collection.Find(doc => true).ToListAsync();
@@ -121,7 +121,7 @@ namespace AssetNXT.Repository
             return _collection.Find<TDocument>(doc => doc.CreatedAt > DateTime.UtcNow.AddDays(-1)).ToList();
         }
 
-        public async Task<List<TDocument>> GetAllTodayAsyc()
+        public async Task<List<TDocument>> GetAllTodayAsync()
         {
             return await _collection.Find<TDocument>(doc => doc.CreatedAt > DateTime.UtcNow.AddDays(-1)).ToListAsync();
         }

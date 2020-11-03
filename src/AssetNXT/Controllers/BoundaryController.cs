@@ -15,10 +15,10 @@ namespace AssetNXT.Controllers
     [Route("api/boundaries")]
     public class BoundaryController : Controller
     {
-        private readonly IMongoDataRepository<Circle> _repository;
+        private readonly IMongoDataRepository<Boundary> _repository;
         private readonly IMapper _mapper;
 
-        public BoundaryController(IMongoDataRepository<Circle> repository, IMapper mapper)
+        public BoundaryController(IMongoDataRepository<Boundary> repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
@@ -27,7 +27,7 @@ namespace AssetNXT.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllBoundaries()
         {
-            var boundaries = await _repository.GetAllLatestAsyc();
+            var boundaries = await _repository.GetAllAsync();
 
             if (boundaries != null)
             {
@@ -53,7 +53,7 @@ namespace AssetNXT.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBoundary(BoundaryCircleCreateDto boundaryCircleCreateDto)
         {
-            var boundary = _mapper.Map<Circle>(boundaryCircleCreateDto);
+            var boundary = _mapper.Map<Boundary>(boundaryCircleCreateDto);
 
             await _repository.CreateObjectAsync(boundary);
 

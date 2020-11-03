@@ -26,7 +26,7 @@ namespace AssetNXT.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllNotifications()
         {
-            var notifications = await _repository.GetAllLatestAsyc();
+            var notifications = await _repository.GetAllAsync();
 
             if (notifications != null)
             {

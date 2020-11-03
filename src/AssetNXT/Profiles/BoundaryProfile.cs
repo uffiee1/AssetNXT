@@ -9,9 +9,9 @@ namespace AssetNXT.Profiles
     {
         public BoundaryProfile()
         {
-            CreateMap<Circle, BoundaryCircleReadDto>();
-            CreateMap<BoundaryCircleCreateDto, Circle>();
-            CreateMap<Circle, BoundaryCircleCreateDto>();
+            CreateMap<Boundary, BoundaryCircleReadDto>();
+            CreateMap<BoundaryCircleCreateDto, Boundary>();
+            CreateMap<Boundary, BoundaryCircleCreateDto>();
         }
     }
 }

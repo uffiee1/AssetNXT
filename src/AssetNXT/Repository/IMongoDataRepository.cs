@@ -15,11 +15,11 @@ namespace AssetNXT.Repository
 
         List<TDocument> GetAllLatest();
 
-        Task<List<TDocument>> GetAllLatestAsyc();
+        Task<List<TDocument>> GetAllLatestAsync();
 
         List<TDocument> GetAllToday();
 
-        Task<List<TDocument>> GetAllTodayAsyc();
+        Task<List<TDocument>> GetAllTodayAsync();
 
         TDocument GetObjectById(string id);
 
