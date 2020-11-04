@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router';
+
 import { Layout } from './components/Layout';
+import { Home } from './pages/Home';
+import { LineChart } from './components/graphs/LineChart';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -13,16 +17,29 @@ export default class App extends Component {
     this.fetchStationData();
   }
 
-  render () {
+  render() {
+
+    var children = ([
+
+       <Route exact path='/' 
+              render={(routeProps) => (
+                <Home {...routeProps} 
+                assets={this.state.assets} /> )} />,
+
+       <Route path='/details/:deviceId'
+              render={(routeProps) => (
+              <LineChart {...routeProps} /> )} />
+    ]);
+
+
     var contents = this.state.loading
       ? <p><em>Loading...</em></p>
-      : <Layout assets={this.state.assets} />
+      : <Layout children={children}/>
 
     return(contents);
   }
 
   async fetchStationData() {
-
     const request = 'api/stations';
 
     const response = await fetch(request);

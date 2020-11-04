@@ -41,6 +41,7 @@ export class Mapper extends Component {
                 <Popup>
                   <Tooltip name={tag.id}
                     description={tag.id}
+                    deviceId={asset.deviceId}
                     temperature={Math.round(tag.temperature)}
                     humidity={Math.round(tag.humidity)}
                     pressure={Math.round(tag.pressure)}/>
