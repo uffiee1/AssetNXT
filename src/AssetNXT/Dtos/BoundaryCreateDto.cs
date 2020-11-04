@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AssetNXT.Models.Data;
 
 namespace AssetNXT.Dtos
 {
-    public class BoundaryCircleCreateDto
+    public class BoundaryCreateDto
     {
         [MaxLength(250)]
         [Required(AllowEmptyStrings = false)]
@@ -16,12 +17,6 @@ namespace AssetNXT.Dtos
         public string Colour { get; set; }
 
         [Required]
-        public double Accuracy { get; set; }
-
-        [Required]
-        public double Latitude { get; set; }
-
-        [Required]
-        public double Longitude { get; set; }
-}
+        public Location Location { get; set; }
+    }
 }

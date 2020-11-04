@@ -93,7 +93,7 @@ namespace AssetNXT.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<List<TDocument>> GetAllLatestAsyc()
+        public async Task<List<TDocument>> GetAllLatestAsync()
         {
             var rnd = new Random();
             var stations = new List<TDocument>();
@@ -121,7 +121,17 @@ namespace AssetNXT.Repository
             throw new NotImplementedException();
         }
 
-        public Task<List<TDocument>> GetAllTodayAsyc()
+        public Task<List<TDocument>> GetAllTodayAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public TDocument GetObjectByDeviceId(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TDocument> GetObjectByDeviceIdAsync(string id)
         {
             throw new NotImplementedException();
         }

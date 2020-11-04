@@ -13,14 +13,8 @@ namespace AssetNXT.Dtos
         [Required]
         public int BatteryLevel { get; set; }
 
+        [Required]
         [MaxLength(250)]
-        [Required(AllowEmptyStrings = false)]
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        public string DeviceId { get; set; }
-
-        [MaxLength(250)]
-        [Required(AllowEmptyStrings = false)]
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string EventId { get; set; }
 
         [Required]
@@ -29,5 +23,9 @@ namespace AssetNXT.Dtos
         [Required]
         [DataType(DataType.Date)]
         public DateTime Time { get; set; }
+
+        [Required]
+        [MaxLength(250)]
+        public string DeviceId { get; set; }
     }
 }
