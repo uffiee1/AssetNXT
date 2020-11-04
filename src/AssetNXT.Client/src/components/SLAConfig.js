@@ -1,25 +1,66 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Button, Input, Table, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, FormText} from 'reactstrap';
 
+import './SLAConfig.css';
+import { CreateSlaModal } from "./modals/CreateSLAModal";
+import { EditSLAModal } from "./modals/EditSLAModal";
+import { DeleteSLAModal } from "./modals/DeleteSLAModal";
 
 export class SLAConfig extends Component {
+
     constructor(props) {
         super(props);
         this.tableRef = React.createRef()
         this.state = {
-            selected: null,
-            modal: false
+            selected: 0,
+            createModal: false,
+            editModal: false,
+            deleteModal: false,
+            isLoaded: false,
+            slaTemplates: [],
+            error: null
         };
-        this.toggle = this.toggle.bind(this);
+        this.toggleCreateModal = this.toggleCreateModal.bind(this);
+        this.toggleEditModal = this.toggleEditModal.bind(this);
+        this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
 
     }
+
     componentDidMount() {
         this.table = this.tableRef.current;
+        fetch("api/constrains")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        slaTemplates: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: false,
+                        error
+                    });
+                }
+            )
     }
 
-    toggle() {
+    toggleDeleteModal() {
         this.setState({
-            modal: !this.state.modal
+            deleteModal: !this.state.deleteModal
+        });
+    }
+
+    toggleCreateModal() {
+        this.setState({
+            createModal: !this.state.createModal
+        });
+    }
+
+    toggleEditModal() {
+        this.setState({
+            editModal: !this.state.editModal
         });
     }
 
@@ -41,80 +82,49 @@ export class SLAConfig extends Component {
         }
     }
 
-    isSelected(e) {
-        console.log(e.target);
+    renderTableContent() {
+        if (this.state.isLoaded) {
+            const listItems = this.state.slaTemplates.map((slaTemplate) => {
+                    if (this.state.selected === slaTemplate) {
+                        return (
+                            <tr className="selected" key={slaTemplate.id} onClick={() => this.setState({ selected: slaTemplate })}>
+                                <td>{slaTemplate.id}</td>
+                                <td>Random SLA configuration</td>
+                            </tr>
+                        );
+                    }
+                else {
+                    return (
+                        <tr key={slaTemplate.id} onClick={() => this.setState({ selected: slaTemplate })}>
+                            <td>{slaTemplate.id}</td>
+                            <td>Random SLA configuration</td>
+                        </tr>
+                    );
+                }
+            });
+            return listItems;
+        }
+        if (this.state.error) return <tr><td>Error</td><td></td></tr>
+        return <tr><td>Loading</td></tr>
     }
+
     render() {
         return (
             <Container>
-                <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                    <Form>
-                    <ModalHeader toggle={this.toggle}>Create Configuration</ModalHeader>
-                    <ModalBody>
-                        <Container>
-                            <Row>
-                                <Label for="Name" sm={2}>Name</Label>
-                                <Col sm={10}>
-                                    <Input type="text" name="name" placeholder="configuration-01" />
-                                </Col>
-                            </Row>
-                            <Container className="rounded border mt-2">
-                            <Row className="pt-1">
-                                <Label for="Name" sm={12}>Temperature</Label>
-                                <Col sm={6}>
-                                    <Label for="minTemperature">Min</Label>
-                                    <Input type="number" name="minTemperature" />
-                                </Col>
-                                <Col sm={6}>
-                                    <Label for="maxTemperature">Max</Label>
-                                    <Input type="number" name="maxTemperature" />
-                                </Col>
-                            </Row>
-                            <Row className="pt-1">
-                                <Label for="Name" sm={12}>Humidity</Label>
-                                <Col sm={6}>
-                                    <Label for="minTemperature">Min</Label>
-                                    <Input type="number" name="minTemperature" />
-                                </Col>
-                                <Col sm={6}>
-                                    <Label for="maxTemperature">Max</Label>
-                                    <Input type="number" name="maxTemperature" />
-                                </Col>
-                            </Row>
-                            <Row className="pt-1">
-                                <Label for="Name" sm={12}>Pressure</Label>
-                                <Col sm={6}>
-                                    <Label for="minTemperature">Min</Label>
-                                    <Input type="number" name="minTemperature" />
-                                </Col>
-                                <Col sm={6}>
-                                    <Label for="maxTemperature">Max</Label>
-                                    <Input type="number" name="maxTemperature" />
-                                </Col>
-                            </Row>
-                            <Row className="py-2">
-                                <Col className="d-flex justify-content-center"><Button color="primary" block>More options</Button></Col>
-                                </Row>
-                            </Container>
-                            </Container>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="success" onClick={this.toggle}>Create</Button>{' '}
-                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                        </ModalFooter>
-                   </Form>
-                </Modal>
+                <CreateSlaModal isOpen={this.state.createModal} toggle={this.toggleCreateModal} />
+                <EditSLAModal isOpen={this.state.editModal} toggle={this.toggleEditModal} sla={this.state.selected} />
+                <DeleteSLAModal isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal} sla={this.state.selected}/>
                 <Row className="py-1">
                     <Col xs="12" lg="6">
-                        <span className="badge badge-primary"><h2>Service Level Agreements</h2></span>                   
+                       <h2>Service Level Agreements</h2>  
                     </Col>
                     <Col md="12" lg={{ size: 4, offset: 2 }} className="d-flex align-items-end pt-1">
-                        <Button onClick={this.toggle} color="success" className="mr-1" >Create <i className="fas fa-plus"></i></Button>
-                        <Button color={this.state.selected ? 'warning' : 'secondary'} className="mr-1 text-white" disabled={this.state.selected? false : true}>Edit <i className="fas fa-edit"></i></Button>
-                        <Button color={this.state.selected ? 'danger' : 'secondary'} className="mr-1" disabled={this.state.selected ? false : true}>Delete <i className="fas fa-trash-alt"></i></Button>
+                        <Button onClick={this.toggleCreateModal} color="success" className="mr-1" >Create <i className="fas fa-plus"></i></Button>
+                        <Button onClick={this.toggleEditModal} color={this.state.selected ? 'info' : 'secondary'} className="mr-1 text-white" disabled={this.state.selected ? false : true}>Edit <i className="fas fa-edit"></i></Button>
+                        <Button onClick={this.toggleDeleteModal} color={this.state.selected ? 'danger' : 'secondary'} className="mr-1" disabled={this.state.selected ? false : true}>Delete <i className="fas fa-trash-alt"></i></Button>
                     </Col>
                 </Row>
-                <Row className="py-1">
+                <Row className="py-3">
                     <Col xs="8" lg="4" className="d-flex justify-content-center align-items-center">
                         <Input
                             type="search"
@@ -131,30 +141,15 @@ export class SLAConfig extends Component {
                 </Row>
                 <Row className="py-1">
                     <Col>
-                        <Table innerRef={this.tableRef} hover>
+                        <Table innerRef={this.tableRef} className="overflow-auto" bordered>
                             <thead>
                                 <tr>
-                                    <th>Name</th>
+                                    <th className="w-25">Name</th>
                                     <th>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr id="Config-01" onClick={() => this.setState({ selected: "Config-01" })}>
-                                    <td>Laughing Bacchus Winecellars</td>
-                                    <td>Canada</td>
-                                </tr>
-                                <tr>
-                                    <td>Magazzini Alimentari Riuniti</td>
-                                    <td>Italy</td>
-                                </tr>
-                                <tr>
-                                    <td>North/South</td>
-                                    <td>UK</td>
-                                </tr>
-                                <tr>
-                                    <td>Paris specialites</td>
-                                    <td>France</td>
-                                </tr>
+                                {this.renderTableContent()}
                             </tbody>
                         </Table>
                         </Col>

@@ -52,10 +52,16 @@
     <Content Include="src\components\assets\map\Mapper.js" />
     <Content Include="src\components\assets\map\Tooltip.css" />
     <Content Include="src\components\assets\map\Tooltip.js" />
+    <Content Include="src\components\modals\CreateSLAModal.js" />
     <Content Include="src\components\Banner.css" />
     <Content Include="src\components\Banner.js" />
     <Content Include="src\components\Layout.css" />
     <Content Include="src\components\Layout.js" />
+    <Content Include="src\components\modals\DeleteSLAModal.js" />
+    <Content Include="src\components\modals\EditSLAModal.js" />
+    <Content Include="src\components\SLAConfig.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\SLAConfig.js" />
     <Content Include="src\index.js" />
     <Content Include="src\registerServiceWorker.js" />
@@ -66,6 +72,7 @@
     <Folder Include="src\components\" />
     <Folder Include="src\components\assets\" />
     <Folder Include="src\components\assets\map\" />
+    <Folder Include="src\components\modals\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
