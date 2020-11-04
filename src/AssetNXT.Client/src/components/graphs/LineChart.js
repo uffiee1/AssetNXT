@@ -4,11 +4,70 @@ import { Line } from 'react-chartjs-2';
 
 import './LineChart.css';
 
-const data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  datasets: [
-    {
-      label: 'My First dataset',
+
+
+export class LineChart extends Component {
+
+  state = {
+    assets: [],
+    loading: true,
+    lineData: null,
+    lineOptions: null
+  }
+
+  componentDidMount() {
+    this.fetchStationData();
+  }
+
+  render() {
+
+     var contents = this.state.loading
+      ? <p><em>Loading...</em></p>
+      : <Line data={this.state.lineData} options={this.state.lineOptions} />
+
+    return(contents);
+  }
+
+  async fetchStationData(){
+
+    const request = 'api/stations';
+    const response = await fetch(request);
+    const data = await response.json();
+
+    this.setState({ assets: data });
+    await this.mapStationData(this.state.assets);
+  }
+
+  async mapStationData(assets) {
+
+     var labels = assets.map((asset) => {
+       return asset.tags[0].createDate; 
+     });
+
+      
+    console.log(labels);
+    var data = assets.map((asset) => {
+      return asset.tags[0].temperature
+    });
+
+    const lineOptions = {
+      scales: {
+        xAxes: [{
+          type: 'time',
+          ticks: {
+            autoskip: true,
+            autoskipPadding: 30,
+            maxTicksLimit: 35
+          }
+        }]
+      }
+    }
+
+    const lineData = { 
+      labels: labels,
+      datasets: [
+      {
+      label: "My First Dataset",
       fill: false,
       lineTension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
@@ -26,18 +85,10 @@ const data = {
       pointHoverBorderWidth: 2,
       pointRadius: 1,
       pointHitRadius: 10,
-      data: [65, 59, 80, 81, 56, 55, 40]
+        data: data
+      }]
     }
-  ]
-};
 
-export class LineChart extends Component {
-
-  render() {
-    return(
-      <Container>
-        <Line data={data}/>
-      </Container>
-    );
+    this.setState({ loading: false, lineData: lineData, lineOptions: lineOptions });
   }
 }

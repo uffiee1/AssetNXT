@@ -27,7 +27,8 @@ export default class App extends Component {
                 assets={this.state.assets} /> )} />,
 
        <Route path='/details/:deviceId'
-              component={LineChart} />
+              render={(routeProps) => (
+              <LineChart {...routeProps} /> )} />
     ]);
 
 
