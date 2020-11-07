@@ -1,57 +1,66 @@
-import React, { Component } from "react";
-import { Container, Row, Col } from 'reactstrap';
+import React, { Component } from 'react';
 
 import './Home.css'
-import { AssetList } from '../components/assets/AssetList';
-import { Mapper } from '../components/assets/map/Mapper';
-import { Banner } from "../components/Banner";
+import Layout from '../components/Layout';
+import TileMap from '../components/map/TileMap';
+import AssetMap from '../components/assets/map/AssetMap';
+import AssetList from '../components/assets/AssetList';
 
-export class Home extends Component {
+export default class Home extends Component {
+  static displayName = Home.name
 
   state = {
-    zoom : this.props.zoom || 14,
-    position: [this.props.assets[0].location.latitude,
-               this.props.assets[0].location.longitude]
+    assets: [],
+    loading: true
   }
 
   constructor(props) {
     super(props);
-    this.zoomInMark = this.zoomInMark.bind(this);
+    this.onAssetAdded = this.onAssetAdded.bind(this);
+    this.onAssetRemoved = this.onAssetRemoved.bind(this);
+    this.onAssetSelected = this.onAssetSelected.bind(this);
   }
 
-  zoomInMark(assetState) {
-    var location = assetState.location;
-    this.setState({ position: [location.latitude, location.longitude] });
+  componentDidMount() {
+    this.fetchStationData();
+  }
+
+  onAssetAdded(asset) {
+
+  }
+
+  onAssetRemoved(asset) {
+  }
+
+  onAssetSelected(asset) {
+    this.map.ensureInCenter(asset);
+  }
+
+  renderComponent(assets) {
+    return <Layout dock={ <AssetMap ref={e => this.map = e} zoom={14} assets={assets} />}
+                   dockLeft={ <AssetList assets={assets} assetSelected={this.onAssetSelected} /> } />
   }
 
   render() {
-    return(
-      <Container fluid className="layout-container">
-        <Row className="layout-container-row">
 
-          <Col xs="12" sm="5" lg="3" xl="2"
-               className="layout-sidepanel">
-            
-            <Row className="layout-sidepanel-banner">
-              <Banner src="images/logo.png" />
-            </Row>
-            <Row className="layout-sidepanel-contents">
-              <AssetList assets={this.props.assets}
-                         assetSelected={this.zoomInMark}/>
-            </Row>
+    var contents = this.state.loading
+      ? <p><em>Loading...</em></p>
+      : this.renderComponent(this.state.assets);
 
-          </Col>
-          <Col xs="12" sm="7" lg="9" xl="10"
-               className="layout-container-contents
-                          d-none d-sm-flex flex-column">
-            
-            <Mapper zoom={this.state.zoom}
-                    assets={this.props.assets}
-                    position={this.state.position}/>
+    return contents;
+  }
 
-          </Col>
-        </Row>
-      </Container>
-    );
+  async fetchStationData() {
+    const request = 'api/stations';
+
+    const response = await fetch(request);
+    console.log("Response:");
+    console.log(response);
+
+    const data = await response.json();
+    console.log("Data:");
+    console.log(data);
+
+    this.setState({ loading: false, assets: data });
   }
 }

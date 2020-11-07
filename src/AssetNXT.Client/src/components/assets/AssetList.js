@@ -5,9 +5,9 @@ import './Asset.css'
 import './AssetList.css'
 import './AssetListItem.css'
 
-import { AssetListItem } from './AssetListItem';
+import AssetListItem from './AssetListItem';
 
-export class AssetList extends Component {
+export default class AssetList extends React.Component {
 
   constructor(props) {
     super(props);
@@ -26,9 +26,10 @@ export class AssetList extends Component {
 
             {this.props.assets.map(asset => 
               asset.tags.map(tag => { return(
-                  <AssetListItem name={tag.id}
-                    location={asset.location}
+                  <AssetListItem 
+                    title={tag.id}
                     description={tag.id}
+                    location={asset.location}
                     assetSelected={this.onAssetSelected}/>
                 );
               })

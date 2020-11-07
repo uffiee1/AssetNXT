@@ -42,23 +42,65 @@
     <Content Include="README.md" />
     <Content Include="src\App.js" />
     <Content Include="src\App.test.js" />
-    <Content Include="src\components\Layout.css" />
-    <Content Include="src\components\Layout.js" />
-    <Content Include="src\components\assets\Asset.css" />
-    <Content Include="src\components\assets\Asset.js" />
-    <Content Include="src\components\assets\AssetList.css" />
-    <Content Include="src\components\assets\AssetList.js" />
-    <Content Include="src\components\assets\AssetListItem.css" />
-    <Content Include="src\components\assets\AssetListItem.js" />
-    <Content Include="src\components\assets\map\Mapper.css" />
-    <Content Include="src\components\assets\map\Mapper.js" />
-    <Content Include="src\components\assets\map\Tooltip.css" />
-    <Content Include="src\components\assets\map\Tooltip.js" />
+    <Content Include="src\components\assets\Asset.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\Asset.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\AssetList.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\AssetList.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\AssetListItem.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\AssetListItem.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\map\AssetMap.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\map\AssetMap.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\map\AssetTooltip.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\map\AssetTooltip.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\Banner.css" />
     <Content Include="src\components\Banner.js" />
     <Content Include="src\components\graphs\LineChart.css" />
     <Content Include="src\components\graphs\LineChart.js" />
+    <Content Include="src\components\Layout.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\Layout.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\map\TileMap.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\map\TileMap.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\map\Tooltip.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\map\Tooltip.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\index.js" />
+    <Content Include="src\pages\AssetPage.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\pages\AssetPage.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\pages\Home.css">
       <SubType>Code</SubType>
     </Content>
@@ -74,6 +116,7 @@
     <Folder Include="src\components\assets\" />
     <Folder Include="src\components\assets\map\" />
     <Folder Include="src\components\graphs\" />
+    <Folder Include="src\components\map\" />
     <Folder Include="src\pages\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />

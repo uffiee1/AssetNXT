@@ -51,6 +51,8 @@ export class LineChart extends Component {
     });
 
     const lineOptions = {
+      responsive: true,
+      maintainAspectRatio : false,
       scales: {
         xAxes: [{
           type: 'time',
