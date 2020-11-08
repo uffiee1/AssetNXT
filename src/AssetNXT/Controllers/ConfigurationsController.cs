@@ -20,8 +20,8 @@ namespace AssetNXT.Controllers
 
         public ConfigurationsController(IMongoDataRepository<Constrain> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation)
         {
-            this._repositoryConstrain = repositoryConstrain;
-            this._repositoryRuuviStation = repositoryRuuviStation;
+            _repositoryConstrain = repositoryConstrain;
+            _repositoryRuuviStation = repositoryRuuviStation;
         }
 
         [HttpGet("{id}")]
