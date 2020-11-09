@@ -126,12 +126,22 @@ namespace AssetNXT.Repository
             throw new NotImplementedException();
         }
 
-        public TDocument GetObjectByDeviceId(string id)
+        public TDocument GetObjectLatestByDeviceId(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<TDocument> GetObjectByDeviceIdAsync(string id)
+        public Task<TDocument> GetObjectLatestByDeviceIdAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TDocument GetObjectAllByDeviceId(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TDocument> GetObjectAllByDeviceIdAsync(string id)
         {
             throw new NotImplementedException();
         }
