@@ -48,39 +48,24 @@
     <Content Include="src\components\assets\AssetList.js" />
     <Content Include="src\components\assets\AssetListItem.css" />
     <Content Include="src\components\assets\AssetListItem.js" />
-    <Content Include="src\components\assets\map\AssetMap.css" />
-    <Content Include="src\components\assets\map\AssetMap.js" />
-    <Content Include="src\components\assets\map\AssetMarkerInfo.css" />
-    <Content Include="src\components\assets\map\AssetMarkerInfo.js" />
+    <Content Include="src\components\assets\map\Mapper.css" />
+    <Content Include="src\components\assets\map\Mapper.js" />
+    <Content Include="src\components\assets\map\Tooltip.css" />
+    <Content Include="src\components\assets\map\Tooltip.js" />
     <Content Include="src\components\assets\search\Searchbar.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\assets\search\Searchbar.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\assets\telemetric\graphs\TelemetricLineGraph.css" />
-    <Content Include="src\components\assets\telemetric\graphs\TelemetricLineGraph.js" />
-    <Content Include="src\components\assets\telemetric\TelemetricDataTemplate.css" />
-    <Content Include="src\components\assets\telemetric\TelemetricDataTemplate.js" />
-    <Content Include="src\components\assets\telemetric\TelemetricTabs.css" />
-    <Content Include="src\components\assets\telemetric\TelemetricTabs.js" />
     <Content Include="src\components\Banner.css" />
     <Content Include="src\components\Banner.js" />
-    <Content Include="src\components\images\logo.png" />
     <Content Include="src\components\Layout.css" />
     <Content Include="src\components\Layout.js" />
-    <Content Include="src\components\notifications\NotificationList.css" />
-    <Content Include="src\components\notifications\NotificationList.js" />
-    <Content Include="src\components\notifications\NotificationListItem.css" />
-    <Content Include="src\components\notifications\NotificationListItem.js" />
     <Content Include="src\components\Slider.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\index.js" />
-    <Content Include="src\pages\DevicePage.css" />
-    <Content Include="src\pages\DevicePage.js" />
-    <Content Include="src\pages\Home.css" />
-    <Content Include="src\pages\Home.js" />
     <Content Include="src\registerServiceWorker.js" />
   </ItemGroup>
   <ItemGroup>
@@ -90,11 +75,6 @@
     <Folder Include="src\components\assets\" />
     <Folder Include="src\components\assets\map\" />
     <Folder Include="src\components\assets\search\" />
-    <Folder Include="src\components\assets\telemetric\" />
-    <Folder Include="src\components\assets\telemetric\graphs\" />
-    <Folder Include="src\components\images\" />
-    <Folder Include="src\components\notifications\" />
-    <Folder Include="src\pages\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

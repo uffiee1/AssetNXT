@@ -19,39 +19,34 @@ namespace AssetNXT
 {
     public class Startup
     {
-        private IConfiguration _configuration;
-
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get => _configuration; set => _configuration = value; }
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // MongoDb Configurations
+            services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
+
+            // Provider
+            services.AddSingleton<IMongoDbSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+
             // Mapping
             // https://stackoverflow.com/questions/40275195/how-to-set-up-automapper-in-asp-net-core
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            // Scope
+            /// services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
+            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>));
 
             // Controllers Serialization
             services.AddControllers().AddNewtonsoftJson(s => { s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
 
             // Swagger
-            ConfigureSwaggerService(services);
-            ConfigureDatabaseService(services);
-
-            // Scope
-            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            /// services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>));
-
-            // React js Start-up Configurations
-            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "../AssetNXT.Client/build"; });
-        }
-
-        public void ConfigureSwaggerService(IServiceCollection services)
-        {
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -60,15 +55,12 @@ namespace AssetNXT
                     Version = "v1"
                 });
             });
-        }
 
-        public void ConfigureDatabaseService(IServiceCollection services)
-        {
-            // MongoDB Configuration
-            services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
-
-            // Provider
-            services.AddSingleton<IMongoDbSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+            // React js Start-up Configurations
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "../AssetNXT.Client/build";
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -5,9 +5,9 @@ import './Asset.css'
 import './AssetList.css'
 import './AssetListItem.css'
 
-import AssetListItem from './AssetListItem';
+import { AssetListItem } from './AssetListItem';
 
-export default class AssetList extends React.Component {
+export class AssetList extends Component {
 
   constructor(props) {
     super(props);
@@ -23,8 +23,8 @@ export default class AssetList extends React.Component {
       <Container className="asset-list-container">
         <Row className="asset-list-row">
           <Col className="asset-list-column">
-            
-          {this.props.assets.map(asset => 
+
+            {this.props.assets.map(asset => 
               asset.tags.map(tag => { 
                 
                 if (!this.props.query || tag.id.indexOf(this.props.query) > -1) {

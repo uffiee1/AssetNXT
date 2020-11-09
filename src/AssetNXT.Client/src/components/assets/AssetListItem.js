@@ -3,9 +3,9 @@ import { Container, Row, Col } from 'reactstrap';
 
 import './Asset.css'
 import './AssetListItem.css'
-import Asset from './Asset';
+import { Asset } from './Asset';
 
-export default class AssetListItem extends Component {
+export class AssetListItem extends Component {
 
   constructor(props) {
     super(props);
@@ -13,12 +13,12 @@ export default class AssetListItem extends Component {
   }
 
   onAssetSelected() {
-    this.props.assetSelected(this.props)
+    this.props.assetSelected(this.props);
   }
 
   render() {
     return (
-      
+
       <Container className="asset-item-container">
         <Row className="asset-item-row"
              onClick={this.onAssetSelected}>
