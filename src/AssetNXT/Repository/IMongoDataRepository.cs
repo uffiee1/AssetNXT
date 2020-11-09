@@ -25,9 +25,9 @@ namespace AssetNXT.Repository
 
         Task<TDocument> GetObjectByIdAsync(string id);
 
-        TDocument GetObjectByDeviceId(string id);
+        List<TDocument> GetObjectsByDeviceId(string id);
 
-        Task<TDocument> GetObjectByDeviceIdAsync(string id);
+        Task<List<TDocument>> GetObjectsByDeviceIdAsync(string id);
 
         void CreateObject(TDocument document);
 

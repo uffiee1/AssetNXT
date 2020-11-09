@@ -21,10 +21,9 @@ namespace AssetNXT.Services
         public List<RuuviStation> GetAllRuuviStations()
         {
             var stations = new List<RuuviStation>();
-            for (int i = _random.Next(50, 100) - 1; i >= 0; i--)
+            for (int i = 0; i < _random.Next(50, 100); i++)
             {
                 var station = MockCreateRuuviStation();
-                station.Time -= TimeSpan.FromMinutes(i * 5);
                 stations.Add(station);
             }
 
@@ -57,16 +56,38 @@ namespace AssetNXT.Services
             return Task.FromResult(MockCreateRuuviStation());
         }
 
-        public RuuviStation GetRuuviStationByDeviceId(string deviceId)
+        public List<RuuviStation> GetRuuviStationsByDeviceId(string deviceId)
         {
-            var station = MockCreateRuuviStation();
-            station.DeviceId = deviceId;
-            return station;
+            var stations = GetAllRuuviStations();
+            for (int i = 0; i < stations.Count; i++)
+            {
+                if (i > 0)
+                {
+                    var currentStation = stations[i];
+                    var currentStationTag = currentStation.Tags[0];
+
+                    var previousStation = stations[i - 1];
+                    var previousStationTag = previousStation.Tags[0];
+
+                    var pressure = previousStationTag.Pressure + _random.Next(-1, 2);
+                    var humidity = previousStationTag.Humidity + (_random.Next(-1, 2) * _random.NextDouble());
+                    var temperature = previousStationTag.Temperature + (_random.Next(-1, 2) * _random.NextDouble());
+
+                    currentStationTag.Humidity = Math.Max(0, Math.Min(humidity, 100));
+                    currentStationTag.Pressure = Math.Max(250, Math.Min(pressure, 1500));
+                    currentStationTag.Temperature = Math.Max(-5, Math.Min(temperature, 10));
+                }
+
+                stations[stations.Count - (i + 1)].Time -= TimeSpan.FromMinutes(5 * i);
+                stations[i].DeviceId = deviceId;
+            }
+
+            return stations;
         }
 
-        public Task<RuuviStation> GetRuuviStationByDeviceIdAsync(string deviceId)
+        public Task<List<RuuviStation>> GetRuuviStationsByDeviceIdAsync(string deviceId)
         {
-            return Task.FromResult(GetRuuviStationByDeviceId(deviceId));
+            return Task.FromResult(GetRuuviStationsByDeviceId(deviceId));
         }
 
         public void CreateRuuviStation(RuuviStation station)
@@ -119,7 +140,7 @@ namespace AssetNXT.Services
 
                 Pressure = _random.Next(250, 1500),
                 Humidity = _random.NextDouble() * 100,
-                Temperature = _random.NextDouble() + _random.Next(-5, 25),
+                Temperature = _random.NextDouble() + _random.Next(-5, 10),
 
                 Id = Guid.NewGuid().ToString().Substring(0, 8)
             };
@@ -135,8 +156,8 @@ namespace AssetNXT.Services
             return new RuuviStation
             {
                 Time = DateTime.UtcNow,
-                EventId = Guid.NewGuid().ToString(),
-                DeviceId = Guid.NewGuid().ToString(),
+                EventId = Guid.NewGuid().ToString().Substring(0, 18),
+                DeviceId = Guid.NewGuid().ToString().Substring(0, 18),
 
                 Location = new Location
                 {

@@ -66,39 +66,55 @@
     <Content Include="src\components\assets\map\AssetMap.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\assets\map\AssetTooltip.css">
+    <Content Include="src\components\assets\map\AssetMarkerInfo.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\assets\map\AssetTooltip.js">
+    <Content Include="src\components\assets\map\AssetMarkerInfo.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\telemetric\graphs\TelemetricLineGraph.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\telemetric\graphs\TelemetricLineGraph.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\telemetric\TelemetricDataTemplate.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\telemetric\TelemetricDataTemplate.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\telemetric\TelemetricTabs.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\telemetric\TelemetricTabs.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\notifications\NotificationList.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\notifications\NotificationList.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\notifications\NotificationListItem.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\notifications\NotificationListItem.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\Banner.css" />
     <Content Include="src\components\Banner.js" />
-    <Content Include="src\components\graphs\LineChart.css" />
-    <Content Include="src\components\graphs\LineChart.js" />
     <Content Include="src\components\Layout.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\Layout.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\map\TileMap.css">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\map\TileMap.js">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\map\Tooltip.css">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\map\Tooltip.js">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="src\index.js" />
-    <Content Include="src\pages\AssetPage.css">
+    <Content Include="src\pages\DevicePage.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\pages\AssetPage.js">
+    <Content Include="src\pages\DevicePage.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\pages\Home.css">
@@ -115,8 +131,9 @@
     <Folder Include="src\components\" />
     <Folder Include="src\components\assets\" />
     <Folder Include="src\components\assets\map\" />
-    <Folder Include="src\components\graphs\" />
-    <Folder Include="src\components\map\" />
+    <Folder Include="src\components\assets\telemetric\" />
+    <Folder Include="src\components\assets\telemetric\graphs\" />
+    <Folder Include="src\components\notifications\" />
     <Folder Include="src\pages\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />

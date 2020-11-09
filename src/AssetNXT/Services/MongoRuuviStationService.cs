@@ -45,17 +45,17 @@ namespace AssetNXT.Services
 
         public Task<RuuviStation> GetRuuviStationByIdAsync(string stationId)
         {
-            return _repository.GetObjectByDeviceIdAsync(stationId);
+            return _repository.GetObjectByIdAsync(stationId);
         }
 
-        public RuuviStation GetRuuviStationByDeviceId(string deviceId)
+        public List<RuuviStation> GetRuuviStationsByDeviceId(string deviceId)
         {
-            return _repository.GetObjectByDeviceId(deviceId);
+            return _repository.GetObjectsByDeviceId(deviceId);
         }
 
-        public Task<RuuviStation> GetRuuviStationByDeviceIdAsync(string deviceId)
+        public Task<List<RuuviStation>> GetRuuviStationsByDeviceIdAsync(string deviceId)
         {
-            return _repository.GetObjectByDeviceIdAsync(deviceId);
+            return _repository.GetObjectsByDeviceIdAsync(deviceId);
         }
 
         public void CreateRuuviStation(RuuviStation station)

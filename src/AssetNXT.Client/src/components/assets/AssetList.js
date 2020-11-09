@@ -28,8 +28,8 @@ export default class AssetList extends React.Component {
               asset.tags.map(tag => { return(
                   <AssetListItem 
                     title={tag.id}
-                    description={tag.id}
                     location={asset.location}
+                    description={asset.deviceId}
                     assetSelected={this.onAssetSelected}/>
                 );
               })

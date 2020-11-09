@@ -26,6 +26,8 @@ export default class Layout extends Component {
             
               { this.dockCenter() }
 
+              { this.dockRight() }
+
             </Row>
           </Col>
         </Row>
@@ -33,11 +35,22 @@ export default class Layout extends Component {
     );
   }
 
-  dockCenter() {
-     var contents = !this.props.dock
-      ? <Col className="layout-contents-panel dock-main" />
-      : <Col className="layout-contents-panel dock-main">
-           {this.props.dock}
+  dockTop() {
+
+    var contents = (!this.props.dockTop && this.props.dockLeft)
+      ? <Col className="layout-contents-panel dock-top" xs="auto"/>
+      : <Col className="layout-contents-panel dock-top">
+          <Row className="layout-row-definition layout-contents-shadow">
+
+            <Col className="layout-banner" xs="12" sm="5" lg="3" xl="2">
+              <Banner src="images/logo.png"/>
+            </Col>
+
+            <Col className="layout-component-container">
+              {this.props.dockTop}
+            </Col>
+
+          </Row>
         </Col>
 
     return contents;
@@ -69,22 +82,27 @@ export default class Layout extends Component {
     return contents;
   }
 
-  dockTop() {
+  dockRight() {
+    var contents = !this.props.dockRight
+      ? <Col className="layout-contents-panel dock-right" xs="auto" />
+      : <Col className="layout-contents-panel dock-right" xs="12" sm="5" lg="3" xl="2">
 
-    var contents = (!this.props.dockTop && this.props.dockLeft)
-      ? <Col className="layout-contents-panel dock-top" xs="auto"/>
-      : <Col className="layout-contents-panel dock-top">
-          <Row className="layout-row-definition layout-contents-shadow">
-
-            <Col className="layout-banner" xs="12" sm="5" lg="3" xl="2">
-              <Banner src="images/logo.png"/>
-            </Col>
-
+          <Row className="layout-row-definition shrink">
             <Col className="layout-component-container">
-              {this.props.dockTop}
+              {this.props.dockRight}
             </Col>
-
           </Row>
+
+        </Col>
+
+    return contents;
+  }
+
+  dockCenter() {
+     var contents = !this.props.dock
+      ? <Col className="layout-contents-panel dock-main" />
+      : <Col className="layout-contents-panel dock-main">
+           {this.props.dock}
         </Col>
 
     return contents;

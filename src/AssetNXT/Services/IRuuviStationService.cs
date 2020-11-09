@@ -22,9 +22,9 @@ namespace AssetNXT.Services
 
         Task<RuuviStation> GetRuuviStationByIdAsync(string stationId);
 
-        RuuviStation GetRuuviStationByDeviceId(string deviceId);
+        List<RuuviStation> GetRuuviStationsByDeviceId(string deviceId);
 
-        Task<RuuviStation> GetRuuviStationByDeviceIdAsync(string deviceId);
+        Task<List<RuuviStation>> GetRuuviStationsByDeviceIdAsync(string deviceId);
 
         void CreateRuuviStation(RuuviStation station);
 

@@ -37,14 +37,27 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
-        [HttpGet("{id}", Name="GetRuuviStationByDeviceId")]
-        public async Task<IActionResult> GetRuuviStationByDeviceId(string id)
+        [HttpGet("{id}", Name = "GetRuuviStationById")]
+        public async Task<IActionResult> GetRuuviStationById(string id)
         {
-            var station = await _service.GetRuuviStationByDeviceIdAsync(id);
+            var stations = await _service.GetRuuviStationByIdAsync(id);
 
-            if (station != null)
+            if (stations != null)
             {
-                return Ok(_mapper.Map<RuuviStationReadDto>(station));
+                return Ok(_mapper.Map<RuuviStationReadDto>(stations));
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("device/{deviceId}", Name="GetRuuviStationByDeviceId")]
+        public async Task<IActionResult> GetRuuviStationsByDeviceId(string deviceId)
+        {
+            var stations = await _service.GetRuuviStationsByDeviceIdAsync(deviceId);
+
+            if (stations != null)
+            {
+                return Ok(_mapper.Map<IEnumerable<RuuviStationReadDto>>(stations));
             }
 
             return NotFound();
@@ -60,7 +73,7 @@ namespace AssetNXT.Controllers
             var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(station);
 
             // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
-            return CreatedAtRoute(nameof(GetRuuviStationByDeviceId), new { Id = ruuviStationReadDto.Id }, ruuviStationReadDto);
+            return CreatedAtRoute(nameof(GetRuuviStationById), new { Id = ruuviStationReadDto.Id }, ruuviStationReadDto);
         }
 
         [HttpPut("{id}")]

@@ -126,16 +126,16 @@ namespace AssetNXT.Repository
             return await _collection.Find<TDocument>(doc => doc.CreatedAt > DateTime.UtcNow.AddDays(-1)).ToListAsync();
         }
 
-        public TDocument GetObjectByDeviceId(string id)
+        public List<TDocument> GetObjectsByDeviceId(string id)
         {
             var matches = _collection.Find(doc => doc.DeviceId == id);
-            return matches.FirstOrDefault();
+            return matches.ToList();
         }
 
-        public async Task<TDocument> GetObjectByDeviceIdAsync(string id)
+        public async Task<List<TDocument>> GetObjectsByDeviceIdAsync(string id)
         {
             var matches = await _collection.FindAsync(doc => doc.DeviceId == id);
-            return await matches.FirstOrDefaultAsync();
+            return await matches.ToListAsync();
         }
     }
 }

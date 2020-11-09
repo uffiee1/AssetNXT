@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 import './Home.css'
 import Layout from '../components/Layout';
-import TileMap from '../components/map/TileMap';
+import AssetList from "../components/assets/AssetList";
 import AssetMap from '../components/assets/map/AssetMap';
-import AssetList from '../components/assets/AssetList';
+import AssetMarkerInfo from "../components/assets/map/AssetMarkerInfo";
 
 export default class Home extends Component {
-  static displayName = Home.name
+  static displayName = Home.displayName
 
   state = {
     assets: [],
@@ -33,18 +33,28 @@ export default class Home extends Component {
   }
 
   onAssetSelected(asset) {
-    this.map.ensureInCenter(asset);
+    this.mapInstance.ensurePopupClosed();
+    this.mapInstance.ensureInCenter(asset);
   }
 
   renderComponent(assets) {
-    return <Layout dock={ <AssetMap ref={e => this.map = e} zoom={14} assets={assets} />}
-                   dockLeft={ <AssetList assets={assets} assetSelected={this.onAssetSelected} /> } />
+    
+    var assetMap = 
+      <AssetMap assets={assets} 
+        assetMarkerTemplate={AssetMarkerInfo}
+        ref={e => this.mapInstance = e} zoom={14}/>
+
+    var assetList = 
+      <AssetList assets={assets}
+        assetSelected={this.onAssetSelected}/>
+
+    return <Layout dockLeft={assetList} dock={assetMap} />
   }
 
   render() {
 
-    var contents = this.state.loading
-      ? <p><em>Loading...</em></p>
+     var contents = this.state.loading
+      ? <Layout dock={<p><em>Loading...</em></p>}/>
       : this.renderComponent(this.state.assets);
 
     return contents;
