@@ -3,7 +3,7 @@ using AssetNXT.Models.Data;
 
 namespace AssetNXT.Dtos
 {
-    public class BoundaryCircleReadDto
+    public class BoundaryReadDto
     {
         public string Id { get; set; }
 

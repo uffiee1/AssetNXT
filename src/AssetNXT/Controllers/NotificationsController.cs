@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AssetNXT.Dtos;
 using AssetNXT.Models.Data;
@@ -12,12 +11,13 @@ namespace AssetNXT.Controllers
 {
     [Produces("application/json")]
     [Route("api/notifications")]
-    public class NotificationController : Controller
+    [ApiController]
+    public class NotificationsController : ControllerBase
     {
         private readonly IMongoDataRepository<Notification> _repository;
         private readonly IMapper _mapper;
 
-        public NotificationController(IMongoDataRepository<Notification> repository, IMapper mapper)
+        public NotificationsController(IMongoDataRepository<Notification> repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
@@ -26,7 +26,7 @@ namespace AssetNXT.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllNotifications()
         {
-            var notifications = await _repository.GetAllAsync();
+            var notifications = await _repository.GetAllLatestAsync();
 
             if (notifications != null)
             {
@@ -36,10 +36,10 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
-        [HttpGet("{id}", Name = "GetNotificationById")]
-        public async Task<IActionResult> GetNotificationById(string id)
+        [HttpGet("{id}", Name = "GetNotificationByDeviceId")]
+        public async Task<IActionResult> GetNotificationByDeviceId(string id)
         {
-            var notification = await _repository.GetObjectByIdAsync(id);
+            var notification = await _repository.GetObjectByDeviceIdAsync(id);
 
             if (notification != null)
             {
@@ -59,7 +59,7 @@ namespace AssetNXT.Controllers
             var notificationReadDto = _mapper.Map<NotificationReadDto>(notification);
 
             // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
-            return CreatedAtRoute(nameof(GetNotificationById), new { Id = notificationReadDto.Id }, notificationReadDto);
+            return CreatedAtRoute(nameof(GetNotificationByDeviceId), new { Id = notificationReadDto.Id }, notificationReadDto);
         }
     }
 }

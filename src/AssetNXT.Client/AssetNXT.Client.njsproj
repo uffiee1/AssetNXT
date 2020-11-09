@@ -52,6 +52,12 @@
     <Content Include="src\components\assets\map\Mapper.js" />
     <Content Include="src\components\assets\map\Tooltip.css" />
     <Content Include="src\components\assets\map\Tooltip.js" />
+    <Content Include="src\components\assets\search\Searchbar.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\search\Searchbar.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\Banner.css" />
     <Content Include="src\components\Banner.js" />
     <Content Include="src\components\Layout.css" />
@@ -68,6 +74,7 @@
     <Folder Include="src\components\" />
     <Folder Include="src\components\assets\" />
     <Folder Include="src\components\assets\map\" />
+    <Folder Include="src\components\assets\search\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

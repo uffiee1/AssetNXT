@@ -11,6 +11,12 @@ namespace AssetNXT.Models.Data
     public class Constrain : Document
     {
         [BsonElement]
+        public string Name { get; set; }
+
+        [BsonElement]
+        public string Description { get; set; }
+
+        [BsonElement]
         public double TemperatureMin { get; set; }
 
         [BsonElement]

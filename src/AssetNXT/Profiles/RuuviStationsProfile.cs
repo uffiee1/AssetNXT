@@ -5,9 +5,9 @@ using AutoMapper;
 
 namespace AssetNXT.Profiles
 {
-    public class RuuviStationProfile : Profile
+    public class RuuviStationsProfile : Profile
     {
-        public RuuviStationProfile()
+        public RuuviStationsProfile()
         {
             CreateMap<RuuviStation, RuuviStationReadDto>();
             CreateMap<RuuviStationCreateDto, RuuviStation>();

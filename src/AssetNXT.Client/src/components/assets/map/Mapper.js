@@ -3,6 +3,7 @@ import { Map, TileLayer, Popup, Marker, Circle } from 'react-leaflet';
 
 import "./Mapper.css";
 import { Tooltip } from './Tooltip';
+import { Searchbar } from "../search/Searchbar";
 
 export class Mapper extends Component {
 
@@ -28,25 +29,29 @@ export class Mapper extends Component {
       <Map zoom={this.props.zoom}
            center={this.props.position}
            ref={e => this.mapInstance = e}
-           className="asset-map-container">
+            className="asset-map-container">
 
         <TileLayer url='https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=HfiQgsMsSnorjEs2Sxek'
                    attribution='&amp;copy <a href="https://www.maptiler.com/copyright/">Maptiler</a> contributors'
                    className="asset-map-tiler" tileSize={512} zoomOffset={-1}/>
 
          {this.props.assets.map(asset => 
-          asset.tags.map(tag => { return(
-               <Marker position={[asset.location.latitude, asset.location.longitude]}
-                       onClick={e => this.map.panTo(e.target.getLatLng())}>
-                <Popup>
-                  <Tooltip name={tag.id}
-                    description={tag.id}
-                    temperature={Math.round(tag.temperature)}
-                    humidity={Math.round(tag.humidity)}
-                    pressure={Math.round(tag.pressure)}/>
-                </Popup>
-              </Marker>
-            );
+          asset.tags.map(tag => { 
+
+            if (!this.props.query || tag.id.indexOf(this.props.query) > -1) {
+              return(
+                 <Marker position={[asset.location.latitude, asset.location.longitude]}
+                         onClick={e => this.map.panTo(e.target.getLatLng())}>
+                  <Popup>
+                    <Tooltip name={tag.id}
+                      description={tag.id}
+                      temperature={Math.round(tag.temperature)}
+                      humidity={Math.round(tag.humidity)}
+                      pressure={Math.round(tag.pressure)}/>
+                  </Popup>
+                </Marker>
+              );
+            }
           })
         )}
 

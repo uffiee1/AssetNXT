@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AssetNXT.Dtos;
 using AssetNXT.Models.Data;
@@ -12,12 +11,13 @@ namespace AssetNXT.Controllers
 {
     [Produces("application/json")]
     [Route("api/constrains")]
-    public class ConstrainController : Controller
+    [ApiController]
+    public class ConstrainsController : ControllerBase
     {
         private readonly IMongoDataRepository<Constrain> _repository;
         private readonly IMapper _mapper;
 
-        public ConstrainController(IMongoDataRepository<Constrain> repository, IMapper mapper)
+        public ConstrainsController(IMongoDataRepository<Constrain> repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
@@ -26,7 +26,7 @@ namespace AssetNXT.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllConstrains()
         {
-            var constrains = await _repository.GetAllAsync();
+            var constrains = await _repository.GetAllLatestAsync();
 
             if (constrains != null)
             {
@@ -36,10 +36,10 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
-        [HttpGet("{id}", Name = "GetConstrainById")]
-        public async Task<IActionResult> GetConstrainById(string id)
+        [HttpGet("{id}", Name = "GetConstrainByDeviceId")]
+        public async Task<IActionResult> GetConstrainByDeviceId(string id)
         {
-            var constrain = await _repository.GetObjectByIdAsync(id);
+            var constrain = await _repository.GetObjectByDeviceIdAsync(id);
 
             if (constrain != null)
             {
@@ -59,7 +59,7 @@ namespace AssetNXT.Controllers
             var constrainReadDto = _mapper.Map<ConstrainReadDto>(constrain);
 
             // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
-            return CreatedAtRoute(nameof(GetConstrainById), new { Id = constrainReadDto.Id }, constrainReadDto);
+            return CreatedAtRoute(nameof(GetConstrainByDeviceId), new { Id = constrainReadDto.Id }, constrainReadDto);
         }
     }
 }

@@ -8,6 +8,10 @@ namespace AssetNXT.Dtos
 
         public string DeviceId { get; set; }
 
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
         public double TemperatureMin { get; set; }
 
         public double TemperatureMax { get; set; }
