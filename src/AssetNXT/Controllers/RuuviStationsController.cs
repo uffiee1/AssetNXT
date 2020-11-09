@@ -27,6 +27,7 @@ namespace AssetNXT.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllRuuviStations()
         {
+
             var stations = await _repository.GetAllLatestAsync();
 
             if (stations != null)
