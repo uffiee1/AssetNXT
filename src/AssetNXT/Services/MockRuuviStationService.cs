@@ -69,16 +69,20 @@ namespace AssetNXT.Services
                     var previousStation = stations[i - 1];
                     var previousStationTag = previousStation.Tags[0];
 
-                    var pressure = previousStationTag.Pressure + _random.Next(-1, 2);
-                    var humidity = previousStationTag.Humidity + (_random.Next(-1, 2) * _random.NextDouble());
-                    var temperature = previousStationTag.Temperature + (_random.Next(-1, 2) * _random.NextDouble());
+                    int oneOrMinusOne() => (_random.Next(0, 2) * 2) - 1;
+                    var pressure = previousStationTag.Pressure + (oneOrMinusOne() * _random.Next(0, 2));
+                    var humidity = previousStationTag.Humidity + (oneOrMinusOne() * _random.NextDouble());
+                    var temperature = previousStationTag.Temperature + (oneOrMinusOne() * _random.NextDouble());
 
                     currentStationTag.Humidity = Math.Max(0, Math.Min(humidity, 100));
                     currentStationTag.Pressure = Math.Max(250, Math.Min(pressure, 1500));
                     currentStationTag.Temperature = Math.Max(-5, Math.Min(temperature, 10));
+
+                    currentStation.Location.Latitude = previousStation.Location.Latitude + (oneOrMinusOne() * (_random.NextDouble() / 50));
+                    currentStation.Location.Longitude = previousStation.Location.Longitude + (oneOrMinusOne() * (_random.NextDouble() / 50));
                 }
 
-                stations[stations.Count - (i + 1)].Time -= TimeSpan.FromMinutes(5 * i);
+                stations[^(i + 1)].Time -= TimeSpan.FromMinutes(5 * i);
                 stations[i].DeviceId = deviceId;
             }
 
