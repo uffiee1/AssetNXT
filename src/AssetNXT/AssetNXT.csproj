@@ -2,12 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\mihai\.nuget\packages\mongodb.driver.core\2.11.2\contentFiles\any\netstandard2.0\Core\Compression\Snappy\lib\win\snappy32.dll" />
+    <Content Remove="C:\Users\mihai\.nuget\packages\mongodb.driver.core\2.11.2\contentFiles\any\netstandard2.0\Core\Compression\Snappy\lib\win\snappy64.dll" />
+    <Content Remove="C:\Users\mihai\.nuget\packages\mongodb.driver.core\2.11.2\contentFiles\any\netstandard2.0\Core\Compression\Zstandard\lib\win\libzstd.dll" />
+  </ItemGroup>
 
   <ItemGroup>
 
     <!-- AutoMapper -->
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
     
     <!-- AspNetCore JsonPatch -->
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="3.1.9" />
@@ -36,6 +43,7 @@
     <PackageReference Include="MongoDB.Driver.Core" Version="2.11.2" />
     
     <!-- Single page application packages-->
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.9" />
      
     <!-- Pomelo Entity Framework Core MySql -->

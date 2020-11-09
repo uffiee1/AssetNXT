@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AssetNXT.Models;
 using AssetNXT.Settings;
 
-namespace AssetNXT.Repositories
+namespace AssetNXT.Repository
 {
     public class MockDataRepository<TDocument> : IMongoDataRepository<TDocument>
     where TDocument : IDocument
@@ -23,27 +23,9 @@ namespace AssetNXT.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<TDocument>> GetAllAsync()
+        public Task<List<TDocument>> GetAllAsync()
         {
-            var rnd = new Random();
-            var stations = new List<TDocument>();
-
-            for (int i = 0; i < rnd.Next(50, 100); i++)
-            {
-                var request = "https://ruuvi-api.herokuapp.com/";
-                var response = await _http.GetAsync(new Uri(request));
-
-                response.EnsureSuccessStatusCode();
-                var data = await response.Content.ReadAsStringAsync();
-
-                stations.Add(JsonSerializer.Deserialize<TDocument>(
-                    data, new JsonSerializerOptions
-                    {
-                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                    }));
-            }
-
-            return stations;
+            throw new NotImplementedException();
         }
 
         public TDocument GetObjectById(string id)
@@ -111,9 +93,27 @@ namespace AssetNXT.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<TDocument>> GetAllLatestAsyc()
+        public async Task<List<TDocument>> GetAllLatestAsync()
         {
-            throw new NotImplementedException();
+            var rnd = new Random();
+            var stations = new List<TDocument>();
+
+            for (int i = 0; i < rnd.Next(50, 100); i++)
+            {
+                var request = "https://ruuvi-api.herokuapp.com/";
+                var response = await _http.GetAsync(new Uri(request));
+
+                response.EnsureSuccessStatusCode();
+                var data = await response.Content.ReadAsStringAsync();
+
+                stations.Add(JsonSerializer.Deserialize<TDocument>(
+                    data, new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    }));
+            }
+
+            return stations;
         }
 
         public List<TDocument> GetAllToday()
@@ -121,7 +121,17 @@ namespace AssetNXT.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<TDocument>> GetAllTodayAsyc()
+        public Task<List<TDocument>> GetAllTodayAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public TDocument GetObjectByDeviceId(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TDocument> GetObjectByDeviceIdAsync(string id)
         {
             throw new NotImplementedException();
         }
