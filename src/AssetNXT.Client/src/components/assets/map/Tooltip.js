@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
 import { Container, Row, Col } from 'reactstrap';
 
-import './AssetMarkerInfo.css';
-import Asset from '../Asset';
+import "./Tooltip.css";
+import { Asset } from "../Asset";
 
-export default class AssetMarkerInfo extends Component {
+export class Tooltip extends Component {
 
   render() {
-    return (
-       <Container className="tooltip-container">
+    return(
+      <Container className="tooltip-container">
 
         <Row className="tooltip-row">
-           <Asset title={this.props.tag.id}
-            description={this.props.asset.deviceId} />
+           <Asset name={this.props.name}
+            description={this.props.description} />
         </Row>
 
         <Row className="tooltip-row">
@@ -27,9 +26,9 @@ export default class AssetMarkerInfo extends Component {
             <Row><label className="tooltip-property">Pressure: </label></Row>
           </Col>
           <Col className="tooltip-column" xs="auto">
-              <Row><label className="tooltip-property-value">{Math.round(this.props.tag.temperature)}&deg;C</label></Row>
-              <Row><label className="tooltip-property-value">{Math.round(this.props.tag.humidity)}%</label></Row>
-              <Row><label className="tooltip-property-value">{Math.round(this.props.tag.pressure)} Pa</label></Row>
+              <Row><label className="tooltip-property-value">{this.props.temperature}&deg;C</label></Row>
+              <Row><label className="tooltip-property-value">{this.props.humidity}%</label></Row>
+              <Row><label className="tooltip-property-value">{this.props.pressure} Pa</label></Row>
           </Col>
         </Row>
 
@@ -41,7 +40,7 @@ export default class AssetMarkerInfo extends Component {
             }
           </Col>
           <Col className="tooltip-link">
-            {this.props.link && <Link to={this.props.link}>More info</Link>}
+            <a className="text-primary" href="#">More Info</a>
           </Col>
         </Row>
 

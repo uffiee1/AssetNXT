@@ -20,15 +20,15 @@ namespace AssetNXT.Controllers
 
         public ConfigurationsController(IMongoDataRepository<Constrain> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation)
         {
-            _repositoryConstrain = repositoryConstrain;
-            _repositoryRuuviStation = repositoryRuuviStation;
+            this._repositoryConstrain = repositoryConstrain;
+            this._repositoryRuuviStation = repositoryRuuviStation;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValadatedTagById(string id)
         {
-            var constrain = await _repositoryConstrain.GetObjectByDeviceIdAsync(id);
-            var station = await _repositoryRuuviStation.GetObjectByDeviceIdAsync(id);
+            var constrain = await _repositoryConstrain.GetObjectLatestByDeviceIdAsync(id);
+            var station = await _repositoryRuuviStation.GetObjectLatestByDeviceIdAsync(id);
 
             if (constrain != null && station != null)
             {

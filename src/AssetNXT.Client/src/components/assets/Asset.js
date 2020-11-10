@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'reactstrap';
 import './Asset.css';
 
 
-export default class Asset extends Component {
+export class Asset extends Component {
 
   render() {
     return(
@@ -18,7 +18,7 @@ export default class Asset extends Component {
           <Col className="asset-contents-container">
             <Row className="asset-contents-row">
               <label className="asset-contents-label">
-                {this.props.title}
+                {this.props.name}
               </label>
 
             </Row>

@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import { Map, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+import React, { Component } from "react";
+import { Map, TileLayer, Popup, Marker, Circle } from 'react-leaflet';
 
-import './AssetMap.css'
-import AssetMarkerInfo from './AssetMarkerInfo';
+import "./Mapper.css";
+import { Tooltip } from './Tooltip';
+import { Searchbar } from "../search/Searchbar";
 
-export default class AssetMap extends Component {
+export class Mapper extends Component {
 
   componentDidMount() {
     this.map = this.mapInstance.leafletElement;
@@ -41,14 +42,13 @@ export default class AssetMap extends Component {
               return(
                  <Marker position={[asset.location.latitude, asset.location.longitude]}
                          onClick={e => this.map.panTo(e.target.getLatLng())}>
-                      <Popup>
-                        <AssetMarkerInfo
-                          title={tag.id}
-                          description={tag.id}
-                          temperature={Math.round(tag.temperature)}
-                          humidity={Math.round(tag.humidity)}
-                          pressure={Math.round(tag.pressure)}/>
-                      </Popup>
+                  <Popup>
+                    <Tooltip name={tag.id}
+                      description={tag.id}
+                      temperature={Math.round(tag.temperature)}
+                      humidity={Math.round(tag.humidity)}
+                      pressure={Math.round(tag.pressure)}/>
+                  </Popup>
                 </Marker>
               );
             }
