@@ -4,7 +4,7 @@ import { AssetList } from "../AssetList";
 
 import "./Searchbar.css";
 
-export default class Searchbar extends Component {
+export class Searchbar extends Component {
 
   constructor(props) {
     super(props)

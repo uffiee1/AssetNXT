@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AssetNXT.Dtos;
 using AssetNXT.Models.Data;
 using AssetNXT.Repository;
+
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,8 +25,9 @@ namespace AssetNXT.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllLatestsRuuviStations()
+        public async Task<IActionResult> GetAllRuuviStations()
         {
+
             var stations = await _repository.GetAllLatestAsync();
 
             if (stations != null)
@@ -36,14 +38,14 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
-        [HttpGet("{id}", Name = "GetRuuviStationById")]
-        public async Task<IActionResult> GetRuuviStationById(string id)
+        [HttpGet("{id}", Name="GetRuuviStationByDeviceId")]
+        public async Task<IActionResult> GetRuuviStationByDeviceId(string id)
         {
-            var stations = await _repository.GetObjectByIdAsync(id);
+            var station = await _repository.GetObjectByDeviceIdAsync(id);
 
-            if (stations != null)
+            if (station != null)
             {
-                return Ok(_mapper.Map<RuuviStationReadDto>(stations));
+                return Ok(_mapper.Map<RuuviStationReadDto>(station));
             }
 
             return NotFound();
@@ -59,20 +61,20 @@ namespace AssetNXT.Controllers
             var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(station);
 
             // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
-            return CreatedAtRoute(nameof(GetRuuviStationById), new { Id = ruuviStationReadDto.Id }, ruuviStationReadDto);
+            return CreatedAtRoute(nameof(GetRuuviStationByDeviceId), new { Id = ruuviStationReadDto.Id }, ruuviStationReadDto);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateRuuviStation(string id, RuuviStationCreateDto stationCreateDto)
         {
             var stationModel = _mapper.Map<RuuviStation>(stationCreateDto);
-            var station = await _repository.GetObjectByDeviceIdAsync(id);
+            var station = await _repository.GetObjectByIdAsync(id);
 
             if (station != null)
             {
                 stationModel.UpdatedAt = DateTime.UtcNow;
                 stationModel.Id = new MongoDB.Bson.ObjectId(id);
-                await _repository.UpdateObjectAsync(id, stationModel);
+                _repository.UpdateObject(id, stationModel);
                 return Ok(_mapper.Map<RuuviStationReadDto>(stationModel));
             }
 
@@ -82,25 +84,12 @@ namespace AssetNXT.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteRuuviStation(string id)
         {
-            var stationModel = await _repository.GetObjectByDeviceIdAsync(id);
+            var stationModel = await _repository.GetObjectByIdAsync(id);
 
             if (stationModel != null)
             {
                 await _repository.RemoveObjectAsync(stationModel);
                 return Ok("Successfully deleted from collection!");
-            }
-
-            return NotFound();
-        }
-
-        [HttpGet("device/{id}", Name = "GetAllRuuviStationByDeviceId")]
-        public async Task<IActionResult> GetAllRuuviStationsByDeviceId(string id)
-        {
-            var stations = await _repository.GetAllByDeviceIdAsync(id);
-
-            if (stations != null)
-            {
-                return Ok(_mapper.Map<IEnumerable<RuuviStationReadDto>>(stations));
             }
 
             return NotFound();

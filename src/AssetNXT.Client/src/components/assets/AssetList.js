@@ -5,9 +5,9 @@ import './Asset.css'
 import './AssetList.css'
 import './AssetListItem.css'
 
-import AssetListItem from './AssetListItem';
+import { AssetListItem } from './AssetListItem';
 
-export default class AssetList extends Component {
+export class AssetList extends Component {
 
   constructor(props) {
     super(props);
@@ -27,13 +27,14 @@ export default class AssetList extends Component {
             {this.props.assets.map(asset => 
               asset.tags.map(tag => { 
                 
-                return(
-                  <AssetListItem 
-                    title={tag.id}
-                    description={tag.id}
-                    location={asset.location}
-                    assetSelected={this.onAssetSelected}/>
-                );
+                if (!this.props.query || tag.id.indexOf(this.props.query) > -1) {
+                  return(
+                    <AssetListItem name={tag.id}
+                      location={asset.location}
+                      description={tag.id}
+                      assetSelected={this.onAssetSelected}/>
+                  );
+                }
 
               })
             )}
