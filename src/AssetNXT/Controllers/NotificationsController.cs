@@ -39,7 +39,7 @@ namespace AssetNXT.Controllers
         [HttpGet("{id}", Name = "GetNotificationByDeviceId")]
         public async Task<IActionResult> GetNotificationByDeviceId(string id)
         {
-            var notification = await _repository.GetObjectLatestByDeviceIdAsync(id);
+            var notification = await _repository.GetAllByDeviceIdAsync(id);
 
             if (notification != null)
             {

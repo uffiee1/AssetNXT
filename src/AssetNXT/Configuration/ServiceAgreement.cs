@@ -13,9 +13,9 @@ namespace AssetNXT.Configuration
 
         public ServiceAgreement(RuuviStation station, Constrain constrain)
         {
-            this.Constrain = constrain;
-            this.Collection = new List<Dictionary<string, bool>>();
-            this.Tags = station.Tags.ToList().OrderByDescending(doc => doc.CreateDate)
+            Constrain = constrain;
+            Collection = new List<Dictionary<string, bool>>();
+            Tags = station.Tags.ToList().OrderByDescending(doc => doc.CreateDate)
                 .GroupBy(doc => new { doc.Id }, (key, group) => group.First()).ToList();
         }
 
@@ -27,22 +27,22 @@ namespace AssetNXT.Configuration
 
         public List<Dictionary<string, bool>> Check()
         {
-            foreach (var tag in this.Tags)
+            foreach (var tag in Tags)
             {
                 Dictionary<string, bool> record = new Dictionary<string, bool>();
 
-                record.Add(tag.Id, this.Breached(tag));
-                this.Collection.Add(record);
+                record.Add(tag.Id, Breached(tag));
+                Collection.Add(record);
             }
 
-            return this.Collection;
+            return Collection;
         }
 
         public bool Breached(Tag tag)
         {
-            return (tag.Humidity >= this.Constrain.HumidityMin && tag.Humidity <= Constrain.HumidityMax) &&
-                   (tag.Pressure >= this.Constrain.PressureMin && tag.Pressure <= Constrain.PressureMax) &&
-                   (tag.Temperature >= this.Constrain.TemperatureMin && tag.Humidity <= Constrain.TemperatureMax);
+            return (tag.Humidity >= Constrain.HumidityMin && tag.Humidity <= Constrain.HumidityMax) &&
+                   (tag.Pressure >= Constrain.PressureMin && tag.Pressure <= Constrain.PressureMax) &&
+                   (tag.Temperature >= Constrain.TemperatureMin && tag.Humidity <= Constrain.TemperatureMax);
         }
     }
 }

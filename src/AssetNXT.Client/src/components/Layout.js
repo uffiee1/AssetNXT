@@ -1,19 +1,17 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from 'reactstrap';
 
-import './Layout.css'
-import { AssetList } from './assets/AssetList';
-import { Mapper } from './assets/map/Mapper';
-import { Banner } from "./Banner";
-import { Searchbar } from "./assets/search/Searchbar";
+import './Layout.css';
+import Banner from './Banner';
+import AssetList from './assets/AssetList';
+import AssetMap from './assets/map/AssetMap';
+import Searchbar from "./assets/search/Searchbar";
 
-export class Layout extends Component {
+export default class Layout extends Component {
 
   state = {
     state : "",
-    zoom : this.props.zoom || 14,
-    position: [this.props.assets[0].location.latitude,
-               this.props.assets[0].location.longitude]
+    zoom: this.props.zoom || 14
   }
 
   constructor(props) {
@@ -54,7 +52,7 @@ export class Layout extends Component {
                           d-none d-sm-flex flex-column">
 
             <Searchbar searchQuery={this.searchQuery}/>
-            <Mapper zoom={this.state.zoom}
+            <AssetMap zoom={this.state.zoom}
                     assets={this.props.assets}
                     query={this.state.query}
                     position={this.state.position}/>

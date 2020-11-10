@@ -32,19 +32,18 @@ namespace AssetNXT.Repository
 
         public async Task<List<TDocument>> GetAllAsync()
         {
-            var matches = await _collection.FindAsync(doc => true);
-            return await matches.ToListAsync();
+            return await Task.FromResult(GetAll());
         }
 
-        public TDocument GetObjectById(string id)
+        public TDocument GetObjectByDeviceId(string id)
         {
-            var matches = _collection.Find(doc => doc.Id == new ObjectId(id));
+            var matches = _collection.Find(doc => doc.DeviceId == id);
             return matches.FirstOrDefault();
         }
 
-        public async Task<TDocument> GetObjectByIdAsync(string id)
+        public async Task<TDocument> GetObjectByDeviceIdAsync(string id)
         {
-            var matches = await _collection.FindAsync(doc => doc.Id == new ObjectId(id));
+            var matches = await _collection.FindAsync(doc => doc.DeviceId == id);
             return await matches.FirstOrDefaultAsync();
         }
 
@@ -105,47 +104,34 @@ namespace AssetNXT.Repository
 
         public List<TDocument> GetAllLatest()
         {
-            // CreatedAt should be changed to UpdatedAt
-            return _collection.Find(doc => true).ToList().OrderByDescending(doc => doc.CreatedAt).GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();
+            return _collection.Find(doc => true).ToList().OrderByDescending(doc => doc.UpdatedAt).GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();
         }
 
         public async Task<List<TDocument>> GetAllLatestAsync()
         {
-            // CreatedAt should be changed to UpdatedAt
-            var matches = await _collection.Find(doc => true).ToListAsync();
-            return matches.OrderByDescending(doc => doc.CreatedAt).GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();
+            return await Task.FromResult(GetAllLatest());
         }
 
-        public List<TDocument> GetAllToday()
+        public TDocument GetObjectById(string id)
         {
-            return _collection.Find<TDocument>(doc => doc.CreatedAt > DateTime.UtcNow.AddDays(-1)).ToList();
-        }
-
-        public async Task<List<TDocument>> GetAllTodayAsync()
-        {
-            return await _collection.Find<TDocument>(doc => doc.CreatedAt > DateTime.UtcNow.AddDays(-1)).ToListAsync();
-        }
-
-        public TDocument GetObjectLatestByDeviceId(string id)
-        {
-            var matches = _collection.Find(doc => doc.DeviceId == id);
+            var matches = _collection.Find(doc => doc.Id == new ObjectId(id)).ToList();
             return matches.FirstOrDefault();
         }
 
-        public async Task<TDocument> GetObjectLatestByDeviceIdAsync(string id)
+        public async Task<TDocument> GetObjectByIdAsync(string id)
         {
-            var matches = await _collection.FindAsync(doc => doc.DeviceId == id);
-            return await matches.FirstOrDefaultAsync();
+            return await Task.FromResult(GetObjectById(id));
         }
 
-        public TDocument GetObjectAllByDeviceId(string id)
+        public List<TDocument> GetAllByDeviceId(string id)
         {
-            return (TDocument)_collection.Find(doc => doc.DeviceId == id);
+            var matches = _collection.Find(doc => doc.DeviceId == id);
+            return matches.ToList();
         }
 
-        public async Task<TDocument> GetObjectAllByDeviceIdAsync(string id)
+        public async Task<List<TDocument>> GetAllByDeviceIdAsync(string id)
         {
-            return (TDocument)await _collection.FindAsync(doc => doc.DeviceId == id);
+            return await Task.FromResult(GetAllByDeviceId(id));
         }
     }
 }

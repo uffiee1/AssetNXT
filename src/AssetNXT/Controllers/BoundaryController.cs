@@ -41,7 +41,7 @@ namespace AssetNXT.Controllers
         [HttpGet("{id}", Name = "GetBoundaryByDeviceId")]
         public async Task<IActionResult> GetBoundaryByDeviceId(string id)
         {
-            var boundary = await _repository.GetObjectLatestByDeviceIdAsync(id);
+            var boundary = await _repository.GetAllByDeviceIdAsync(id);
 
             if (boundary != null)
             {

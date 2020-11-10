@@ -1,18 +1,19 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 
-import "./Tooltip.css";
-import { Asset } from "../Asset";
+import './AssetMarkerInfo.css';
+import Asset from '../Asset';
 
-export class Tooltip extends Component {
+export default class AssetMarkerInfo extends Component {
 
   render() {
-    return(
-      <Container className="tooltip-container">
+    return (
+       <Container className="tooltip-container">
 
         <Row className="tooltip-row">
-           <Asset name={this.props.name}
-            description={this.props.description} />
+           <Asset title={this.props.tag.id}
+            description={this.props.asset.deviceId} />
         </Row>
 
         <Row className="tooltip-row">
@@ -26,9 +27,9 @@ export class Tooltip extends Component {
             <Row><label className="tooltip-property">Pressure: </label></Row>
           </Col>
           <Col className="tooltip-column" xs="auto">
-              <Row><label className="tooltip-property-value">{this.props.temperature}&deg;C</label></Row>
-              <Row><label className="tooltip-property-value">{this.props.humidity}%</label></Row>
-              <Row><label className="tooltip-property-value">{this.props.pressure} Pa</label></Row>
+              <Row><label className="tooltip-property-value">{Math.round(this.props.tag.temperature)}&deg;C</label></Row>
+              <Row><label className="tooltip-property-value">{Math.round(this.props.tag.humidity)}%</label></Row>
+              <Row><label className="tooltip-property-value">{Math.round(this.props.tag.pressure)} Pa</label></Row>
           </Col>
         </Row>
 
@@ -40,7 +41,7 @@ export class Tooltip extends Component {
             }
           </Col>
           <Col className="tooltip-link">
-            <a className="text-primary" href="#">More Info</a>
+            {this.props.link && <Link to={this.props.link}>More info</Link>}
           </Col>
         </Row>
 

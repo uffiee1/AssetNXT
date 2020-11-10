@@ -1,0 +1,14 @@
+.data-template-container {
+    display:flex;
+    flex-direction: column;
+}
+
+.data-template-row {
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.data-template-col {
+    height: 100%;
+    overflow-y: auto;
+}
