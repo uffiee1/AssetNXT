@@ -39,7 +39,7 @@ namespace AssetNXT.Controllers
         [HttpGet("{id}", Name = "GetConstrainByDeviceId")]
         public async Task<IActionResult> GetConstrainByDeviceId(string id)
         {
-            var constrain = await _repository.GetObjectByDeviceIdAsync(id);
+            var constrain = await _repository.GetAllByDeviceIdAsync(id);
 
             if (constrain != null)
             {

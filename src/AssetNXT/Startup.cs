@@ -1,7 +1,5 @@
 using System;
-using AssetNXT.Configuration;
-using AssetNXT.Models.Data;
-using AssetNXT.Profiles;
+
 using AssetNXT.Repository;
 using AssetNXT.Settings;
 
@@ -19,34 +17,41 @@ namespace AssetNXT
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            this.Configuration = configuration;
-        }
-
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
-            // MongoDb Configurations
-            services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    var contractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.ContractResolver = contractResolver;
+                });
 
-            // Provider
-            services.AddSingleton<IMongoDbSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
-
-            // Mapping
-            // https://stackoverflow.com/questions/40275195/how-to-set-up-automapper-in-asp-net-core
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "../AssetNXT.Client/build";
+            });
+
+            ConfigureSwaggerServices(services);
+            ConfigureDatabaseServices(services);
 
             // Scope
-            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            /* services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>)); */
+            /// services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
+            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>));
 
             // Controllers Serialization
             services.AddControllers().AddNewtonsoftJson(s => { s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
+        }
 
-            // Swagger
+        public void ConfigureSwagger(IServiceCollection services)
+        {
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -55,11 +60,25 @@ namespace AssetNXT
                     Version = "v1"
                 });
             });
+        }
 
-            // React js Start-up Configurations
-            services.AddSpaStaticFiles(configuration =>
+        public void ConfigureDatabaseServices(IServiceCollection services)
+        {
+            // MongoDB Configuration
+            services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
+            services.AddSingleton<IMongoDbSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+        }
+
+        public void ConfigureSwaggerServices(IServiceCollection services)
+        {
+            // Swagger
+            services.AddSwaggerGen(options =>
             {
-                configuration.RootPath = "../AssetNXT.Client/build";
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "API",
+                    Version = "v1"
+                });
             });
         }
 

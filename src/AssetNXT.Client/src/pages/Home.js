@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
-import { Layout } from './components/Layout';
+import React, { Component } from "react";
 
-export default class App extends Component {
-  static displayName = App.name;
+import './Home.css'
+import Layout from '../components/Layout';
+
+export default class Home extends Component {
+  static displayName = Home.displayName
 
   constructor(props) {
     super(props);
@@ -13,16 +15,16 @@ export default class App extends Component {
     this.fetchStationData();
   }
 
-  render () {
-    var contents = this.state.loading
-      ? <p><em>Loading...</em></p>
-      : <Layout assets={this.state.assets} />
+  render() {
 
-    return(contents);
+     var contents = this.state.loading
+      ? <Layout dock={<p><em>Loading...</em></p>}/>
+      : this.renderComponent(this.state.assets);
+
+    return contents;
   }
 
   async fetchStationData() {
-
     const request = 'api/stations';
 
     const response = await fetch(request);
