@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using AssetNXT.Models;
@@ -17,17 +16,17 @@ namespace AssetNXT.Repository
 
         Task<List<TDocument>> GetAllLatestAsync();
 
-        List<TDocument> GetAllToday();
-
-        Task<List<TDocument>> GetAllTodayAsync();
-
         TDocument GetObjectById(string id);
 
         Task<TDocument> GetObjectByIdAsync(string id);
 
-        List<TDocument> GetObjectsByDeviceId(string id);
+        TDocument GetObjectByDeviceId(string id);
 
-        Task<List<TDocument>> GetObjectsByDeviceIdAsync(string id);
+        Task<TDocument> GetObjectByDeviceIdAsync(string id);
+
+        List<TDocument> GetAllByDeviceId(string id);
+
+        Task<List<TDocument>> GetAllByDeviceIdAsync(string id);
 
         void CreateObject(TDocument document);
 

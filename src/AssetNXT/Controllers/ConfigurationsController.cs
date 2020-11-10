@@ -27,8 +27,8 @@ namespace AssetNXT.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValadatedTagById(string id)
         {
-            var constrain = await _repositoryConstrain.GetObjectByIdAsync(id);
-            var station = await _repositoryRuuviStation.GetObjectByIdAsync(id);
+            var constrain = await _repositoryConstrain.GetObjectByDeviceIdAsync(id);
+            var station = await _repositoryRuuviStation.GetObjectByDeviceIdAsync(id);
 
             if (constrain != null && station != null)
             {

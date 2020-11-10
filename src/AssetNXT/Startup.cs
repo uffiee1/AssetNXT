@@ -1,7 +1,6 @@
 using System;
 
 using AssetNXT.Repository;
-using AssetNXT.Services;
 using AssetNXT.Settings;
 
 using AutoMapper;
@@ -42,7 +41,13 @@ namespace AssetNXT
 
             ConfigureSwaggerServices(services);
             ConfigureDatabaseServices(services);
-            services.AddSingleton<IRuuviStationService, MockRuuviStationService>();
+
+            // Scope
+            /// services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
+            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MockDataRepository<>));
+
+            // Controllers Serialization
+            services.AddControllers().AddNewtonsoftJson(s => { s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
         }
 
         public void ConfigureSwagger(IServiceCollection services)
@@ -62,9 +67,6 @@ namespace AssetNXT
             // MongoDB Configuration
             services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
             services.AddSingleton<IMongoDbSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
-
-            // MongoDB Repositories
-            services.AddSingleton(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
         }
 
         public void ConfigureSwaggerServices(IServiceCollection services)

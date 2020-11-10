@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using AssetNXT.Dtos;
 using AssetNXT.Models.Data;
 using AssetNXT.Repository;
-using AssetNXT.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,19 +14,19 @@ namespace AssetNXT.Controllers
     [ApiController]
     public class RuuviStationsController : ControllerBase
     {
-        private readonly IRuuviStationService _service;
+        private readonly IMongoDataRepository<RuuviStation> _repository;
         private readonly IMapper _mapper;
 
-        public RuuviStationsController(IRuuviStationService service, IMapper mapper)
+        public RuuviStationsController(IMongoDataRepository<RuuviStation> repository, IMapper mapper)
         {
             _mapper = mapper;
-            _service = service;
+            _repository = repository;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllLatestsRuuviStations()
         {
-            var stations = await _service.GetAllLatestRuuviStationsAsync();
+            var stations = await _repository.GetAllLatestAsync();
 
             if (stations != null)
             {
@@ -40,24 +39,11 @@ namespace AssetNXT.Controllers
         [HttpGet("{id}", Name = "GetRuuviStationById")]
         public async Task<IActionResult> GetRuuviStationById(string id)
         {
-            var stations = await _service.GetRuuviStationByIdAsync(id);
+            var stations = await _repository.GetObjectByIdAsync(id);
 
             if (stations != null)
             {
                 return Ok(_mapper.Map<RuuviStationReadDto>(stations));
-            }
-
-            return NotFound();
-        }
-
-        [HttpGet("device/{deviceId}", Name="GetRuuviStationByDeviceId")]
-        public async Task<IActionResult> GetRuuviStationsByDeviceId(string deviceId)
-        {
-            var stations = await _service.GetRuuviStationsByDeviceIdAsync(deviceId);
-
-            if (stations != null)
-            {
-                return Ok(_mapper.Map<IEnumerable<RuuviStationReadDto>>(stations));
             }
 
             return NotFound();
@@ -68,7 +54,7 @@ namespace AssetNXT.Controllers
         {
             var station = _mapper.Map<RuuviStation>(ruuviStationCreateDto);
 
-            await _service.CreateRuuviStationAsync(station);
+            await _repository.CreateObjectAsync(station);
 
             var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(station);
 
@@ -80,13 +66,13 @@ namespace AssetNXT.Controllers
         public async Task<IActionResult> UpdateRuuviStation(string id, RuuviStationCreateDto stationCreateDto)
         {
             var stationModel = _mapper.Map<RuuviStation>(stationCreateDto);
-            var station = await _service.GetRuuviStationByIdAsync(id);
+            var station = await _repository.GetObjectByDeviceIdAsync(id);
 
             if (station != null)
             {
                 stationModel.UpdatedAt = DateTime.UtcNow;
                 stationModel.Id = new MongoDB.Bson.ObjectId(id);
-                await _service.UpdateRuuviStationAsync(id, stationModel);
+                await _repository.UpdateObjectAsync(id, stationModel);
                 return Ok(_mapper.Map<RuuviStationReadDto>(stationModel));
             }
 
@@ -96,12 +82,25 @@ namespace AssetNXT.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteRuuviStation(string id)
         {
-            var stationModel = await _service.GetRuuviStationByIdAsync(id);
+            var stationModel = await _repository.GetObjectByDeviceIdAsync(id);
 
             if (stationModel != null)
             {
-                await _service.DeleteRuuviStationAsync(stationModel);
+                await _repository.RemoveObjectAsync(stationModel);
                 return Ok("Successfully deleted from collection!");
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("device/{id}", Name = "GetAllRuuviStationByDeviceId")]
+        public async Task<IActionResult> GetAllRuuviStationsByDeviceId(string id)
+        {
+            var stations = await _repository.GetAllByDeviceIdAsync(id);
+
+            if (stations != null)
+            {
+                return Ok(_mapper.Map<IEnumerable<RuuviStationReadDto>>(stations));
             }
 
             return NotFound();
