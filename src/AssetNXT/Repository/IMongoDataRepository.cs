@@ -17,21 +17,17 @@ namespace AssetNXT.Repository
 
         Task<List<TDocument>> GetAllLatestAsync();
 
-        List<TDocument> GetAllToday();
-
-        Task<List<TDocument>> GetAllTodayAsync();
-
         TDocument GetObjectById(string id);
 
         Task<TDocument> GetObjectByIdAsync(string id);
 
-        TDocument GetObjectLatestByDeviceId(string id);
+        TDocument GetObjectByDeviceId(string id);
 
-        Task<TDocument> GetObjectLatestByDeviceIdAsync(string id);
+        Task<TDocument> GetObjectByDeviceIdAsync(string id);
 
-        TDocument GetObjectAllByDeviceId(string id);
+        List<TDocument> GetAllObjectsByDeviceId(string id);
 
-        Task<TDocument> GetObjectAllByDeviceIdAsync(string id);
+        Task<List<TDocument>> GetAllObjectsByDeviceIdAsync(string id);
 
         void CreateObject(TDocument document);
 
