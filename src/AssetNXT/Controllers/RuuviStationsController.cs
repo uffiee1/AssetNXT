@@ -40,7 +40,7 @@ namespace AssetNXT.Controllers
         [HttpGet("{id}", Name="GetRuuviStationByDeviceId")]
         public async Task<IActionResult> GetRuuviStationByDeviceId(string id)
         {
-            var station = await _repository.GetObjectLatestByDeviceIdAsync(id);
+            var station = await _repository.GetObjectByDeviceIdAsync(id);
 
             if (station != null)
             {
