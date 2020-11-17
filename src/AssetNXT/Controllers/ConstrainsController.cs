@@ -27,7 +27,7 @@ namespace AssetNXT.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllConstrains()
         {
-            var constrains = await _repository.GetAllLatestAsync();
+            var constrains = await _repository.GetAllAsync();
 
             if (constrains != null)
             {

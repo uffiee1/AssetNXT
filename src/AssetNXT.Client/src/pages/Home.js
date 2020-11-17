@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import './Home.css'
+import './Home.css';
 import Layout from '../components/Layout';
 import AssetList from "../components/assets/AssetList";
 import AssetMap from '../components/assets/map/AssetMap';

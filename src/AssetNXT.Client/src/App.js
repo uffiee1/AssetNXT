@@ -13,8 +13,8 @@ export default class App extends Component {
     return (
         <Switch>
             <Route path='/' exact component={Home} />
-            <Route path='/:deviceId' exact component={StationPage} />
             <Route path='/constrains' exact component={ConstrainPage} />
+            <Route path='/:deviceId' exact component={StationPage} />
         </Switch>
     );
   }
