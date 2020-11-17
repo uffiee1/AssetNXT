@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 
-import './Home.css'
+import './StationPage.css'
 import Layout from '../components/Layout';
 import TelemetricTabs from "../components/assets/telemetric/TelemetricTabs";
 import TelemetricDataTemplate from "../components/assets/telemetric/TelemetricDataTemplate";
 
-export default class DevicePage extends Component {
-  static displayName = DevicePage.displayName
+export default class StationPage extends Component {
+  static displayName = StationPage.displayName
 
   state = {
     assets: [],

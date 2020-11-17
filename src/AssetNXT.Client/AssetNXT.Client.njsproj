@@ -90,6 +90,11 @@
     <Content Include="src\components\assets\telemetric\TelemetricTabs.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\constrains\createConstrains.js" />
+    <Content Include="src\components\constrains\deleteConstrains.js" />
+    <Content Include="src\components\constrains\editConstrains.js" />
+    <Content Include="src\pages\ConstrainPage.css" />
+    <Content Include="src\pages\ConstrainPage.js" />
     <Content Include="src\components\notifications\NotificationList.css">
       <SubType>Code</SubType>
     </Content>
@@ -113,10 +118,10 @@
     <Content Include="src\components\search\Searchbar.css" />
     <Content Include="src\components\search\Searchbar.js" />
     <Content Include="src\index.js" />
-    <Content Include="src\pages\DevicePage.css">
+    <Content Include="src\pages\StationPage.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\pages\DevicePage.js">
+    <Content Include="src\pages\StationPage.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\pages\Home.css">
@@ -135,6 +140,7 @@
     <Folder Include="src\components\assets\map\" />
     <Folder Include="src\components\assets\telemetric\" />
     <Folder Include="src\components\assets\telemetric\graphs\" />
+    <Folder Include="src\components\constrains\" />
     <Folder Include="src\components\notifications\" />
     <Folder Include="src\components\search\" />
     <Folder Include="src\pages\" />

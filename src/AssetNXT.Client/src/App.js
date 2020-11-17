@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Router } from 'react-router-dom';
 
 import Home from './pages/Home';
-import DevicePage from './pages/DevicePage'
+import StationPage from './pages/StationPage';
+import ConstrainPage from './pages/ConstrainPage';
 
 
 export default class App extends Component {
   static displayName = App.name;
 
   render() {
-    return(
-      <Switch>
-        <Route path='/' exact component={Home}/>
-        <Route path='/:deviceId' component={DevicePage}/>
-      </Switch>
+    return (
+      <Router>
+        <Switch>
+            <Route path='/' exact component={Home} />
+            <Route path='/:deviceId' exact component={StationPage} />
+            <Route path='/constrains/' exact component={ConstrainPage} />
+        </Switch>
+      </Router>
     );
   }
 }

@@ -1,0 +1,28 @@
+.selected {
+    background-color: whitesmoke;
+}
+
+table thead {
+    background-color: #1E90FF1F;
+}
+
+tbody tr:hover {
+    cursor: pointer;
+    background-color: whitesmoke;
+}
+
+.badge-lightblue {
+    background-color: #1E90FF1F;
+}
+
+.nested-input {
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+.nested-button {
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.mh-90{
+    max-height: 90% !important;
+}
