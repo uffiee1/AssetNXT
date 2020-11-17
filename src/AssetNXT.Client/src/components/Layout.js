@@ -102,7 +102,8 @@ export default class Layout extends Component {
      var contents = !this.props.dock
       ? <Col className="layout-contents-panel dock-main" />
       : <Col className="layout-contents-panel dock-main">
-           {this.props.dock}
+             {this.props.dock}
+             {this.props.search}
         </Col>
 
     return contents;

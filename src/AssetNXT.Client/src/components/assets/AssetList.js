@@ -25,13 +25,17 @@ export default class AssetList extends React.Component {
           <Col className="asset-list-column">
 
             {this.props.assets.map(asset => 
-              asset.tags.map(tag => { return(
-                  <AssetListItem 
-                    title={tag.id}
-                    location={asset.location}
-                    description={asset.deviceId}
-                    assetSelected={this.onAssetSelected}/>
-                );
+              asset.tags.map(tag => {
+                
+                if (!this.props.query || tag.id.indexOf(this.props.query) > -1) {
+                  return (
+                    <AssetListItem
+                      title={tag.id}
+                      location={asset.location}
+                      description={asset.deviceId}
+                      assetSelected={this.onAssetSelected} />
+                  );
+                }
               })
             )}
 

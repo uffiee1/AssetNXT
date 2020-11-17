@@ -21,21 +21,26 @@ export default class AssetMap extends Component {
 
   renderAssets(assets, Template) {
 
-    return assets.map(asset => {
-      return asset.tags.map(tag =>
-        <Marker position={this.getAssetLatLng(asset)}
-          onClick={() => this.ensureInCenter(asset)}> {
-            
-            Template && <Popup>
-              <Template asset={asset} tag={tag} 
-                        link={`/${asset.deviceId}/`}>
-              </Template>
-            </Popup>
+    return assets.map(asset =>
+      asset.tags.map(tag => {
 
-          }
-        </Marker>
-      )
-    })
+        if (!this.props.query || tag.id.indexOf(this.props.query) > -1) {
+          return (
+            <Marker position={this.getAssetLatLng(asset)}
+              onClick={() => this.ensureInCenter(asset)}> {
+            
+                Template && <Popup>
+                  <Template asset={asset} tag={tag}
+                    link={`/${asset.deviceId}/`}>
+                  </Template>
+                </Popup>
+
+              }
+            </Marker>
+          );
+        }
+      })
+    );
   }
 
   render() {

@@ -5,72 +5,85 @@ import Layout from '../components/Layout';
 import AssetList from "../components/assets/AssetList";
 import AssetMap from '../components/assets/map/AssetMap';
 import AssetMarkerInfo from "../components/assets/map/AssetMarkerInfo";
+import Searchbar from "../components/search/Searchbar";
 
 export default class Home extends Component {
   static displayName = Home.displayName
 
-  state = {
-    assets: [],
-    loading: true
-  }
+    state = {
+        zoom: this.props.zoom || 14,
+        assets: [],
+        loading: true
+    }
 
-  constructor(props) {
-    super(props);
-    this.onAssetAdded = this.onAssetAdded.bind(this);
-    this.onAssetRemoved = this.onAssetRemoved.bind(this);
-    this.onAssetSelected = this.onAssetSelected.bind(this);
-  }
+    constructor(props) {
+        super(props);
+        this.searchQuery = this.searchQuery.bind(this);
+        this.onAssetAdded = this.onAssetAdded.bind(this);
+        this.onAssetRemoved = this.onAssetRemoved.bind(this);
+        this.onAssetSelected = this.onAssetSelected.bind(this);
+    }
 
-  componentDidMount() {
-    this.fetchStationData();
-  }
+    componentDidMount() {
+        this.fetchStationData();
+    }
 
-  onAssetAdded(asset) {
+    searchQuery(query) {
+        this.setState({ query: query})
+    }
 
-  }
+    onAssetAdded(asset) {
 
-  onAssetRemoved(asset) {
-  }
+    }
 
-  onAssetSelected(asset) {
-    this.mapInstance.ensurePopupClosed();
-    this.mapInstance.ensureInCenter(asset);
-  }
+    onAssetRemoved(asset) {
+    }
 
-  renderComponent(assets) {
+    onAssetSelected(asset) {
+        this.mapInstance.ensurePopupClosed();
+        this.mapInstance.ensureInCenter(asset);
+    }
+
+    renderComponent(assets) {
     
-    var assetMap = 
-      <AssetMap assets={assets} 
-        assetMarkerTemplate={AssetMarkerInfo}
-        ref={e => this.mapInstance = e} zoom={14}/>
+        var assetMap = 
+          <AssetMap assets={assets} 
+            assetMarkerTemplate={AssetMarkerInfo}
+                ref={e => this.mapInstance = e}
+                zoom={this.state.zoom}
+                query={this.state.query}/>
 
-    var assetList = 
-      <AssetList assets={assets}
-        assetSelected={this.onAssetSelected}/>
+        var assetList = 
+          <AssetList assets={assets}
+                assetSelected={this.onAssetSelected}
+                query={this.state.query}/>
 
-    return <Layout dockLeft={assetList} dock={assetMap} />
-  }
+        var assetSearch = 
+            <Searchbar searchQuery={this.searchQuery} />
 
-  render() {
+        return <Layout dockLeft={assetList} dock={assetMap} search={assetSearch} />
+    }
 
-     var contents = this.state.loading
-      ? <Layout dock={<p><em>Loading...</em></p>}/>
-      : this.renderComponent(this.state.assets);
+    render() {
 
-    return contents;
-  }
+         var contents = this.state.loading
+          ? <Layout dock={<p><em>Loading...</em></p>}/>
+          : this.renderComponent(this.state.assets);
 
-  async fetchStationData() {
-    const request = 'api/stations';
+        return contents;
+    }
 
-    const response = await fetch(request);
-    console.log("Response:");
-    console.log(response);
+    async fetchStationData() {
+        const request = 'api/stations';
 
-    const data = await response.json();
-    console.log("Data:");
-    console.log(data);
+        const response = await fetch(request);
+        console.log("Response:");
+        console.log(response);
 
-    this.setState({ loading: false, assets: data });
-  }
+        const data = await response.json();
+        console.log("Data:");
+        console.log(data);
+
+        this.setState({ loading: false, assets: data });
+    }
 }

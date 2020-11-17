@@ -110,6 +110,8 @@
     <Content Include="src\components\Layout.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\search\Searchbar.css" />
+    <Content Include="src\components\search\Searchbar.js" />
     <Content Include="src\index.js" />
     <Content Include="src\pages\DevicePage.css">
       <SubType>Code</SubType>
@@ -134,6 +136,7 @@
     <Folder Include="src\components\assets\telemetric\" />
     <Folder Include="src\components\assets\telemetric\graphs\" />
     <Folder Include="src\components\notifications\" />
+    <Folder Include="src\components\search\" />
     <Folder Include="src\pages\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
