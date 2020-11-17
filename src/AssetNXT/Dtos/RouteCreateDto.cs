@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using AssetNXT.Models.Data;
 
 namespace AssetNXT.Dtos
 {
-    public class BoundaryCreateDto
+    public class RouteCreateDto
     {
         [MaxLength(250)]
         [Required(AllowEmptyStrings = false)]
@@ -11,12 +12,6 @@ namespace AssetNXT.Dtos
         public string DeviceId { get; set; }
 
         [Required]
-        public double Radius { get; set; }
-
-        [Required]
-        public string Colour { get; set; }
-
-        [Required]
-        public Location Location { get; set; }
+        public Boundary[] Points { get; set; }
     }
 }
