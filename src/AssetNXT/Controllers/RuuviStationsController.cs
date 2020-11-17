@@ -81,6 +81,9 @@ namespace AssetNXT.Controllers
         {
             var station = _mapper.Map<RuuviStation>(ruuviStationCreateDto);
 
+            station.Tags.ForEach(tag => tag.CreateDate = DateTime.UtcNow);
+            station.Tags.ForEach(tag => tag.UpdateAt = DateTime.UtcNow);
+
             await _repository.CreateObjectAsync(station);
 
             var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(station);
@@ -99,6 +102,8 @@ namespace AssetNXT.Controllers
             {
                 stationModel.UpdatedAt = DateTime.UtcNow;
                 stationModel.Id = new MongoDB.Bson.ObjectId(id);
+                stationModel.Tags.ForEach(tag => tag.UpdateAt = DateTime.UtcNow);
+
                 _repository.UpdateObject(id, stationModel);
                 return Ok(_mapper.Map<RuuviStationReadDto>(stationModel));
             }

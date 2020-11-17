@@ -4,13 +4,17 @@ namespace AssetNXT.Dtos
 {
     public class TagReadDto
     {
+        public string Id { get; set; }
+
+        public DateTime UpdateAt { get; set; }
+
+        public DateTime CreateDate { get; set; }
+
         public double AccelX { get; set; }
 
         public double AccelY { get; set; }
 
         public double AccelZ { get; set; }
-
-        public DateTime CreateDate { get; set; }
 
         public int DataFormat { get; set; }
 
@@ -21,8 +25,6 @@ namespace AssetNXT.Dtos
         public double Humidity { get; set; }
 
         public double HumidityOffset { get; set; }
-
-        public string Id { get; set; }
 
         public int MeasurementSequenceNumber { get; set; }
 
@@ -35,8 +37,6 @@ namespace AssetNXT.Dtos
         public double Temperature { get; set; }
 
         public int txPower { get; set; }
-
-        public DateTime UpdateAt { get; set; }
 
         public double Voltage { get; set; }
     }
