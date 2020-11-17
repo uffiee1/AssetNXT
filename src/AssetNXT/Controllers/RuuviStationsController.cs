@@ -63,6 +63,19 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
+        [HttpGet("all-tags/{id}", Name = "GetAllTagsByDeviceId")]
+        public async Task<IActionResult> GetAllTagsByDeviceId(string id)
+        {
+            var stations = await _repository.GetAllObjectsByDeviceIdAsync(id);
+
+            if (stations != null)
+            {
+                return Ok(_mapper.Map<List<TagReadDto>>(stations));
+            }
+
+            return NotFound();
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateRuuviStation(RuuviStationCreateDto ruuviStationCreateDto)
         {
