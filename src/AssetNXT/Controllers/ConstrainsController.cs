@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AssetNXT.Dtos;
 using AssetNXT.Models.Data;
@@ -60,6 +61,37 @@ namespace AssetNXT.Controllers
 
             // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
             return CreatedAtRoute(nameof(GetConstrainByDeviceId), new { Id = constrainReadDto.Id }, constrainReadDto);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateConstrain(string id, ConstrainCreateDto constrainCreateDto)
+        {
+            var constrainModel = _mapper.Map<Constrain>(constrainCreateDto);
+            var constrain = await _repository.GetObjectByIdAsync(id);
+
+            if (constrain != null)
+            {
+                constrainModel.UpdatedAt = DateTime.UtcNow;
+                constrainModel.Id = new MongoDB.Bson.ObjectId(id);
+                _repository.UpdateObject(id, constrainModel);
+                return Ok(_mapper.Map<ConstrainReadDto>(constrainModel));
+            }
+
+            return NotFound();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteConstrain(string id)
+        {
+            var constrainModel = await _repository.GetObjectByIdAsync(id);
+
+            if (constrainModel != null)
+            {
+                await _repository.RemoveObjectAsync(constrainModel);
+                return Ok("Successfully deleted from collection!");
+            }
+
+            return NotFound();
         }
     }
 }
