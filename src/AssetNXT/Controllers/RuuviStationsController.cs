@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AssetNXT.Controllers
 {
     [Produces("application/json")]
-    [Route("api/stations")]
+    [Route("api/stations/")]
     [ApiController]
     public class RuuviStationsController : ControllerBase
     {
@@ -45,6 +45,19 @@ namespace AssetNXT.Controllers
             if (station != null)
             {
                 return Ok(_mapper.Map<RuuviStationReadDto>(station));
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("all/{id}", Name = "GetAllByDeviceId")]
+        public async Task<IActionResult> GetAllByDeviceId(string id)
+        {
+            var stations = await _repository.GetAllObjectsByDeviceIdAsync(id);
+
+            if (stations != null)
+            {
+                return Ok(_mapper.Map<List<RuuviStationReadDto>>(stations));
             }
 
             return NotFound();

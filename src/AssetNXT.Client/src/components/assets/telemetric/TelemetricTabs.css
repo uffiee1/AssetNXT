@@ -1,0 +1,15 @@
+.react-tabs {
+    display:flex;
+    flex-grow: 1;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.react-tabs__tab-panel{
+    min-height: 0;
+}
+
+.react-tabs__tab-panel--selected {
+    display:flex !important;
+    flex-grow: 1 !important;
+}

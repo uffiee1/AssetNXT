@@ -25,7 +25,7 @@ namespace AssetNXT.Repository
             throw new NotImplementedException();
         }
 
-        public async Task CreateObjectAsync(TDocument document)
+        public Task CreateObjectAsync(TDocument document)
         {
             throw new NotImplementedException();
         }
@@ -100,7 +100,7 @@ namespace AssetNXT.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<TDocument> GetObjectByDeviceIdAsync(string id)
+        public Task<TDocument> GetObjectByDeviceIdAsync(string id)
         {
             throw new NotImplementedException();
         }
@@ -110,7 +110,7 @@ namespace AssetNXT.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<TDocument> GetObjectByIdAsync(string id)
+        public Task<TDocument> GetObjectByIdAsync(string id)
         {
             throw new NotImplementedException();
         }
@@ -120,7 +120,7 @@ namespace AssetNXT.Repository
             throw new NotImplementedException();
         }
 
-        public async Task RemoveObjectAsync(TDocument document)
+        public Task RemoveObjectAsync(TDocument document)
         {
             throw new NotImplementedException();
         }
@@ -130,7 +130,7 @@ namespace AssetNXT.Repository
             throw new NotImplementedException();
         }
 
-        public async Task RemoveObjectByIdAsync(string id)
+        public Task RemoveObjectByIdAsync(string id)
         {
             throw new NotImplementedException();
         }
@@ -140,7 +140,7 @@ namespace AssetNXT.Repository
             throw new NotImplementedException();
         }
 
-        public async Task UpdateObjectAsync(string id, TDocument document)
+        public Task UpdateObjectAsync(string id, TDocument document)
         {
             throw new NotImplementedException();
         }
