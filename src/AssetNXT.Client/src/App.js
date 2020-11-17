@@ -4,6 +4,7 @@ import { Switch, Route, Router } from 'react-router-dom';
 import Home from './pages/Home';
 import StationPage from './pages/StationPage';
 import ConstrainPage from './pages/ConstrainPage';
+import GeometricPage from './pages/GeometricPage';
 
 
 export default class App extends Component {
@@ -13,6 +14,7 @@ export default class App extends Component {
     return (
         <Switch>
             <Route path='/' exact component={Home} />
+            <Route path='/geo' exact component={GeometricPage} />
             <Route path='/constrains' exact component={ConstrainPage} />
             <Route path='/:deviceId' exact component={StationPage} />
         </Switch>
