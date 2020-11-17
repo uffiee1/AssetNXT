@@ -1,5 +1,5 @@
 using System;
-
+using AssetNXT.Hubs;
 using AssetNXT.Repository;
 using AssetNXT.Settings;
 
@@ -41,6 +41,7 @@ namespace AssetNXT
 
             ConfigureSwaggerServices(services);
             ConfigureDatabaseServices(services);
+            ConfigureCrossOriginResourceSharing(services);
 
             // Scope
             services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
@@ -48,6 +49,9 @@ namespace AssetNXT
 
             // Controllers Serialization
             services.AddControllers().AddNewtonsoftJson(s => { s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
+
+            // SignalR
+            services.AddSignalR();
         }
 
         public void ConfigureSwagger(IServiceCollection services)
@@ -82,6 +86,21 @@ namespace AssetNXT
             });
         }
 
+        public void ConfigureCrossOriginResourceSharing(IServiceCollection services)
+        {
+            // SignalR
+            services.AddCors(options =>
+            {
+                options.AddPolicy("ClientPermission", policy =>
+                {
+                    policy.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins("http://localhost:3000")
+                        .AllowCredentials();
+                });
+            });
+        }
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -96,6 +115,7 @@ namespace AssetNXT
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<RuuviStationHub>("/hubs/stations");
             });
 
             // Client SPA
@@ -118,6 +138,9 @@ namespace AssetNXT
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
             });
+
+            // SignalR
+            app.UseCors("ClientPermission");
         }
     }
 }
