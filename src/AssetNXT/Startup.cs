@@ -54,18 +54,6 @@ namespace AssetNXT
             services.AddSignalR();
         }
 
-        public void ConfigureSwagger(IServiceCollection services)
-        {
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-                {
-                    Title = "API",
-                    Version = "v1"
-                });
-            });
-        }
-
         public void ConfigureDatabaseServices(IServiceCollection services)
         {
             // MongoDB Configuration
