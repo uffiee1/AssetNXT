@@ -34,13 +34,10 @@ namespace AssetNXT
                 });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "../AssetNXT.Client/build";
-            });
 
             ConfigureSwaggerServices(services);
             ConfigureDatabaseServices(services);
+            ConfigureSpaFilesServices(services);
             ConfigureCrossOriginResourceSharing(services);
 
             // Scope
@@ -52,6 +49,14 @@ namespace AssetNXT
 
             // SignalR
             services.AddSignalR();
+        }
+
+        public void ConfigureSpaFilesServices(IServiceCollection services)
+        {
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "../AssetNXT.Client/build";
+            });
         }
 
         public void ConfigureDatabaseServices(IServiceCollection services)

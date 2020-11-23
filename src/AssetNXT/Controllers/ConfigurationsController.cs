@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AssetNXT.Configuration;
+﻿using System.Threading.Tasks;
+using AssetNXT.Configurations;
 using AssetNXT.Models.Data;
 using AssetNXT.Repository;
+using AssetNXT.Dtos;
+
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace AssetNXT.Controllers
 {
@@ -17,11 +17,13 @@ namespace AssetNXT.Controllers
     {
         private readonly IMongoDataRepository<Constrain> _repositoryConstrain;
         private readonly IMongoDataRepository<RuuviStation> _repositoryRuuviStation;
+        private readonly IMapper _mapper;
 
-        public ConfigurationsController(IMongoDataRepository<Constrain> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation)
+        public ConfigurationsController(IMongoDataRepository<Constrain> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
         {
             this._repositoryConstrain = repositoryConstrain;
             this._repositoryRuuviStation = repositoryRuuviStation;
+            _mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -32,11 +34,9 @@ namespace AssetNXT.Controllers
 
             if (constrain != null && station != null)
             {
-                var serviceAgreement = new ServiceAgreement(station, constrain);
+                var serviceAgreement = new ServiceAgreement(station.Tags, constrain);;
 
-                var json = JsonConvert.SerializeObject(serviceAgreement.Check());
-
-                return Ok(json);
+                return Ok(_mapper.Map<IEnumerable<ConfigurationsReadDto>>(serviceAgreement.IsBreached(station.DeviceId)));
             }
 
             return NotFound();

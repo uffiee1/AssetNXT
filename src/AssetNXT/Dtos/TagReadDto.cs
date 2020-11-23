@@ -6,6 +6,8 @@ namespace AssetNXT.Dtos
     {
         public string Id { get; set; }
 
+        public bool IsActive { get; set; }
+
         public DateTime UpdateAt { get; set; }
 
         public DateTime CreateDate { get; set; }

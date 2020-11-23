@@ -28,6 +28,7 @@ namespace AssetNXT.Controllers
         public async Task<IActionResult> GetAllRuuviStations()
         {
             var stations = await _repository.GetAllLatestAsync();
+            stations.ForEach(s => s.Tags.RemoveAll(t => t.IsActive != true));
 
             if (stations != null)
             {
@@ -83,6 +84,7 @@ namespace AssetNXT.Controllers
 
             station.Tags.ForEach(tag => tag.CreateDate = DateTime.UtcNow);
             station.Tags.ForEach(tag => tag.UpdateAt = DateTime.UtcNow);
+            station.Tags.ForEach(tag => tag.IsActive = true);
 
             await _repository.CreateObjectAsync(station);
 

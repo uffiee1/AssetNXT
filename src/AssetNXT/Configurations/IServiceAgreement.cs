@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using AssetNXT.Models.Data;
 
-namespace AssetNXT.Configuration
+namespace AssetNXT.Configurations
 {
     public interface IServiceAgreement
     {
-        List<Dictionary<string, bool>> Check();
+        List<Configuration> IsBreached(string id);
 
-        bool Breached(Tag tag);
     }
 }
