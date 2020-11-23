@@ -19,42 +19,45 @@ export default class AssetMap extends Component {
     this.ensureWithinBounds(this.props.assets);
   }
 
-  renderAssets(assets, Template) {
+  renderAssets(assets, AssetTemplate) {
 
-    return assets.map(asset =>
-      asset.tags.map(tag => {
+    var query = this.props.query;
+    var queryInactive = !this.props.query;
 
-        if (!this.props.query || tag.id.indexOf(this.props.query) > -1) {
-          return (
-            <Marker position={this.getAssetLatLng(asset)}
-              onClick={() => this.ensureInCenter(asset)}> {
-            
-                Template && <Popup>
-                  <Template asset={asset} tag={tag}
-                    link={`/${asset.deviceId}/`}>
-                  </Template>
-                </Popup>
+    return assets.map(asset => {
+      if (queryInactive || asset.deviceId.indexOf(query) > -1) {
 
-              }
-            </Marker>
-          );
-        }
-      })
-    );
+        return <Marker position={this.getAssetLatLng(asset)}
+          onclick={() => this.ensureInCenter(asset)}> {
+
+            AssetTemplate && <Popup>
+              <AssetTemplate asset={asset} 
+                link={`/${asset.deviceId}/`}/>
+             </Popup>
+          }
+        </Marker>
+      }
+    });
+  }
+
+  renderBoundaries() {
   }
 
   render() {
-    return(
+
+    var assets = this.props.assets;
+    var assetTemplate = this.props.assetMarkerTemplate;
+
+    return (
       <Map zoom={this.props.zoom}
            center={this.props.center}
-           ref= { e => this.mapInstance = e}>
+           ref={e => this.mapInstance = e}>
 
         <TileLayer tileSize={512} zoomOffset={-1}
-                     url='https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=HfiQgsMsSnorjEs2Sxek'
-                     attribution='&amp;copy <a href="https://www.maptiler.com/copyright/">Maptiler</a> contributors' />
+          url='https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=HfiQgsMsSnorjEs2Sxek'
+          attribution='&amp;copy <a href="https://www.maptiler.com/copyright/">Maptiler</a> contributors' />
 
-
-        {this.renderAssets(this.props.assets, this.props.assetMarkerTemplate)}
+        {assetTemplate && this.renderAssets(assets, assetTemplate)}
 
       </Map>
     );
