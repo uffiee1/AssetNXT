@@ -75,11 +75,17 @@ export default class Layout extends Component {
             <Col className="layout-component-container">
               {this.props.dockLeft}
             </Col>
-          </Row>
+          </Row> 
 
+          </Col> 
+
+      return contents;
+
+    var banner = this.props.dockTop
+        ? <Col className="layout-banner"/>
+    : <Col className="layout-banner">
+        <Banner toggle src="images/logo.png"/>
         </Col>
-
-    return contents;
   }
 
   dockRight() {
