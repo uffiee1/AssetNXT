@@ -30,18 +30,9 @@ export default class Layout extends Component {
 
   dockLeft() {
 
-    var banner = this.props.dockTop
-      ? <Col className="layout-banner"/>
-      : <Col className="layout-banner">
-          <Banner toggle src="images/logo.png"/>
-        </Col>
-
     var contents = !this.props.dockLeft
       ? <Col className="layout-contents-panel dock-left" xs="auto" />
       : <Col className="layout-contents-panel dock-left" xs="12" sm="5" lg="3" xl="2">
-          <Row className="layout-row-definition layout-contents-shadow">
-            {banner}
-          </Row>
 
           <Row className="layout-row-definition shrink">
             <Col className="layout-component-container">

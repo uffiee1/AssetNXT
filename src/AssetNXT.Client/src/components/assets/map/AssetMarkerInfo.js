@@ -31,17 +31,13 @@ export default class AssetMarkerInfo extends Component {
   render() {
     return (
       <Container className="tooltip-container">
-        <Row className="tooltip-row position-relative">
-          <Asset title={this.props.asset.tags[this.state.index].id}
-            description={this.props.asset.deviceId} />
-
-          { this.props.asset.tags.length > 1 && 
-          <span className="tooltip-page">{this.state.index + 1}/{this.props.asset.tags.length}</span> }
-
+        <Row className="tooltip-row">
+          <Asset title={this.props.asset.tags[this.state.index].id} description={this.props.asset.deviceId} />
+            {this.props.asset.tags.length > 1 && <span className="tooltip-row">{this.state.index + 1} / {this.props.asset.tags.length}</span>}
         </Row>
 
         <Row className="tooltip-row">
-          <hr className="w-100" />
+            <hr className="w-100" />
         </Row>
 
         <Row className="tooltip-row flex-nowrap">
