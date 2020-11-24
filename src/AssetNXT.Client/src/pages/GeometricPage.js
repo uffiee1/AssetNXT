@@ -1,14 +1,15 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import { Container, Row, Col } from 'reactstrap';
 
 import Layout from '../components/Layout';
-import GeometricConfig from '../components/geoconfig/GeometricConfig';
+import GeometricMap from '../components/geoconfig/GeometricMap';
+import GeometricModal from '../components/geoconfig/GeometricModal';
 
 export default class GeometricPage extends Component
 {
     static displayName = GeometricPage.displayName
 
     render() {
-    var geoConfig = < GeometricConfig />
-        return < Layout dock ={geoConfig} />
+      return <Layout dock={<GeometricModal />} />
     }
 }

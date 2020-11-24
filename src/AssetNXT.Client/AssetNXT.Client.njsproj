@@ -107,12 +107,32 @@
     <Content Include="src\components\constrains\actions\editConstrains.js" />
     <Content Include="src\components\constrains\ConstrainService.css" />
     <Content Include="src\components\constrains\ConstrainService.js" />
-    <Content Include="src\components\geoconfig\GeometricConfig.css" />
-    <Content Include="src\components\geoconfig\GeometricConfig.js">
+    <Content Include="src\components\geoconfig\GeometricModal.css" />
+    <Content Include="src\components\geoconfig\GeometricModal.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\Banner.css" />
     <Content Include="src\components\Banner.js" />
+    <Content Include="src\components\geoconfig\GeometricForm.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\geoconfig\GeometricForm.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\geoconfig\GeometricMap.css" />
+    <Content Include="src\components\geoconfig\GeometricMap.js" />
+    <Content Include="src\components\geoconfig\GeometricList.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\geoconfig\GeometricList.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\geoconfig\GeometricListItem.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\geoconfig\GeometricListItem.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\Layout.css">
       <SubType>Code</SubType>
     </Content>
