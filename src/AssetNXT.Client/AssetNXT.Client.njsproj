@@ -95,6 +95,7 @@
     <Content Include="src\components\constrains\actions\editConstrains.js" />
     <Content Include="src\components\constrains\ConstrainService.css" />
     <Content Include="src\components\constrains\ConstrainService.js" />
+    <Content Include="src\components\constrains\TablePagination.js" />
     <Content Include="src\components\geoconfig\GeometricConfig.css" />
     <Content Include="src\components\geoconfig\GeometricConfig.js">
       <SubType>Code</SubType>
