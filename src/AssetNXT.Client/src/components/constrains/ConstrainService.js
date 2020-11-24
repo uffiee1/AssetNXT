@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button, Input, Table} from 'reactstrap';
+import { Container, Row, Col, Button, Input, Table } from 'reactstrap';
 import { store } from 'react-notifications-component';
 import ReactNotification from 'react-notifications-component'
 
 import './ConstrainService.css';
+import TablePagination from "./TablePagination";
 import CreateConstrains from "./actions/createConstrains";
 import EditConstrains from "./actions/editConstrains";
 import DeleteConstrains from "./actions/deleteConstrains";
@@ -21,18 +22,26 @@ export default class ConstrainService extends Component {
             deleteModal: false,
             isLoaded: false,
             slaTemplates: [],
+            tableSlaTemplates: [],
+            tablePageIndex: 0,
             error: null
         };
         this.toggleCreateModal = this.toggleCreateModal.bind(this);
         this.toggleEditModal = this.toggleEditModal.bind(this);
         this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
         this.submitSuccess = this.submitSuccess.bind(this);
+        this.setTableSlaTemplate = this.setTableSlaTemplate.bind(this);
+        this.setIndex = this.setIndex.bind(this);
 
     }
 
     componentDidMount() {
         this.table = this.tableRef.current;
         this.fetchData();    
+    }
+
+    setTableSlaTemplate(value) {
+            this.setState({ tableSlaTemplate: value })
     }
 
     async fetchData() {
@@ -43,6 +52,7 @@ export default class ConstrainService extends Component {
                     this.setState({
                         isLoaded: true,
                         slaTemplates: result,
+                        tableSlaTemplates: this.splitTemplates(result),
                         selected: 0,
                     });
                 },
@@ -53,6 +63,14 @@ export default class ConstrainService extends Component {
                     });
                 }
             )
+    }
+
+    splitTemplates(array) {
+        var i, j, tempArray = [], chunk = 5;
+        for (i = 0, j = array.length; i < j; i += chunk) {
+            tempArray = [...tempArray, array.slice(i, i + chunk)];
+        }
+        return tempArray
     }
 
     submitSuccess(success, msg) {
@@ -107,10 +125,21 @@ export default class ConstrainService extends Component {
         });
     }
 
+    setIndex(value) {
+        this.setState({ tablePageIndex : value })
+    }
+
+    hideOnSearch() {
+        if (this.state.tableSlaTemplates[0] === this.state.slaTemplates) return "d-none"
+        else return "d-block"
+    }
+
     searchChange(event, table) {
         this.setState({selected : 0})
         var  filter, tr, td, i, txtValue;
         filter = event.target.value.toUpperCase();
+        if (filter !== "") this.setState({ tableSlaTemplates: [this.state.slaTemplates], tablePageIndex: 0 })
+        else if (filter === "") this.setState({ tableSlaTemplates: this.splitTemplates(this.state.slaTemplates), tablePageIndex: 0 });
         table = this.table;
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
@@ -128,13 +157,21 @@ export default class ConstrainService extends Component {
 
     renderTableContent() {
         if (this.state.isLoaded) {
-            const listItems = this.state.slaTemplates.map((slaTemplate) => {
+            const listItems = this.state.tableSlaTemplates[this.state.tablePageIndex].map((slaTemplate) => {
                 let className = "";
-                if (this.state.selected === slaTemplate) className = "selected";              
+                if (this.state.selected === slaTemplate) className = "selected";  
                 return (
                     <tr className={className} key={slaTemplate.id} onClick={() => this.setState({ selected: slaTemplate })}>
                         <td>{slaTemplate.name}</td>
                         <td>{slaTemplate.description}</td>
+                        <td className="tooltiptd">
+                            <b>minTemp: {slaTemplate.temperatureMin} </b>
+                            <b>maxTemp: {slaTemplate.temperatureMax} </b>
+                            <b>minHumid: {slaTemplate.humidityMin} </b>
+                            <b>maxHumid: {slaTemplate.humidityMax} </b>
+                            <b>minPress: {slaTemplate.pressureMax} </b>
+                            <b>maxPress: {slaTemplate.pressureMin} </b>
+                        </td>
                     </tr>
                 );           
             });
@@ -149,11 +186,6 @@ export default class ConstrainService extends Component {
             <Container fluid>
                 <ReactNotification className="mh-90" />
                 <Container>
-
-                    <CreateConstrains isOpen={this.state.createModal} toggle={this.toggleCreateModal} success={this.submitSuccess} />
-                    <EditConstrains isOpen={this.state.editModal} toggle={this.toggleEditModal} sla={this.state.selected} success={this.submitSuccess} />
-                    <DeleteConstrains isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal} sla={this.state.selected} success={this.submitSuccess} />
-
                     <Row className="py-1">
                         <Col xs="12" lg="6">
                             <h2>Service Level Agreements</h2>
@@ -182,7 +214,7 @@ export default class ConstrainService extends Component {
                         </Col>
                     </Row>
 
-                    <Row className="py-1">
+                    <Row className="py-1 asset-table-row">
                         <Col>
                             <Table innerRef={this.tableRef} className="overflow-auto" bordered>
                                 <thead>
@@ -197,7 +229,15 @@ export default class ConstrainService extends Component {
                             </Table>
                         </Col>
                     </Row>
-
+                    {this.state.isLoaded ? (
+                        <div>
+                        <div className={this.hideOnSearch()}> <TablePagination min={0} max={this.state.tableSlaTemplates.length} index={this.state.tablePageIndex} setIndex={this.setIndex} /></div>
+                        <CreateConstrains isOpen={this.state.createModal} toggle={this.toggleCreateModal} success={this.submitSuccess} />
+                            <EditConstrains isOpen={this.state.editModal} toggle={this.toggleEditModal} sla={this.state.selected} success={this.submitSuccess} />
+                            <DeleteConstrains setIndex={this.setIndex} isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal} sla={this.state.selected} success={this.submitSuccess} />
+                       </div>
+                        ): <p>Loading...</p>
+                    }
                 </Container>
             </Container>
         );

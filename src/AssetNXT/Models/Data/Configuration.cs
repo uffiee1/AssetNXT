@@ -19,6 +19,5 @@ namespace AssetNXT.Models.Data
         public DateTime CreateDate { get; set; }
 
         public DateTime UpdateAt { get; set; }
-
     }
 }

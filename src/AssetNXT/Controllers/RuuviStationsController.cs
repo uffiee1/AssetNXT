@@ -64,7 +64,6 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
-
         [HttpGet("tags/{id}", Name = "GetAllTagsByDeviceId")]
         public async Task<IActionResult> GetAllTagsByDeviceId(string id)
         {

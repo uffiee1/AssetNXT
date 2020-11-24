@@ -21,7 +21,6 @@ namespace AssetNXT.Configurations
             this.Collection = new List<Configuration>();
         }
 
-
         public List<Tag> Tags { get => _tags; set => _tags = value; }
 
         public Constrain Constrain { get => _constrain; set => _constrain = value; }

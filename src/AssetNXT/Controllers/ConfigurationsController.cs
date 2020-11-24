@@ -1,12 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AssetNXT.Configurations;
+using AssetNXT.Dtos;
 using AssetNXT.Models.Data;
 using AssetNXT.Repository;
-using AssetNXT.Dtos;
-
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace AssetNXT.Controllers
 {
@@ -34,7 +33,7 @@ namespace AssetNXT.Controllers
 
             if (constrain != null && station != null)
             {
-                var serviceAgreement = new ServiceAgreement(station.Tags, constrain);;
+                var serviceAgreement = new ServiceAgreement(station.Tags, constrain);
 
                 return Ok(_mapper.Map<IEnumerable<ConfigurationsReadDto>>(serviceAgreement.IsBreached(station.DeviceId)));
             }
