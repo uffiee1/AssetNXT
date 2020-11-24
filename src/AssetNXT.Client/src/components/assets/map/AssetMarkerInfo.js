@@ -7,13 +7,37 @@ import Asset from '../Asset';
 
 export default class AssetMarkerInfo extends Component {
 
+  state = {
+    index: 0
+  }
+
+  moveNext() {
+ 
+    var maxLength = this.props.asset.tags.length - 1;
+    var index = this.state.index + 1;
+
+    index = Math.min(index, maxLength);
+    this.setState({index: index});
+  }
+
+  movePrevious() {
+    var minLength = 0;
+    var index = this.state.index - 1;
+
+    index = Math.max(index, minLength);
+    this.setState({index: index});
+  }
+
   render() {
     return (
-       <Container className="tooltip-container">
-
-        <Row className="tooltip-row">
-           <Asset title={this.props.tag.id}
+      <Container className="tooltip-container">
+        <Row className="tooltip-row position-relative">
+          <Asset title={this.props.asset.tags[this.state.index].id}
             description={this.props.asset.deviceId} />
+
+          { this.props.asset.tags.length > 1 && 
+          <span className="tooltip-page">{this.state.index + 1}/{this.props.asset.tags.length}</span> }
+
         </Row>
 
         <Row className="tooltip-row">
@@ -21,30 +45,50 @@ export default class AssetMarkerInfo extends Component {
         </Row>
 
         <Row className="tooltip-row flex-nowrap">
+          
+          { this.props.asset.tags.length > 1 && 
+          <Col className="tooltip-column d-flex align-items-center pl-0">
+            <button className="tooltip-arrow" onClick={(__e) => this.movePrevious()}>&lt;</button>
+          </Col> }
+
           <Col className="tooltip-column">
             <Row><label className="tooltip-property">Temperature: </label></Row>
             <Row><label className="tooltip-property">Humidity: </label></Row>
             <Row><label className="tooltip-property">Pressure: </label></Row>
           </Col>
           <Col className="tooltip-column" xs="auto">
-              <Row><label className="tooltip-property-value">{Math.round(this.props.tag.temperature)}&deg;C</label></Row>
-              <Row><label className="tooltip-property-value">{Math.round(this.props.tag.humidity)}%</label></Row>
-              <Row><label className="tooltip-property-value">{Math.round(this.props.tag.pressure)} Pa</label></Row>
+            <Row><label className="tooltip-property-value">{Math.round(this.props.asset.tags[this.state.index].temperature)}&deg;C</label></Row>
+            <Row><label className="tooltip-property-value">{Math.round(this.props.asset.tags[this.state.index].humidity)}%</label></Row>
+            <Row><label className="tooltip-property-value">{Math.round(this.props.asset.tags[this.state.index].pressure)} Pa</label></Row>
           </Col>
+
+          { this.props.asset.tags.length > 1 && 
+          <Col className="tooltip-column d-flex align-items-center pr-0">
+            <button className="tooltip-arrow" onClick={(__e) => this.moveNext()}>&gt;</button>
+          </Col> }
+
         </Row>
 
-        <Row className="tooltip-row">
+        <Row className="tooltip-row flex-nowrap">
+
+          { this.props.asset.tags.length > 1 && 
+          <Col xs="auto" className="tooltip-column pl-0 pr-4"/>}
+
           <Col className="tooltip-icon" xs="auto">
             {this.props.outofbounds 
               ? <i className="fa fa-exclamation-triangle fa-2x text-warning"/>
               : <i className="fa fa-check-circle fa-2x text-success"/>
             }
           </Col>
+
           <Col className="tooltip-link">
             {this.props.link && <Link to={this.props.link}>More info</Link>}
           </Col>
-        </Row>
 
+          { this.props.asset.tags.length > 1 && 
+          <Col xs="auto"className="tooltip-column pr-0 pl-4"/>}
+
+        </Row>
       </Container>
     );
   }

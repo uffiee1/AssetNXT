@@ -5,10 +5,24 @@
     padding-right: 0 !important;
 }
 
+.tooltip-page {
+    right: 0;
+    bottom: 0;
+    position: absolute;
+}
+
+.tooltip-arrow {
+    border: none;
+    font-size: 1rem;
+    background: none;
+    outline: none !important;
+}
+
 .tooltip-property {
     padding-right: 0.5rem;
 }
 
 .tooltip-property-value {
     min-width: 50px;
+    text-align: right;
 }

@@ -19,26 +19,27 @@ export default class AssetList extends React.Component {
   }
 
   render() {
+
+    var query = this.props.query;
+    var queryInactive = !this.props.query;
+
     return(
       <Container className="asset-list-container">
         <Row className="asset-list-row">
           <Col className="asset-list-column">
 
-            {this.props.assets.map(asset => 
-              asset.tags.map(tag => {
-                
-                if (!this.props.query || tag.id.indexOf(this.props.query) > -1) {
-                  return (
-                    <AssetListItem
-                      title={tag.id}
-                      location={asset.location}
-                      description={asset.deviceId}
-                      assetSelected={this.onAssetSelected} />
-                  );
-                }
-              })
-            )}
+            {this.props.assets.map(asset => {
+              if (queryInactive || asset.deviceId.indexOf(query) > -1) {
 
+                return <AssetListItem 
+                  title={asset.deviceId}
+                  location={asset.location}
+                  description={asset.eventId}
+                  assetSelected={this.onAssetSelected}>
+                </AssetListItem>
+              }
+            })
+           }
           </Col>
         </Row>
       </Container>

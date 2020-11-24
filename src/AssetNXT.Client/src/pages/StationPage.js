@@ -9,7 +9,6 @@ export default class StationPage extends Component {
   static displayName = StationPage.displayName
 
   state = {
-    assets: [],
     loading: true
   }
 
@@ -17,19 +16,20 @@ export default class StationPage extends Component {
     this.fetchStationData();
   }
 
-  renderComponent(assets) {
-    var telemetricTabs = 
-      <TelemetricTabs assets={assets}
+  renderComponent(stations) {
+
+    const telemetricTabs =
+      <TelemetricTabs stations={stations}
         telemetricTemplate={TelemetricDataTemplate}/>
 
-    return <Layout dock={telemetricTabs} />
+    return <Layout dock={telemetricTabs}/>
   }
 
   render() {
 
      var contents = this.state.loading
       ? <Layout dock={<p><em>Loading...</em></p>}/>
-      : this.renderComponent(this.state.assets);
+      : this.renderComponent(this.state.stations);
 
     return contents;
   }
@@ -45,6 +45,6 @@ export default class StationPage extends Component {
     console.log("Data:");
     console.log(data);
 
-    this.setState({ loading: false, assets: data });
+    this.setState({ loading: false, stations: data });
   }
 }
