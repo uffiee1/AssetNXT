@@ -72,6 +72,15 @@
     <Content Include="src\components\assets\map\AssetMarkerInfo.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\assets\settings\SettingsButton.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\settings\SettingsButton.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\settings\SettingsList.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\assets\telemetric\graphs\TelemetricLineGraph.css">
       <SubType>Code</SubType>
     </Content>
@@ -147,6 +156,7 @@
     <Folder Include="src\components\" />
     <Folder Include="src\components\assets\" />
     <Folder Include="src\components\assets\map\" />
+    <Folder Include="src\components\assets\settings\" />
     <Folder Include="src\components\assets\telemetric\" />
     <Folder Include="src\components\assets\telemetric\graphs\" />
     <Folder Include="src\components\constrains\" />
