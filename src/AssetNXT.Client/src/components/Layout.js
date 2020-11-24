@@ -3,12 +3,14 @@ import { Container, Row, Col } from 'reactstrap';
 
 import './Layout.css';
 import Banner from './Banner';
+import Navigation from '../components/navigation/navigation';
 
 export default class Layout extends Component {
 
   render() {
     return(
       <Container fluid className="layout-container">
+        <Navigation />
         <Row className="layout-row-definition">
           <Col className="layout-column-definition">
 
@@ -22,7 +24,7 @@ export default class Layout extends Component {
           <Col className="layout-column-definition">
             <Row className="layout-contents-container">
 
-              { this.dockLeft() }
+            
             
               { this.dockCenter() }
 
