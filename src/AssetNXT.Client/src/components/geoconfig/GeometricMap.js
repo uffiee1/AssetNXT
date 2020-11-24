@@ -7,7 +7,7 @@ import './GeometricMap.css';
 export default class GeometricMap extends Component {
 
   state = {
-    markers: []
+    markers: this.props.positions || []
   }
 
   addMarker(position) {
@@ -30,7 +30,6 @@ export default class GeometricMap extends Component {
     }
   }
 
-
   renderMarker(position, idx) {
     return (
       <Marker index={idx}
@@ -43,7 +42,6 @@ export default class GeometricMap extends Component {
       </Marker>
     );
   }
-
 
   render() {
     return (

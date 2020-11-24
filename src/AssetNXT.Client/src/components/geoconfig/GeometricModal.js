@@ -23,8 +23,9 @@ export default class GeometricModal extends Component {
         <Row>
           <Col xs="12" lg="4">
             <div className="aspect-box">
-              <GeometricMap zoom={8} center={[52.2129919, 5.2793703]}
-                            stateHasChanged={this.geoStateHasChanged}/>
+              <GeometricMap positions={this.state.positions} 
+                stateHasChanged={this.geoStateHasChanged}
+                zoom={8} center={[52.2129919, 5.2793703]} />
             </div>
           </Col>
           <Col xs="12" lg="8">
