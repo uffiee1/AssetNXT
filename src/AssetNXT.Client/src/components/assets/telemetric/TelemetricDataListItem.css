@@ -1,23 +1,24 @@
-.notification-item-row {
+.telemetric-item-row {
     padding: 0.5rem 1rem;
     border-bottom: 1px solid whitesmoke;
 }
 
-    .notification-item-row:hover {
+    .telemetric-item-row:hover {
         background-color: #f0f0f0;
     }
 
 
-    .notification-item-row:active {
+    .telemetric-item-row:active {
         background-color: #dbdbd9;
     }
 
-.notification-item-col {
+.telemetric-item-col {
     display: flex;
     align-items: center;
     padding: 0px !important;
 }
-.notification-string {
+
+.telemetric-string {
     margin: auto;
     margin-left: 0.5rem;
 }

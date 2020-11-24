@@ -6,9 +6,9 @@ import './TelemetricLineGraph.css';
 
 export default class TelemetricLineGraph extends Component {
 
-  getLabels(assets) {
-    return assets.map(asset => {
-      return asset.time;
+  getLabels(stations) {
+    return stations.map(station => {
+      return station.time;
     });
   }
 
@@ -31,7 +31,7 @@ export default class TelemetricLineGraph extends Component {
 
     const dataset = {
       fill: false,
-      label: `${this.props.assets[0].deviceId}`,
+      label: `${this.props.telemetricId}`,
       backgroundColor: 'rgba(75,192,192,0.4)',
       borderColor: 'rgba(75,192,192,1)',
       borderCapStyle: 'butt',
@@ -52,7 +52,7 @@ export default class TelemetricLineGraph extends Component {
 
     const chartData = {
       datasets: [dataset],
-      labels: this.getLabels(this.props.assets)
+      labels: this.getLabels(this.props.stations)
     }
 
     return <Line data={chartData} options={options}/>
