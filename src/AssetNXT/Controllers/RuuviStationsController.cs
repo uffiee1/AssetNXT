@@ -64,7 +64,8 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
-        [HttpGet("all-tags/{id}", Name = "GetAllTagsByDeviceId")]
+
+        [HttpGet("tags/{id}", Name = "GetAllTagsByDeviceId")]
         public async Task<IActionResult> GetAllTagsByDeviceId(string id)
         {
             var stations = await _repository.GetAllObjectsByDeviceIdAsync(id);
