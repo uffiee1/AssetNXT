@@ -99,9 +99,6 @@
     <Content Include="src\components\geoconfig\GeometricConfig.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\navigation\Navigation.js">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="src\components\notifications\NotificationList.css">
       <SubType>Code</SubType>
     </Content>
@@ -154,7 +151,6 @@
     <Folder Include="src\components\constrains\" />
     <Folder Include="src\components\constrains\actions\" />
     <Folder Include="src\components\geoconfig\" />
-    <Folder Include="src\components\navigation\" />
     <Folder Include="src\components\notifications\" />
     <Folder Include="src\components\search\" />
     <Folder Include="src\pages\" />

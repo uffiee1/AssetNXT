@@ -7,13 +7,6 @@ namespace AssetNXT.Dtos
     public class RouteCreateDto
     {
         [MaxLength(250)]
-        [Required]
-        public string Name { get; set; }
-
-        [Required(AllowEmptyStrings = true)]
-        public string Description { get; set; }
-
-        [MaxLength(250)]
         [Required(AllowEmptyStrings = false)]
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string DeviceId { get; set; }

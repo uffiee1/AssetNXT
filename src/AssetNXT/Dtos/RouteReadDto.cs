@@ -12,10 +12,6 @@ namespace AssetNXT.Dtos
 
         public string DeviceId { get; set; }
 
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
         public List<Boundary> Points { get; set; }
 
         public DateTime CreatedAt { get; set; }
