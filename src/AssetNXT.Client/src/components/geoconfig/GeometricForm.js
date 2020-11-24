@@ -4,6 +4,29 @@ import { Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reac
 import './GeometricForm.css';
 
 export default class GeometricForm extends Component {
+
+  state = {
+    position: this.props.position,
+  }
+
+  setLatitude(value) {
+    this.state.position.lat = value;
+    this.setState({position: this.state.position});
+
+    if (this.props.stateHasChanged) {
+      this.props.stateHasChanged(this.state);
+    }
+  }
+
+  setLongitude(value) {
+    this.state.position.lng = value;
+    this.setState({position: this.state.position});
+
+    if (this.props.stateHasChanged) {
+      this.props.stateHasChanged(this.state);
+    }
+  }
+
   render() {
     return (
       <Form> 
@@ -14,12 +37,16 @@ export default class GeometricForm extends Component {
           <Row form>
             <Col xs="auto">
               <FormGroup>
-                <Input type="text" placeholder="Latitude" />
+                <Input type="text" placeholder="Latitude"
+                  onchange={(e) => this.setLatitude(e.target.value)}
+                  value={this.props.position.lat} />
               </FormGroup>
             </Col>
             <Col xs="auto">
               <FormGroup>
-                <Input type="text" placeholder="Longitude" />
+                <Input type="text" placeholder="Longitude"
+                  onchange={(e) => this.setLongitude(e.target.value)}
+                  value={this.props.position.lng}/>
               </FormGroup>
             </Col>
           </Row>

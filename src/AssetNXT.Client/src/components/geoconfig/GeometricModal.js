@@ -10,11 +10,19 @@ import GeometricList from './GeometricList';
 export default class GeometricModal extends Component {
 
   state = {
-    positions: []
+    positions: [],
+    selectedIndex: 0
   }
 
   geoStateHasChanged = (state) => {
-    this.setState({positions: state.markers});
+    this.setState({
+      positions: state.markers, 
+      selectedIndex: state.selectedIndex});
+  }
+
+  formStateHasChanged = (state) => {
+    this.state.positions[this.state.selectedIndex] = state.position;
+    this.setState({positions: this.state.positions});
   }
 
   render() {
@@ -30,7 +38,8 @@ export default class GeometricModal extends Component {
           </Col>
           <Col xs="12" lg="8">
             <Row>
-              <GeometricForm/>
+              <GeometricForm stateHasChanged={this.formStateHasChanged}
+                position={this.state.positions[this.state.selectedIndex] || {lat: 0, lng: 0}}/>
             </Row>
             <Row>
               <GeometricList points={this.state.positions}/>

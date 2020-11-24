@@ -7,14 +7,22 @@ import './GeometricMap.css';
 export default class GeometricMap extends Component {
 
   state = {
-    markers: this.props.positions || []
+    markers: this.props.positions,
+    selectedIndex: this.props.selectedIndex
+  }
+
+  selectMarker(selectedIndex) {
+    this.setState({selectedIndex});
+    if (this.props.stateHasChanged) {
+      this.props.stateHasChanged(this.state);
+    }
   }
 
   addMarker(position) {
     const {markers} = this.state;
     markers.push(position);
 
-    this.setState({markers});
+    this.setState({markers, selectedIndex: markers.length - 1});
     if (this.props.stateHasChanged) {
       this.props.stateHasChanged(this.state);
     }
@@ -38,7 +46,8 @@ export default class GeometricMap extends Component {
         key={`marker-${idx}`}
         ondrag={this.dragHandler}
         ondragend={this.dragEndHandler}
-        ondragstart={this.dragStartHandler}>
+        ondragstart={this.dragStartHandler}
+        onclick={this.clickHandler}>
       </Marker>
     );
   }
@@ -62,6 +71,10 @@ export default class GeometricMap extends Component {
     );
   }
 
+  clickHandler = (e) => {
+    this.selectMarker(e.target.options.index);
+  }
+
   dragHandler = (e) => {
     this.updateMarker(e.latlng, e.target.options.index);
   }
@@ -71,5 +84,4 @@ export default class GeometricMap extends Component {
 
   dragStartHandler = (e) => {
   }
-
 }
