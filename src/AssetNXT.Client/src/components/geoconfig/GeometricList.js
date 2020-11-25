@@ -14,8 +14,8 @@ export default class GeometricList extends React.Component {
         <Row className="geometric-list-row">
           <Col className="geometric-list-column">
 
-            {this.props.points && this.props.points.map(point => {    
-              return <GeometricListItem point={point}/>
+            {this.props.boundaries && this.props.boundaries.map(boundary => {    
+              return <GeometricListItem boundary={boundary}/>
             })
            }
           </Col>

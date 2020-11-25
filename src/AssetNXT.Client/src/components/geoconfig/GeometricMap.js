@@ -6,56 +6,64 @@ import './GeometricMap.css';
 
 export default class GeometricMap extends Component {
 
-  state = {
-    selected: false,
-    selectedIndex: Number.NaN,
-    markers: this.props.positions
+  defaultZoom = 8
+
+  defaultPosition = [52.2129919, 5.2793703]
+
+  addBoundary(position) {
+    const {boundaries} = this.props;
+    const index = boundaries.length;
+
+    this.invokeBoundaryAdd({radius: 0, position});
+    this.selectBoundary(index);
   }
 
-  addMarker(position) {
-    console.log('click');
-    const index = this.state.markers.length;
-    const {markers} = this.state;
-    markers.push(position);
-
-    this.setState({markers, selectedIndex: index});
-    this.invokeStateHasChanged();
-  }
- 
-  removeMarker(index) {
-    const {markers} = this.state;
-    markers.splice(index, 1);
-
-    this.setState({markers, selectedIndex: Number.NaN});
-    this.invokeStateHasChanged();
+  selectBoundary(index) {
+    if (this.props.onSelectBoundary) {
+      this.props.onSelectBoundary(index);
+    }
   }
 
-  updateMarker(index, position) {
-    const {markers} = this.state;
-    markers[index] = position;
+  updateBoundary(index, position) {
 
-    this.setState({markers});
-    this.invokeStateHasChanged();
+    const {boundaries} = this.props;
+    const boundary = boundaries[index];
+
+    boundary.position = position;
+    this.invokeBoundaryUpdate(index, boundary);
   }
 
-  invokeStateHasChanged() {
-    if (this.props.stateHasChanged) {
-      this.props.stateHasChanged(this.state);
+  invokeBoundaryAdd(boundary) {
+    if (this.props.onAddBoundary) {
+      this.props.onAddBoundary(boundary);
+    }
+  }
+
+  invokeBoundaryRemove(index) {
+    if (this.props.onRemoveBoundary) {
+      this.props.onRemoveBoundary(index);
+    }
+  }
+
+  invokeBoundaryUpdate(index, boundary) {
+    if (this.props.onUpdateBoundary) {
+      this.props.onUpdateBoundary(index, boundary);
     }
   }
 
   render() {
     return (
-      <Map zoom={this.props.zoom}
-        center={this.props.center}
-        onclick={(e) => { this.addMarker(e.latlng) }}>
+      <Map zoom={this.defaultZoom}
+        center={this.defaultPosition}
+        onclick={(__e) => this.addBoundary(__e.latlng)}>
 
         <TileLayer tileSize={512} zoomOffset={-1}
           url='https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=HfiQgsMsSnorjEs2Sxek'
           attribution='&amp;copy <a href="https://www.maptiler.com/copyright/">Maptiler</a> contributors' />
 
-          {this.state.markers.map((position, idx) => this.renderMarker(position, idx))}
-          <Polyline positions={this.state.markers.map(position => [position.lat, position.lng])}/>
+        {this.props.boundaries.map((boundary, idx) => this.renderBoundary(boundary, idx))}
+        {this.props.boundaries.map((boundary, idx) => this.renderMarker(boundary.position, idx))}
+        <Polyline positions={this.props.boundaries.map(boundary => [boundary.position.lat, boundary.position.lng])} />
 
       </Map>
     );
@@ -69,30 +77,38 @@ export default class GeometricMap extends Component {
         key={`marker-${idx}`}
         ondrag={this.dragHandler}
         ondragend={this.dragEndHandler}
-        ondragstart={this.dragStartHandler}>
+        ondragstart={this.dragStartHandler}
+        onclick={this.clickHandler}>
       </Marker>
     );
   }
 
+  renderBoundary(boundary, idx) {
+    return (
+      <Circle index={idx} 
+        key={`boundary-${idx}`} 
+        radius={boundary.radius} 
+        center={[boundary.position.lat, 
+                 boundary.position.lng]}>
+      </Circle>
+    );
+  }
+
+  clickHandler = (__e) => {
+    const options = __e.target.options;
+    this.selectBoundary(options.index);
+  }
+
   dragHandler = (__e) => {
-    console.log('drag');
-    const targetOptions = __e.target.options;
-    this.updateMarker(targetOptions.index, __e.latlng);
+    const options = __e.target.options;
+    this.updateBoundary(options.index, __e.latlng);
   }
 
   dragEndHandler = (__e) => {
-    console.log('drag-end');
-    const targetOptions = __e.target.options;
-    this.setState({selected: false, selectedIndex: targetOptions.index});
-    this.invokeStateHasChanged();
   }
 
-  dragStartHandler = (__e) => {
-    console.log('drag-start');
-    const targetOptions = __e.target.options;
-    this.setState({selected: true, selectedIndex: targetOptions.index});
-    this.invokeStateHasChanged();
-
-    console.log(this.state.selected);
+  dragStartHandler = (__e) => {   
+    const options = __e.target.options;
+    this.selectBoundary(options.index);
   }
 }

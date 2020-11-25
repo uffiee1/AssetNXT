@@ -4,66 +4,58 @@ import { Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reac
 import './GeometricForm.css';
 
 export default class GeometricForm extends Component {
-
-  state = {
-    position: this.props.position,
-  }
-
-  setLatitude(value) {
-    this.state.position.lat = value;
-    this.setState({position: this.state.position});
-
-    if (this.props.stateHasChanged) {
-      this.props.stateHasChanged(this.state);
+  
+  setBoundaryRadius(value) {
+    if (this.props.onChangeBoundaryRadius) {
+      this.props.onChangeBoundaryRadius(value);
     }
   }
 
-  setLongitude(value) {
-    this.state.position.lng = value;
-    this.setState({position: this.state.position});
+  setBoundaryLatitude(value) {
+    if (this.props.onChangeBoundaryLatitude) {
+      this.props.onChangeBoundaryLatitude(value);
+    }
+  }
 
-    if (this.props.stateHasChanged) {
-      this.props.stateHasChanged(this.state);
+  setBoundaryLongitude(value) {
+    if (this.props.onChangeBoundaryLongitude) {
+      this.props.onChangeBoundaryLongitude(value);
     }
   }
 
   render() {
-    return (
-      <Form> 
-        <Container fluid>
-          <Row form>
-            <Label for="position">Position:</Label>
-          </Row>
-          <Row form>
-            <Col xs="auto">
-              <FormGroup>
+    return(
+      <Form>
+        <Row>
+          <Label for="position">Position:</Label>
+        </Row>
+        <Row>
+          <Col xs="auto">
+            <FormGroup>
                 <Input type="text" placeholder="Latitude"
-                  onchange={(e) => this.setLatitude(e.target.value)}
-                  value={this.props.position.lat} />
-              </FormGroup>
-            </Col>
-            <Col xs="auto">
-              <FormGroup>
-                <Input type="text" placeholder="Longitude"
-                  onchange={(e) => this.setLongitude(e.target.value)}
-                  value={this.props.position.lng}/>
-              </FormGroup>
-            </Col>
-          </Row>
-          <Row form>
-            <Label for="radius">Radius:</Label>
-          </Row>
-          <Row form>
-            <FormGroup>
-              <Input type="range" min={1} max={50} step={1}/>
+                 onChange={(e) => this.setBoundaryLatitude(e.target.value)}
+                 value={this.props.boundaryLatitude} />
             </FormGroup>
-          </Row>
-          <Row form>
-            <FormGroup>
-              <Button color={'primary'}>Add</Button>
-            </FormGroup>
-          </Row>
-        </Container>
+          </Col>
+          <Col xs="auto">
+              <Input type="text" placeholder="Longitude"
+               onChange={(e) => this.setBoundaryLongitude(e.target.value)}
+               value={this.props.boundaryLongitude}/>
+          </Col>
+        </Row>
+        <Row>
+          <Label for="radius">Radius:</Label>
+        </Row>
+        <Row>
+           <Input type="range" min={1} max={5000} step={1}
+             onChange={(e) => this.setBoundaryRadius(e.target.value)}
+             value={this.props.boundaryRadius}/>
+        </Row>
+        <Row>
+          <FormGroup>
+            <Button color={'primary'}>Add</Button>
+          </FormGroup>
+        </Row>
       </Form>
     );
   }

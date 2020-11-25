@@ -8,7 +8,7 @@ export default class GeometricListItem extends React.Component {
 
   render() {
     return(
-     <p>{this.props.point.lat}, {this.props.point.lng}</p>
+     <p>{this.props.boundary.position.lat}, {this.props.boundary.position.lng} - {this.props.boundary.radius}</p>
     );
   }
 }
