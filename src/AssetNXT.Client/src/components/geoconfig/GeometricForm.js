@@ -25,9 +25,11 @@ export default class GeometricForm extends Component {
 
   render() {
     return(
-      <Form>
+      <Container fluid>
         <Row>
-          <Label for="position">Position:</Label>
+          <Col xs="auto">
+            <Label for="position">Position:</Label>
+          </Col>
         </Row>
         <Row>
           <Col xs="auto">
@@ -44,19 +46,18 @@ export default class GeometricForm extends Component {
           </Col>
         </Row>
         <Row>
-          <Label for="radius">Radius:</Label>
+          <Col xs="auto">
+            <Label for="radius">Radius:</Label>
+          </Col>
         </Row>
         <Row>
-           <Input type="range" min={1} max={5000} step={1}
-             onChange={(e) => this.setBoundaryRadius(e.target.value)}
-             value={this.props.boundaryRadius}/>
+          <Col xs="auto">
+             <Input type="range" min={1} max={5000} step={1}
+               onChange={(e) => this.setBoundaryRadius(e.target.value)}
+               value={this.props.boundaryRadius}/>
+          </Col>
         </Row>
-        <Row>
-          <FormGroup>
-            <Button color={'primary'}>Add</Button>
-          </FormGroup>
-        </Row>
-      </Form>
+      </Container>
     );
   }
 }

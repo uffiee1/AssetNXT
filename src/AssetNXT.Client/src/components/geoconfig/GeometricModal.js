@@ -34,17 +34,30 @@ export default class GeometricModal extends Component {
           </Col>
           <Col xs="12" lg="8">
             <Row>
-             <GeometricForm
-                boundaryRadius={this.state.boundaryRadius}
-                boundaryLatitude={this.state.boundaryLatitude}
-                boundaryLongitude={this.state.boundaryLongitude}
-                onChangeBoundaryRadius={this.changeBoundaryRadius}
-                onChangeBoundaryLatitude={this.changeBoundaryLatitude}
-                onChangeBoundaryLongitude={this.changeBoundaryLongitude}>
-              </GeometricForm>
+              <Col>
+                <GeometricForm
+                  boundaryRadius={this.state.boundaryRadius}
+                  boundaryLatitude={this.state.boundaryLatitude}
+                  boundaryLongitude={this.state.boundaryLongitude}
+                  onChangeBoundaryRadius={this.changeBoundaryRadius}
+                  onChangeBoundaryLatitude={this.changeBoundaryLatitude}
+                  onChangeBoundaryLongitude={this.changeBoundaryLongitude}>
+                 </GeometricForm>
+              </Col>
             </Row>
             <Row>
-              <GeometricList boundaries={this.state.boundaries}/>
+              <Col>
+                <hr className="w-100"/>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <label>Points:</label>
+                <GeometricList 
+                  boundaries={this.state.boundaries}
+                  onUpdateBoundary={this.updateBoundary}
+                  onRemoveBoundary={this.removeBoundary}/>
+              </Col>
             </Row>
           </Col>
         </Row>
@@ -61,13 +74,20 @@ export default class GeometricModal extends Component {
   removeBoundary = (index) => {
     const {boundaries} = this.state;
     boundaries.splice(index, 1);
-    this.setState({boundaries});
+    this.setState({boundaries, boundaryIndex: Number.NaN});
   }
 
   updateBoundary = (index, boundary) => {
     const {boundaries} = this.state;
     boundaries[index] = boundary;
     this.setState({boundaries})
+
+    if (this.state.boundaryIndex == index) {
+      this.setState({boundaryIndex: index, 
+        boundaryRadius: boundaries[index].radius, 
+        boundaryLatitude: boundaries[index].position.lat,
+        boundaryLongitude: boundaries[index].position.lng});
+    }
   }
 
   selectBoundary = (index) => {
