@@ -5,7 +5,7 @@ import './GeometricModal.css'
 
 import GeometricMap from './GeometricMap';
 import GeometricForm from './GeometricForm';
-import GeometricList from './GeometricList';
+import GeometricTable from './GeometricTable';
 
 export default class GeometricModal extends Component {
 
@@ -19,7 +19,7 @@ export default class GeometricModal extends Component {
 
   render() {
     return (
-      <Container fluid>
+      <Container fluid className="geometric-modal">
         <Row>
           <Col xs="12" lg="4">
             <div className="aspect-box">
@@ -33,7 +33,7 @@ export default class GeometricModal extends Component {
             </div>
           </Col>
           <Col xs="12" lg="8">
-            <Row>
+            <Row className="geometric-form">
               <Col>
                 <GeometricForm
                   boundaryRadius={this.state.boundaryRadius}
@@ -45,15 +45,14 @@ export default class GeometricModal extends Component {
                  </GeometricForm>
               </Col>
             </Row>
-            <Row>
+            <Row className="geometric-separator">
               <Col>
                 <hr className="w-100"/>
               </Col>
             </Row>
-            <Row>
+            <Row className="geometric-table">
               <Col>
-                <label>Points:</label>
-                <GeometricList 
+                <GeometricTable 
                   boundaries={this.state.boundaries}
                   onUpdateBoundary={this.updateBoundary}
                   onRemoveBoundary={this.removeBoundary}/>

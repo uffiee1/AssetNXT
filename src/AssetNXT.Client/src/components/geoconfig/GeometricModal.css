@@ -1,3 +1,23 @@
+.geometric-modal,
+.geometric-modal > .row,
+.geometric-modal > .row > * {
+    height: 100%;
+}
+
+.geometric-modal > .row > * {
+    display:flex;
+    flex-direction: column;
+}
+
+.geometric-table {
+    min-height: 0;
+}
+
+.geometric-table,
+.geometric-table > * {
+    height: 100%;
+}
+
 .aspect-box {
     padding-top: 100%;
     position:relative;

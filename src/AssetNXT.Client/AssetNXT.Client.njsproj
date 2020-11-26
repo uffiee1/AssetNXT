@@ -121,16 +121,10 @@
     </Content>
     <Content Include="src\components\geoconfig\GeometricMap.css" />
     <Content Include="src\components\geoconfig\GeometricMap.js" />
-    <Content Include="src\components\geoconfig\GeometricList.css">
+    <Content Include="src\components\geoconfig\GeometricTable.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\geoconfig\GeometricList.js">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\geoconfig\GeometricListItem.css">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\geoconfig\GeometricListItem.js">
+    <Content Include="src\components\geoconfig\GeometricTable.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\Layout.css">
