@@ -19,7 +19,7 @@ export default class GeometricTable extends Component {
 
   render() {
     return(
-      <Container className="table-container">
+      <Container fluid className="table-container">
         <Row>
           <Col>
 

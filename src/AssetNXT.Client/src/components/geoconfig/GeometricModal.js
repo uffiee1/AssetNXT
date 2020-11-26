@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 
 import './GeometricModal.css'
 
@@ -56,6 +56,11 @@ export default class GeometricModal extends Component {
                   boundaries={this.state.boundaries}
                   onUpdateBoundary={this.updateBoundary}
                   onRemoveBoundary={this.removeBoundary}/>
+              </Col>
+            </Row>
+            <Row className="geometric-add">
+              <Col className="py-3">
+                <Button color="info">Submit</Button>
               </Col>
             </Row>
           </Col>
