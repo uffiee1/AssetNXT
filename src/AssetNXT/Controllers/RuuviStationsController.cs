@@ -116,7 +116,7 @@ namespace AssetNXT.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteRuuviStation(string id)
         {
-            var stationModel = await _repository.GetObjectByIdAsync(id);
+            var stationModel = await _repository.GetObjectByDeviceIdAsync(id);
 
             if (stationModel != null)
             {

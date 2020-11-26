@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Container, Row, Col } from 'reactstrap';
 
 import './Layout.css';
-import Banner from './Banner';
 import Navigation from '../components/navigation/Navigation';
 
 export default class Layout extends Component {

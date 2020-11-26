@@ -40,6 +40,9 @@
     <Content Include="public\manifest.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="src\App.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\App.js" />
     <Content Include="src\App.test.js" />
     <Content Include="src\components\assets\Asset.css">

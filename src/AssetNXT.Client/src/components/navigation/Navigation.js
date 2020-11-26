@@ -1,46 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
-  Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
+  Collapse,
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText
-} from 'reactstrap';
+  NavbarBrand,
+} from "reactstrap";
+import { Link } from "react-router-dom";
 
-const Navigation = (props) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Navigation = () => {
+    const [topbarIsOpen, setTopbarOpen] = useState(true);
+    const toggleTopbar = () => {
+      setTopbarOpen(!topbarIsOpen);
+    }
+    
+    return (
+        <Navbar color="light" light className="navbar shadow-sm m-1 p-2 bg-white rounded" expand="md" >
+            <NavbarBrand className="px-5">
+                <NavLink tag={Link} to={"/"}>
+                    AssetNXT
+                </NavLink>
+            </NavbarBrand>
+                
+            <NavbarToggler onClick={toggleTopbar} />
 
-  const toggle = () => setIsOpen(!isOpen);
-
-  return (
-    <div>
-      <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">AssetNXT</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-
-            <Collapse isOpen={isOpen} navbar>
-                <Nav className="mr-auto" fluid="lg" navbar>
-                    <NavItem>
-                        <NavLink href="/constrains/">Constrains</NavLink>
+            <Collapse isOpen={topbarIsOpen} navbar>
+                <Nav className="mr-auto" navbar>
+                    
+                    <NavItem  className="mx-3">
+                        <NavLink tag={Link} to={"/"}>
+                            Home
+                        </NavLink>
                     </NavItem>
-                    <NavItem>
-                        <NavLink href="/notifications/">Notifications</NavLink>
+                    
+                    <NavItem className="mx-3">
+                        <NavLink tag={Link} to={"/constrains"}>
+                            Constrains
+                        </NavLink>
                     </NavItem>
-                    <NavItem>
-                        <NavLink href="/geo/">Geometrics</NavLink>
+
+                    <NavItem  className="mx-3">
+                        <NavLink tag={Link} to={"/notifications"}>
+                            Notifications
+                        </NavLink>
                     </NavItem>
+                    
+                    <NavItem  className="mx-3">
+                        <NavLink tag={Link} to={"/geo"}>
+                            Geometrics
+                        </NavLink>
+                    </NavItem>
+
                 </Nav>
             </Collapse>
-      </Navbar>
-    </div>
-  );
+        </Navbar>
+    );
 }
 
 export default Navigation;

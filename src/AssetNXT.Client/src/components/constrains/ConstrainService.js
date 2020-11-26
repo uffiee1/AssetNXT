@@ -66,7 +66,7 @@ export default class ConstrainService extends Component {
     }
 
     splitTemplates(array) {
-        var i, j, tempArray = [], chunk = 5;
+        var i, j, tempArray = [], chunk = 10;
         for (i = 0, j = array.length; i < j; i += chunk) {
             tempArray = [...tempArray, array.slice(i, i + chunk)];
         }
@@ -185,7 +185,7 @@ export default class ConstrainService extends Component {
         return (
             <Container fluid>
                 <ReactNotification className="mh-90" />
-                <Container>
+                <Container className="content m-auto">
                     <Row className="py-1">
                         <Col xs="12" lg="6">
                             <h2>Service Level Agreements</h2>
@@ -197,7 +197,7 @@ export default class ConstrainService extends Component {
                         </Col>
                     </Row>
 
-                    <Row className="py-3">
+                    <Row className="py-2">
                         <Col xs="8" lg="4" className="d-flex justify-content-center align-items-center">
                             <Input
                                 type="search"
@@ -214,7 +214,7 @@ export default class ConstrainService extends Component {
                         </Col>
                     </Row>
 
-                    <Row className="py-1 asset-table-row">
+                    <Row className="py-1">
                         <Col>
                             <Table innerRef={this.tableRef} className="overflow-auto" bordered>
                                 <thead>
@@ -230,12 +230,17 @@ export default class ConstrainService extends Component {
                         </Col>
                     </Row>
                     {this.state.isLoaded ? (
+                    <Row className="py-1">
+                        <Col>
                         <div>
-                        <div className={this.hideOnSearch()}> <TablePagination min={0} max={this.state.tableSlaTemplates.length} index={this.state.tablePageIndex} setIndex={this.setIndex} /></div>
-                        <CreateConstrains isOpen={this.state.createModal} toggle={this.toggleCreateModal} success={this.submitSuccess} />
+                            <div className={this.hideOnSearch()}> <TablePagination min={0} max={this.state.tableSlaTemplates.length} index={this.state.tablePageIndex} setIndex={this.setIndex} /></div>
+                        
+                            <CreateConstrains isOpen={this.state.createModal} toggle={this.toggleCreateModal} success={this.submitSuccess} />
                             <EditConstrains isOpen={this.state.editModal} toggle={this.toggleEditModal} sla={this.state.selected} success={this.submitSuccess} />
                             <DeleteConstrains setIndex={this.setIndex} isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal} sla={this.state.selected} success={this.submitSuccess} />
-                       </div>
+                        </div>
+                        </Col>
+                    </Row>
                         ): <p>Loading...</p>
                     }
                 </Container>
