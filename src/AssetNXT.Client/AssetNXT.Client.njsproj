@@ -123,8 +123,6 @@
     <Content Include="src\components\geoconfig\GeometricModal.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\Banner.css" />
-    <Content Include="src\components\Banner.js" />
     <Content Include="src\components\geoconfig\GeometricForm.css">
       <SubType>Code</SubType>
     </Content>
