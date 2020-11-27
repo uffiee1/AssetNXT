@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "./Navigation.css" 
+import logo from "../images/logo.png"
 import {
   Navbar,
   NavbarToggler,
@@ -7,6 +9,9 @@ import {
   NavItem,
   NavLink,
   NavbarBrand,
+  Row,
+  Container,
+  Col
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
@@ -20,7 +25,13 @@ const Navigation = () => {
         <Navbar color="light" light className="navbar shadow-sm m-1 p-2 bg-white rounded" expand="md" >
             <NavbarBrand className="px-5">
                 <NavLink tag={Link} to={"/"}>
-                    AssetNXT
+                    <Container fluid className="banner-container">
+                        <Row className="banner-container-row">
+                            <Col className="banner-image-container">
+                                <img className="img-fluid" src={logo} />
+                            </Col>
+                        </Row>
+                    </Container>
                 </NavLink>
             </NavbarBrand>
                 
