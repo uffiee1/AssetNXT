@@ -32,7 +32,7 @@ export default class AssetMap extends Component {
 
             AssetTemplate && <Popup>
               <AssetTemplate asset={asset} 
-                link={`/${asset.deviceId}/`}/>
+                link={`/station/${asset.deviceId}/`}/>
              </Popup>
           }
         </Marker>
