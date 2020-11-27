@@ -70,7 +70,7 @@ namespace AssetNXT.Repository
         // Returns an object by the deviceId unique for every RuuviStation.
         public TDocument GetObjectByDeviceId(string id)
         {
-            var matches = _collection.Find(doc => doc.DeviceId == id);
+            var matches = _collection.Find(doc => doc.DeviceId == id).ToList().OrderByDescending(doc => doc.UpdatedAt).ToList();
             return matches.FirstOrDefault();
         }
 
@@ -83,7 +83,7 @@ namespace AssetNXT.Repository
         // Returns all records by the unique deviceId.
         public List<TDocument> GetAllObjectsByDeviceId(string id)
         {
-            return _collection.Find(doc => doc.DeviceId == id).ToList();
+            return _collection.Find(doc => doc.DeviceId == id).ToList().OrderByDescending(doc => doc.UpdatedAt).ToList();
         }
 
         // Returns all records by the unique deviceId Async.

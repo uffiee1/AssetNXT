@@ -40,6 +40,9 @@
     <Content Include="public\manifest.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="src\App.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\App.js" />
     <Content Include="src\App.test.js" />
     <Content Include="src\components\assets\Asset.css">
@@ -70,6 +73,15 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\assets\map\AssetMarkerInfo.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\settings\SettingsButton.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\settings\SettingsButton.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\settings\SettingsList.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\assets\telemetric\graphs\TelemetricLineGraph.css">
@@ -160,6 +172,7 @@
     <Folder Include="src\components\" />
     <Folder Include="src\components\assets\" />
     <Folder Include="src\components\assets\map\" />
+    <Folder Include="src\components\assets\settings\" />
     <Folder Include="src\components\assets\telemetric\" />
     <Folder Include="src\components\assets\telemetric\graphs\" />
     <Folder Include="src\components\constrains\" />

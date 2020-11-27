@@ -28,6 +28,7 @@ namespace AssetNXT.Controllers
         public async Task<IActionResult> GetAllRuuviStations()
         {
             var stations = await _repository.GetAllLatestAsync();
+            stations.ForEach(s => s.Tags.RemoveAll(t => t.IsActive != true));
 
             if (stations != null)
             {
@@ -63,7 +64,7 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
-        [HttpGet("all-tags/{id}", Name = "GetAllTagsByDeviceId")]
+        [HttpGet("tags/{id}", Name = "GetAllTagsByDeviceId")]
         public async Task<IActionResult> GetAllTagsByDeviceId(string id)
         {
             var stations = await _repository.GetAllObjectsByDeviceIdAsync(id);
@@ -83,6 +84,7 @@ namespace AssetNXT.Controllers
 
             station.Tags.ForEach(tag => tag.CreateDate = DateTime.UtcNow);
             station.Tags.ForEach(tag => tag.UpdateAt = DateTime.UtcNow);
+            station.Tags.ForEach(tag => tag.IsActive = true);
 
             await _repository.CreateObjectAsync(station);
 
@@ -114,7 +116,7 @@ namespace AssetNXT.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteRuuviStation(string id)
         {
-            var stationModel = await _repository.GetObjectByIdAsync(id);
+            var stationModel = await _repository.GetObjectByDeviceIdAsync(id);
 
             if (stationModel != null)
             {

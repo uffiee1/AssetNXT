@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Container, Row, Col } from 'reactstrap';
 
 import './Home.css';
 import Layout from '../components/Layout';
@@ -13,7 +14,8 @@ export default class Home extends Component {
     state = {
         zoom: this.props.zoom || 14,
         assets: [],
-        loading: true
+        loading: true,
+        settingsModal: false,
     }
 
     constructor(props) {
@@ -56,7 +58,7 @@ export default class Home extends Component {
         var assetList = 
           <AssetList assets={assets}
                 assetSelected={this.onAssetSelected}
-                query={this.state.query}/>
+                query={this.state.query} />
 
         var assetSearch = 
             <Searchbar searchQuery={this.searchQuery} />

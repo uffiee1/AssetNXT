@@ -9,6 +9,12 @@ namespace AssetNXT.Models.Data
     public class Route : Document
     {
         [BsonElement]
+        public string Name { get; set; }
+
+        [BsonElement]
+        public string Description { get; set; }
+
+        [BsonElement]
         public List<Boundary> Points { get; set; }
     }
 }

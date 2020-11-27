@@ -26,3 +26,22 @@ tbody tr:hover {
 .mh-90{
     max-height: 90% !important;
 }
+
+.asset-table-row {
+    height: 440px;
+}
+
+.tooltiptd{
+    display: none;
+    position: absolute;
+    left: 26%;
+    background-color: dimgray;
+    color: white;
+    border-radius: 8px;
+    opacity: 0.9;
+}
+
+
+tbody tr:hover > .tooltiptd {
+    display: block;
+}

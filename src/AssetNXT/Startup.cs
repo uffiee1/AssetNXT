@@ -35,24 +35,29 @@ namespace AssetNXT
                 });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "../AssetNXT.Client/build";
-            });
 
             ConfigureSwaggerServices(services);
             ConfigureDatabaseServices(services);
+            ConfigureSpaFilesServices(services);
             ConfigureCrossOriginResourceSharing(services);
 
             // Scope
             services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
+            /// services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
 
             // Controllers Serialization
             services.AddControllers().AddNewtonsoftJson(s => { s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
 
             // SignalR
             services.AddSignalR();
+        }
+
+        public void ConfigureSpaFilesServices(IServiceCollection services)
+        {
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "../AssetNXT.Client/build";
+            });
         }
 
         public void ConfigureDatabaseServices(IServiceCollection services)

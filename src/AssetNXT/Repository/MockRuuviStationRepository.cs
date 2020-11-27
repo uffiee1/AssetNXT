@@ -136,7 +136,7 @@ namespace AssetNXT.Repository
                     Longitude = (_random.NextDouble() * (6.8936619 - 4.4777325)) + 4.4777325
                 },
 
-                Tags = Enumerable.Range(0, _random.Next(1, 2))
+                Tags = Enumerable.Range(0, _random.Next(4, 5))
                 .Select(x => MockRuuviStationTag()).ToList()
             };
 
