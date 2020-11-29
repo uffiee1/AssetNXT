@@ -169,6 +169,8 @@ namespace AssetNXT.Repository
         {
             return new Tag
             {
+                IsActive = true,
+
                 AccelX = _random.NextDouble(),
                 AccelY = _random.NextDouble(),
                 AccelZ = _random.NextDouble(),
@@ -185,6 +187,8 @@ namespace AssetNXT.Repository
         {
             return new Tag
             {
+                IsActive = ancestor.IsActive,
+
                 AccelX = _random.NextDouble(),
                 AccelY = _random.NextDouble(),
                 AccelZ = _random.NextDouble(),
