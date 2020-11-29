@@ -1,3 +1,7 @@
+.nav-link {
+    padding: 0 !important;
+}
+
 .banner-image-container {
     height: 48px;
     min-height: 48px;

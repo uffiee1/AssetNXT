@@ -23,7 +23,7 @@ const Navigation = () => {
     
     return (
         <Navbar color="light" light className="navbar shadow-sm m-1 p-2 bg-white rounded" expand="md" >
-            <NavbarBrand className="px-5">
+            <NavbarBrand>
                 <NavLink tag={Link} to={"/"}>
                     <Container fluid className="banner-container">
                         <Row className="banner-container-row">
