@@ -28,7 +28,7 @@ export default class GeometricTable extends Component {
                 <Row className="p-3">
                   <Col>Latitude</Col>
                   <Col>Longitude</Col>
-                  <Col>Radius</Col>
+                  <Col>Radius (m)</Col>
                   <Col/>
                 </Row>
               </Col>
