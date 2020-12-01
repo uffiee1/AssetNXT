@@ -9,7 +9,7 @@ namespace AssetNXT.Profiles
     {
         public ConfigurationsProfile()
         {
-            CreateMap<AgreementConfiguration, ServiceConfigurationReadDto>();
+            CreateMap<ServiceAgreement, ServiceConfigurationReadDto>();
         }
     }
 }

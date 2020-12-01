@@ -14,12 +14,12 @@ namespace AssetNXT.Controllers
     [Produces("application/json")]
     [Route("api/constrains")]
     [ApiController]
-    public class ConstrainsController : ControllerBase
+    public class AgreementsController : ControllerBase
     {
-        private readonly IConstrainDataRepository<AgreementConstrain> _repository;
+        private readonly IConstrainDataRepository<Agreement> _repository;
         private readonly IMapper _mapper;
 
-        public ConstrainsController(IConstrainDataRepository<AgreementConstrain> repository, IMapper mapper)
+        public AgreementsController(IConstrainDataRepository<Agreement> repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
@@ -54,7 +54,7 @@ namespace AssetNXT.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateConstrain(AgreementConstrainCreateDto constrainCreateDto)
         {
-            var constrain = _mapper.Map<AgreementConstrain>(constrainCreateDto);
+            var constrain = _mapper.Map<Agreement>(constrainCreateDto);
 
             if (constrain != null)
             {
@@ -72,7 +72,7 @@ namespace AssetNXT.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateConstrain(string id, AgreementConstrainCreateDto constrainCreateDto)
         {
-            var constrainModel = _mapper.Map<AgreementConstrain>(constrainCreateDto);
+            var constrainModel = _mapper.Map<Agreement>(constrainCreateDto);
             var constrain = await _repository.GetObjectByConstrainIdAsync(id);
 
             if (constrain != null)

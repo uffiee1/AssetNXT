@@ -15,11 +15,11 @@ namespace AssetNXT.Controllers
     [ApiController]
     public class ServiceAgreementController : ControllerBase
     {
-        private readonly IConstrainDataRepository<AgreementConstrain> _repositoryConstrain;
+        private readonly IConstrainDataRepository<Agreement> _repositoryConstrain;
         private readonly IMongoDataRepository<RuuviStation> _repositoryRuuviStation;
         private readonly IMapper _mapper;
 
-        public ServiceAgreementController(IConstrainDataRepository<AgreementConstrain> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
+        public ServiceAgreementController(IConstrainDataRepository<Agreement> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
         {
             this._repositoryConstrain = repositoryConstrain;
             this._repositoryRuuviStation = repositoryRuuviStation;

@@ -5,6 +5,6 @@ namespace AssetNXT.Configurations
 {
     public interface IGeometricConfiguration
     {
-        List<GeometricConfiguration> IsBreached(string id);
+        List<ServiceGeometric> IsBreached(string id);
     }
 }

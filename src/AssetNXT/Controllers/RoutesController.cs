@@ -14,12 +14,12 @@ namespace Ruuvi.Controllers
     [Produces("application/json")]
     [Route("api/routes")]
     [ApiController]
-    public class RouteController : ControllerBase
+    public class RoutesController : ControllerBase
     {
         private readonly IConstrainDataRepository<Route> _repository;
         private readonly IMapper _mapper;
 
-        public RouteController(IConstrainDataRepository<Route> repository, IMapper mapper)
+        public RoutesController(IConstrainDataRepository<Route> repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;

@@ -5,6 +5,6 @@ namespace AssetNXT.Configurations
 {
     public interface IServiceAgreementConfiguration
     {
-        List<AgreementConfiguration> IsBreached(string id);
+        List<ServiceAgreement> IsBreached(string id);
     }
 }

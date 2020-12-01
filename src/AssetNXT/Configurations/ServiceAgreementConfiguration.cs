@@ -7,27 +7,27 @@ namespace AssetNXT.Configurations
     public class ServiceAgreementConfiguration : IServiceAgreementConfiguration
     {
         private List<Tag> _tags;
-        private AgreementConstrain _constrain;
-        private List<AgreementConfiguration> _collection;
+        private Agreement _constrain;
+        private List<ServiceAgreement> _collection;
 
-        public ServiceAgreementConfiguration(List<Tag> tags, AgreementConstrain constrain)
+        public ServiceAgreementConfiguration(List<Tag> tags, Agreement constrain)
         {
             this.Tags = tags;
             this.Constrain = constrain;
-            this.Collection = new List<AgreementConfiguration>();
+            this.Collection = new List<ServiceAgreement>();
         }
 
         public List<Tag> Tags { get => _tags; set => _tags = value; }
 
-        public AgreementConstrain Constrain { get => _constrain; set => _constrain = value; }
+        public Agreement Constrain { get => _constrain; set => _constrain = value; }
 
-        public List<AgreementConfiguration> Collection { get => _collection; set => _collection = value; }
+        public List<ServiceAgreement> Collection { get => _collection; set => _collection = value; }
 
-        public List<AgreementConfiguration> IsBreached(string id)
+        public List<ServiceAgreement> IsBreached(string id)
         {
             foreach (var tag in this.Tags)
             {
-                AgreementConfiguration configuration = new AgreementConfiguration();
+                ServiceAgreement configuration = new ServiceAgreement();
 
                 configuration.DeviceId = id;
                 configuration.TagId = tag.Id;

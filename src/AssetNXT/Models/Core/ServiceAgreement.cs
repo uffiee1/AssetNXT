@@ -2,7 +2,7 @@
 
 namespace AssetNXT.Models.Core
 {
-    public class AgreementConfiguration
+    public class ServiceAgreement
     {
         public string DeviceId { get; set; }
 

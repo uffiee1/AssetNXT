@@ -9,9 +9,9 @@ namespace AssetNXT.Profiles
     {
         public ConstrainsProfile()
         {
-            CreateMap<AgreementConstrain, AgreementConstrainReadDto>();
-            CreateMap<AgreementConstrainCreateDto, AgreementConstrain>();
-            CreateMap<AgreementConstrain, AgreementConstrainCreateDto>();
+            CreateMap<Agreement, AgreementConstrainReadDto>();
+            CreateMap<AgreementConstrainCreateDto, Agreement>();
+            CreateMap<Agreement, AgreementConstrainCreateDto>();
         }
     }
 }

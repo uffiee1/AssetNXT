@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AssetNXT.Models.Core
 {
-    public class GeometricConfiguration
+    public class ServiceGeometric
     {
         public string DeviceId { get; set; }
 
