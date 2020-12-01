@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using AssetNXT.Repository;
+using AssetNXT.Repository.Service;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 

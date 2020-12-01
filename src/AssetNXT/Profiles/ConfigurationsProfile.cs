@@ -1,5 +1,5 @@
 ﻿using AssetNXT.Dtos;
-using AssetNXT.Models.Data;
+using AssetNXT.Models.Core;
 
 using AutoMapper;
 
@@ -9,7 +9,7 @@ namespace AssetNXT.Profiles
     {
         public ConfigurationsProfile()
         {
-            CreateMap<Configuration, ConfigurationsReadDto>();
+            CreateMap<AgreementConfiguration, ServiceConfigurationReadDto>();
         }
     }
 }

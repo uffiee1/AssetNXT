@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace AssetNXT.Dtos
+namespace AssetNXT.Models.Core
 {
-    public class ConfigurationsReadDto
+    public class AgreementConfiguration
     {
+        public string DeviceId { get; set; }
+
         public bool IsActive { get; set; }
 
         public string TagId { get; set; }
@@ -16,6 +15,8 @@ namespace AssetNXT.Dtos
         public bool Pressure { get; set; }
 
         public bool Temperature { get; set; }
+
+        public DateTime CreateDate { get; set; }
 
         public DateTime UpdateAt { get; set; }
     }

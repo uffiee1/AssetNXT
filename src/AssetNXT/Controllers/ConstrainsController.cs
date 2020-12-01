@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Dtos;
+using AssetNXT.Models.Core;
 using AssetNXT.Models.Data;
 using AssetNXT.Repository;
-
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssetNXT.Controllers
 {
     [Produces("application/json")]
-    [Route("api/constrains")]
+    [Route("api/agreement/constrains")]
     [ApiController]
     public class ConstrainsController : ControllerBase
     {
-        private readonly IMongoDataRepository<Constrain> _repository;
+        private readonly IConstrainDataRepository<AgreementConstrain> _repository;
         private readonly IMapper _mapper;
 
-        public ConstrainsController(IMongoDataRepository<Constrain> repository, IMapper mapper)
+        public ConstrainsController(IConstrainDataRepository<AgreementConstrain> repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
@@ -28,73 +28,55 @@ namespace AssetNXT.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllConstrains()
         {
-            var constrains = await _repository.GetAllAsync();
+            var constrains = await _repository.GetAllLatestAsync();
 
             if (constrains != null)
             {
-                return Ok(_mapper.Map<IEnumerable<ConstrainReadDto>>(constrains));
+                return Ok(_mapper.Map<IEnumerable<AgreementConstrainReadDto>>(constrains));
             }
 
             return NotFound();
         }
 
-        [HttpGet("{id}", Name = "GetConstrainByDeviceId")]
-        public async Task<IActionResult> GetConstrainByDeviceId(string id)
+        [HttpGet("{id}", Name = "GetConstrainByConstrainId")]
+        public async Task<IActionResult> GetConstrainByConstrainId(string id)
         {
-            var constrain = await _repository.GetObjectByDeviceIdAsync(id);
+            var constrains = await _repository.GetAllObjectsByConstrainIdAsync(id);
 
-            if (constrain != null)
+            if (constrains != null)
             {
-                return Ok(_mapper.Map<ConstrainReadDto>(constrain));
+                return Ok(_mapper.Map<IEnumerable<AgreementConstrainReadDto>>(constrains));
             }
 
             return NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateConstrain(MultipleConstrainsCreateDto multipleConstrainsCreateDto)
+        public async Task<IActionResult> CreateConstrain(AgreementConstrainCreateDto constrainCreateDto)
         {
-            List<Constrain> constrainList = new List<Constrain>();
+            var constrain = _mapper.Map<AgreementConstrain>(constrainCreateDto);
 
-            foreach (var deviceId in multipleConstrainsCreateDto.Devices)
+            if (constrain != null)
             {
-                ConstrainCreateDto constrainCreateDto = new ConstrainCreateDto();
-                constrainCreateDto.DeviceId = deviceId;
-                constrainCreateDto.Name = multipleConstrainsCreateDto.Name;
-                constrainCreateDto.Description = multipleConstrainsCreateDto.Description;
-                constrainCreateDto.HumidityMax = multipleConstrainsCreateDto.HumidityMax;
-                constrainCreateDto.HumidityMin = multipleConstrainsCreateDto.HumidityMin;
-                constrainCreateDto.PressureMax = multipleConstrainsCreateDto.PressureMax;
-                constrainCreateDto.PressureMin = multipleConstrainsCreateDto.PressureMin;
-                constrainCreateDto.TemperatureMax = multipleConstrainsCreateDto.TemperatureMax;
-                constrainCreateDto.TemperatureMin = multipleConstrainsCreateDto.TemperatureMin;
-
-                var constrain = _mapper.Map<Constrain>(constrainCreateDto);
-
                 await _repository.CreateObjectAsync(constrain);
-                constrainList.Add(constrain);
-            }
-
-            if (constrainList.Any())
-            {
-                return Ok(_mapper.Map<IEnumerable<ConstrainReadDto>>(constrainList));
+                return Ok(_mapper.Map<AgreementConstrainReadDto>(constrain));
             }
 
             return NotFound();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateConstrain(string id, ConstrainCreateDto constrainCreateDto)
+        public async Task<IActionResult> UpdateConstrain(string id, AgreementConstrainCreateDto constrainCreateDto)
         {
-            var constrainModel = _mapper.Map<Constrain>(constrainCreateDto);
-            var constrain = await _repository.GetObjectByIdAsync(id);
+            var constrainModel = _mapper.Map<AgreementConstrain>(constrainCreateDto);
+            var constrain = await _repository.GetObjectByConstrainIdAsync(id);
 
             if (constrain != null)
             {
                 constrainModel.UpdatedAt = DateTime.UtcNow;
                 constrainModel.Id = new MongoDB.Bson.ObjectId(id);
                 _repository.UpdateObject(id, constrainModel);
-                return Ok(_mapper.Map<ConstrainReadDto>(constrainModel));
+                return Ok(_mapper.Map<AgreementConstrainReadDto>(constrainModel));
             }
 
             return NotFound();
@@ -103,7 +85,7 @@ namespace AssetNXT.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteConstrain(string id)
         {
-            var constrainModel = await _repository.GetObjectByIdAsync(id);
+            var constrainModel = await _repository.GetObjectByConstrainIdAsync(id);
 
             if (constrainModel != null)
             {

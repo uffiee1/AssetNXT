@@ -3,11 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AssetNXT.Dtos
 {
-    public class MultipleConstrainsCreateDto
+    public class AgreementConstrainCreateDto
     {
         [MaxLength(250)]
         [Required]
         public List<string> Devices { get; set; }
+
+        [Required]
+        public int ConstrainId { get; set; }
 
         [MaxLength(250)]
         [Required]

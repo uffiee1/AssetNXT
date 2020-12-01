@@ -1,37 +1,33 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using AssetNXT.Models.Core;
 using AssetNXT.Models.Data;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace AssetNXT.Configurations
 {
-    public class ServiceAgreement : IServiceAgreement
+    public class ServiceAgreementConfiguration : IServiceAgreementConfiguration
     {
         private List<Tag> _tags;
-        private Constrain _constrain;
-        private List<Configuration> _collection;
+        private AgreementConstrain _constrain;
+        private List<AgreementConfiguration> _collection;
 
-        public ServiceAgreement(List<Tag> tags, Constrain constrain)
+        public ServiceAgreementConfiguration(List<Tag> tags, AgreementConstrain constrain)
         {
             this.Tags = tags;
             this.Constrain = constrain;
-            this.Collection = new List<Configuration>();
+            this.Collection = new List<AgreementConfiguration>();
         }
 
         public List<Tag> Tags { get => _tags; set => _tags = value; }
 
-        public Constrain Constrain { get => _constrain; set => _constrain = value; }
+        public AgreementConstrain Constrain { get => _constrain; set => _constrain = value; }
 
-        public List<Configuration> Collection { get => _collection; set => _collection = value; }
+        public List<AgreementConfiguration> Collection { get => _collection; set => _collection = value; }
 
-        public List<Configuration> IsBreached(string id)
+        public List<AgreementConfiguration> IsBreached(string id)
         {
             foreach (var tag in this.Tags)
             {
-                Configuration configuration = new Configuration();
+                AgreementConfiguration configuration = new AgreementConfiguration();
 
                 configuration.DeviceId = id;
                 configuration.TagId = tag.Id;
