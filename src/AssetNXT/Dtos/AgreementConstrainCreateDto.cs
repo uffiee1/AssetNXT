@@ -9,9 +9,6 @@ namespace AssetNXT.Dtos
         [Required]
         public List<string> Devices { get; set; }
 
-        [Required]
-        public int ConstrainId { get; set; }
-
         [MaxLength(250)]
         [Required]
         public string Name { get; set; }

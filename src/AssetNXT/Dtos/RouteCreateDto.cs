@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using AssetNXT.Models.Data;
+using AssetNXT.Models.Core;
 
 namespace AssetNXT.Dtos
 {
     public class RouteCreateDto
     {
         [MaxLength(250)]
-        [Required(AllowEmptyStrings = false)]
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        public string DeviceId { get; set; }
+        [Required]
+        public List<string> Devices { get; set; }
 
         [MaxLength(250)]
         [Required]

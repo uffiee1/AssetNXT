@@ -58,7 +58,11 @@ namespace AssetNXT.Controllers
 
             if (constrain != null)
             {
+                var lastConstrain = await _repository.GetLastConstrainIdAsync();
+                constrain.ConstrainId = lastConstrain != null ? lastConstrain.ConstrainId + 1 : 0;
+
                 await _repository.CreateObjectAsync(constrain);
+
                 return Ok(_mapper.Map<AgreementConstrainReadDto>(constrain));
             }
 

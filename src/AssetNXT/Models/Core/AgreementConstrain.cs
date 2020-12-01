@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace AssetNXT.Models.Core
 {
-    [BsonCollection("constrains")]
+    [BsonCollection("agreement_constrains")]
     public class AgreementConstrain : Constrain
     {
         [BsonElement]

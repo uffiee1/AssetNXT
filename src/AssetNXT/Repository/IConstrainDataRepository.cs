@@ -8,6 +8,12 @@ namespace AssetNXT.Repository
 {
     public interface IConstrainDataRepository<TConstrain> where TConstrain : IConstrain
     {
+        // Returns the last saved constrainId.
+        TConstrain GetLastConstrainId();
+
+        // Returns the last saved constrainId Async.
+        Task<TConstrain> GetLastConstrainIdAsync();
+
         // Returns all latest objects from db based on date.
         List<TConstrain> GetAllLatest();
 
