@@ -131,6 +131,12 @@
     </Content>
     <Content Include="src\components\geoconfig\GeometricMap.css" />
     <Content Include="src\components\geoconfig\GeometricMap.js" />
+    <Content Include="src\components\routes\RouteConfig.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\routes\RouteConfig.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\geoconfig\GeometricTable.css">
       <SubType>Code</SubType>
     </Content>
@@ -145,6 +151,12 @@
     </Content>
     <Content Include="src\components\navigation\Navigation.css" />
     <Content Include="src\components\navigation\Navigation.js" />
+    <Content Include="src\components\routes\RouteTable.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\routes\RouteTable.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\search\Searchbar.css" />
     <Content Include="src\components\search\Searchbar.js" />
     <Content Include="src\index.js" />
@@ -179,6 +191,7 @@
     <Folder Include="src\components\constrains\actions\" />
     <Folder Include="src\components\geoconfig\" />
     <Folder Include="src\components\navigation\" />
+    <Folder Include="src\components\routes\" />
     <Folder Include="src\components\search\" />
     <Folder Include="src\pages\" />
   </ItemGroup>

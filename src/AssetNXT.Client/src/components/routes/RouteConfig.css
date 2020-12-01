@@ -1,0 +1,48 @@
+.route-config,
+.route-config > .row,
+.route-config > .row > *:last-child {
+    height: 100%;
+}
+
+  .route-config > .row > * {
+      display: flex;
+      flex-direction: column;
+  }
+
+.route-table {
+    min-height: 0;
+}
+
+  .route-table,
+  .route-table > * {
+      max-height: 100%;
+   }
+   
+  .route-table > .col > * {
+      box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+  }
+
+.aspect-box {
+    padding-top: 100%;
+    position: relative;
+}
+
+  .aspect-box > * {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      position: absolute !important;
+  }
+
+.modal-dialog {
+    margin: 0;
+    height: 100%;
+    max-width: none;
+}
+
+.modal-content {
+    height: 100%;
+    padding: 2.5rem;
+    
+}
