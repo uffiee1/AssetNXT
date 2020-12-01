@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AssetNXT.Controllers
 {
     [Produces("application/json")]
-    [Route("api/agreement/constrains")]
+    [Route("api/constrains")]
     [ApiController]
     public class ConstrainsController : ControllerBase
     {
