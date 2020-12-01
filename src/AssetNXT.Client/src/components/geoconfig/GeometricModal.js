@@ -10,6 +10,8 @@ import GeometricTable from './GeometricTable';
 export default class GeometricModal extends Component {
 
   state = {
+    name: '',
+    description: '',
     boundaries: [],
     boundaryRadius: 0,
     boundaryLatitude: 0,
@@ -36,9 +38,13 @@ export default class GeometricModal extends Component {
             <Row className="geometric-form">
               <Col>
                 <GeometricForm
+                  name={this.state.name}
+                  description={this.state.description}
                   boundaryRadius={this.state.boundaryRadius}
                   boundaryLatitude={this.state.boundaryLatitude}
                   boundaryLongitude={this.state.boundaryLongitude}
+                  onChangeName={this.changeName}
+                  onChangeDescription={this.changeDescription}
                   onChangeBoundaryRadius={this.changeBoundaryRadius}
                   onChangeBoundaryLatitude={this.changeBoundaryLatitude}
                   onChangeBoundaryLongitude={this.changeBoundaryLongitude}>
@@ -60,8 +66,7 @@ export default class GeometricModal extends Component {
             </Row>
             <Row className="geometric-add">
               <Col className="py-3">
-                <Button color="info"
-                  onClick={e => this.props.onSubmit(this.state.boundaries)}>Submit</Button>
+                <Button color="info" onClick={e => this.submitRoute()}>Submit</Button>
               </Col>
             </Row>
           </Col>
@@ -105,6 +110,24 @@ export default class GeometricModal extends Component {
       boundaryLatitude: boundaries[index].position.lat,
       boundaryLongitude: boundaries[index].position.lng
     });
+  }
+
+  submitRoute = () => {
+    if (this.props.onSubmit) {
+      this.props.onSubmit({
+        name: this.state.name,
+        boundaries: this.state.boundaries,
+        description: this.state.description,
+      })
+    }
+  }
+
+  changeName = (value) => {
+    this.setState({name: value});
+  }
+
+  changeDescription = (value) => {
+    this.setState({ description: value});
   }
 
   changeBoundaryRadius = (value) => {

@@ -5,6 +5,18 @@ import './GeometricForm.css';
 
 export default class GeometricForm extends Component {
   
+  setName(value) {
+    if (this.props.onChangeName) {
+      this.props.onChangeName(value);
+    }
+  }
+
+  setDescription(value) {
+    if (this.props.onChangeDescription) {
+      this.props.onChangeDescription(value);
+    }
+  }
+
   setBoundaryRadius(value) {
     if (this.props.onChangeBoundaryRadius) {
       this.props.onChangeBoundaryRadius(value);
@@ -26,6 +38,29 @@ export default class GeometricForm extends Component {
   render() {
     return(
       <Container fluid>
+        <Row>
+          <Col xs="auto">
+            <FormGroup>
+              <Label for="name">Name:</Label>
+              <Input type="text" placeholder="Name"
+                onChange={(e) => this.setName(e.target.value)}
+                value={this.props.name}/>
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row>
+           <Col xs="auto">
+            <FormGroup>
+              <Label for="description">Description:</Label>
+              <Input type="text" placeholder="Description"
+                onChange={(e) => this.setDescription(e.target.value)}
+                value={this.props.description}/>
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row>
+          <hr className="w-100"/>
+        </Row>
         <Row>
           <Col xs="auto">
             <Label for="position">Position:</Label>

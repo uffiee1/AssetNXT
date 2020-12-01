@@ -88,13 +88,13 @@ export default class RouteConfig extends Component {
 
   }
 
-  addRoute = async (boundaries) => {
+  addRoute = async (route) => {
     const data = {
-      name: "<null>",
-      deviceId: "<null>",
-      description: "<null>",
-      points: boundaries.map(boundary => {
-        return {
+      name: route.name,
+      deviceId: route.deviceId || "<null>",
+      description: route.description,
+      points: route.boundaries.map(
+        boundary => { return {
           colour: 'dodgerblue',
           radius: boundary.radius,
           location: {
