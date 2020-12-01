@@ -77,7 +77,7 @@ namespace AssetNXT.Repository
 
         public Task<RuuviStation> GetObjectByDeviceIdAsync(string id)
         {
-            throw new NotSupportedException();
+            return Task.FromResult(GetAllObjectsByDeviceId(id).FirstOrDefault());
         }
 
         public RuuviStation GetObjectById(string id)

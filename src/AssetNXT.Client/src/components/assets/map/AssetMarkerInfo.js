@@ -8,7 +8,9 @@ import Asset from '../Asset';
 export default class AssetMarkerInfo extends Component {
 
   state = {
-    index: 0
+    index: 0,
+    outofbounds:[],
+
   }
 
   moveNext() {
@@ -26,6 +28,35 @@ export default class AssetMarkerInfo extends Component {
 
     index = Math.max(index, minLength);
     this.setState({index: index});
+  }
+
+  componentDidMount() {
+      this.fetchSlaData();
+  }
+
+  async fetchSlaData() {
+        const request = 'api/configurations/' + this.props.asset.deviceId;
+
+        const response = await fetch(request);
+        console.log("Response:");
+        console.log(response);
+
+        const data = await response.json();
+        console.log("SLA Changed:");
+        console.log(data);
+        let arr = [];
+        data.map(() => {
+            if (data.humidity && data.temperature && data.pressure) {
+                console.log("true:");
+                arr.push(true);
+            } else {
+                console.log("false");
+                arr.push(false);
+            }
+        })
+        this.setState({
+            outofbounds: arr
+  })
   }
 
   render() {
@@ -81,7 +112,7 @@ export default class AssetMarkerInfo extends Component {
           <Col xs="auto" className="tooltip-column pl-0 pr-4"/>}
 
           <Col className="tooltip-icon" xs="auto">
-            {this.props.outofbounds 
+            {this.state.outofbounds[this.state.index]
               ? <i className="fa fa-exclamation-triangle fa-2x text-warning"/>
               : <i className="fa fa-check-circle fa-2x text-success"/>
             }
