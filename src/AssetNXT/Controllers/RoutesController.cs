@@ -14,12 +14,12 @@ namespace Ruuvi.Controllers
     [Produces("application/json")]
     [Route("api/routes")]
     [ApiController]
-    public class RouteController : ControllerBase
+    public class RoutesController : ControllerBase
     {
         private readonly IMongoDataRepository<Route> _repository;
         private readonly IMapper _mapper;
 
-        public RouteController(IMongoDataRepository<Route> repository, IMapper mapper)
+        public RoutesController(IMongoDataRepository<Route> repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
