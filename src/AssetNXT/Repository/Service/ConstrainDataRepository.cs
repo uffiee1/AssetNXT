@@ -65,6 +65,19 @@ namespace AssetNXT.Repository.Service
             return await Task.FromResult(GetAllObjectsByConstrainId(id));
         }
 
+        // Returns an object by the deviceId unique for every RuuviStation.
+        public TConstrain GetObjectByDeviceId(string id)
+        {
+            var matches = _collection.Find(doc => true).ToList().OrderByDescending(doc => doc.UpdatedAt).ToList().Where(doc => doc.Devices.Contains(id));
+            return matches.FirstOrDefault();
+        }
+
+        // Returns an object by the deviceId unique for every RuuviStation Async.
+        public async Task<TConstrain> GetObjectByDeviceIdAsync(string id)
+        {
+            return await Task.FromResult(GetObjectByDeviceId(id));
+        }
+
         // Creates a record from the model.
         public void CreateObject(TConstrain document)
         {
