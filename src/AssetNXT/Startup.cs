@@ -117,13 +117,13 @@ namespace AssetNXT
             app.UseStaticFiles();
 
             app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "../AssetNXT.Client";
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
-            });
+             {
+                 spa.Options.SourcePath = "../AssetNXT.Client";
+                 if (env.IsDevelopment())
+                 {
+                     spa.UseReactDevelopmentServer(npmScript: "start");
+                 }
+             });
 
             // Swagger config
             app.UseSwagger();

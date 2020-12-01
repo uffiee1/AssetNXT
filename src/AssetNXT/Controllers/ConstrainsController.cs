@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Dtos;
 using AssetNXT.Models.Data;
@@ -51,16 +52,35 @@ namespace AssetNXT.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateConstrain(ConstrainCreateDto constrainCreateDto)
+        public async Task<IActionResult> CreateConstrain(MultipleConstrainsCreateDto multipleConstrainsCreateDto)
         {
-            var constrain = _mapper.Map<Constrain>(constrainCreateDto);
+            List<Constrain> constrainList = new List<Constrain>();
 
-            await _repository.CreateObjectAsync(constrain);
+            foreach (var deviceId in multipleConstrainsCreateDto.Devices)
+            {
+                ConstrainCreateDto constrainCreateDto = new ConstrainCreateDto();
+                constrainCreateDto.DeviceId = deviceId;
+                constrainCreateDto.Name = multipleConstrainsCreateDto.Name;
+                constrainCreateDto.Description = multipleConstrainsCreateDto.Description;
+                constrainCreateDto.HumidityMax = multipleConstrainsCreateDto.HumidityMax;
+                constrainCreateDto.HumidityMin = multipleConstrainsCreateDto.HumidityMin;
+                constrainCreateDto.PressureMax = multipleConstrainsCreateDto.PressureMax;
+                constrainCreateDto.PressureMin = multipleConstrainsCreateDto.PressureMin;
+                constrainCreateDto.TemperatureMax = multipleConstrainsCreateDto.TemperatureMax;
+                constrainCreateDto.TemperatureMin = multipleConstrainsCreateDto.TemperatureMin;
 
-            var constrainReadDto = _mapper.Map<ConstrainReadDto>(constrain);
+                var constrain = _mapper.Map<Constrain>(constrainCreateDto);
 
-            // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
-            return CreatedAtRoute(nameof(GetConstrainByDeviceId), new { Id = constrainReadDto.Id }, constrainReadDto);
+                await _repository.CreateObjectAsync(constrain);
+                constrainList.Add(constrain);
+            }
+
+            if (constrainList.Any())
+            {
+                return Ok(_mapper.Map<IEnumerable<ConstrainReadDto>>(constrainList));
+            }
+
+            return NotFound();
         }
 
         [HttpPut("{id}")]
