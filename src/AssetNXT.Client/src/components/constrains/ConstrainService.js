@@ -7,6 +7,7 @@ import './ConstrainService.css';
 import TablePagination from "./TablePagination";
 import CreateConstrains from "./actions/createConstrains";
 import EditConstrains from "./actions/editConstrains";
+import ApplyConstrains from "./actions/applyConstrains";
 import DeleteConstrains from "./actions/deleteConstrains";
 
 import 'react-notifications-component/dist/theme.css'
@@ -20,6 +21,7 @@ export default class ConstrainService extends Component {
             createModal: false,
             editModal: false,
             deleteModal: false,
+            applyModal: false,
             isLoaded: false,
             slaTemplates: [],
             tableSlaTemplates: [],
@@ -28,6 +30,7 @@ export default class ConstrainService extends Component {
         };
         this.toggleCreateModal = this.toggleCreateModal.bind(this);
         this.toggleEditModal = this.toggleEditModal.bind(this);
+        this.toggleApplyModal = this.toggleApplyModal.bind(this);
         this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
         this.submitSuccess = this.submitSuccess.bind(this);
         this.setTableSlaTemplate = this.setTableSlaTemplate.bind(this);
@@ -125,6 +128,10 @@ export default class ConstrainService extends Component {
         });
     }
 
+    toggleApplyModal() {
+        this.setState({ applyModal: !this.state.applyModal })
+    }
+
     setIndex(value) {
         this.setState({ tablePageIndex : value })
     }
@@ -190,11 +197,6 @@ export default class ConstrainService extends Component {
                         <Col xs="12" lg="6">
                             <h2>Service Level Agreements</h2>
                         </Col>
-                        <Col md="12" lg={{ size: 4, offset: 2 }} className="d-flex align-items-end pt-1">
-                            <Button onClick={this.toggleCreateModal} color="success" className="mr-1" >Create <i className="fas fa-plus"></i></Button>
-                            <Button onClick={this.toggleEditModal} color={this.state.selected ? 'info' : 'secondary'} className="mr-1 text-white" disabled={this.state.selected ? false : true}>Edit <i className="fas fa-edit"></i></Button>
-                            <Button onClick={this.toggleDeleteModal} color={this.state.selected ? 'danger' : 'secondary'} className="mr-1" disabled={this.state.selected ? false : true}>Delete <i className="fas fa-trash-alt"></i></Button>
-                        </Col>
                     </Row>
 
                     <Row className="py-2">
@@ -211,6 +213,12 @@ export default class ConstrainService extends Component {
                                     <i className="fa fa-search"></i>
                                 </Button>
                             </div>
+                        </Col>
+                        <Col md="12" lg="8" className="d-flex justify-content-lg-end  pt-1">
+                            <Button onClick={this.toggleCreateModal} color="success" className="mr-1" >Create <i className="fas fa-plus"></i></Button>
+                            <Button onClick={this.toggleEditModal} color={this.state.selected ? 'info' : 'secondary'} className="mr-1 text-white" disabled={this.state.selected ? false : true}>Edit <i className="fas fa-edit"></i></Button>
+                            <Button onClick={this.toggleApplyModal} color={this.state.selected ? 'info' : 'secondary'} className="mr-1" disabled={this.state.selected ? false : true}>Apply <i class="fas fa-check"></i></Button>
+                            <Button onClick={this.toggleDeleteModal} color={this.state.selected ? 'danger' : 'secondary'} className="mr-1" disabled={this.state.selected ? false : true}>Delete <i className="fas fa-trash-alt"></i></Button>
                         </Col>
                     </Row>
 
@@ -233,15 +241,15 @@ export default class ConstrainService extends Component {
                     <Row className="py-1">
                         <Col>
                         <div>
-                            <div className={this.hideOnSearch()}> <TablePagination min={0} max={this.state.tableSlaTemplates.length} index={this.state.tablePageIndex} setIndex={this.setIndex} /></div>
-                        
+                            <div className={this.hideOnSearch()}> <TablePagination min={0} max={this.state.tableSlaTemplates.length} index={this.state.tablePageIndex} setIndex={this.setIndex} /></div>          
                             <CreateConstrains isOpen={this.state.createModal} toggle={this.toggleCreateModal} success={this.submitSuccess} />
                             <EditConstrains isOpen={this.state.editModal} toggle={this.toggleEditModal} sla={this.state.selected} success={this.submitSuccess} />
                             <DeleteConstrains setIndex={this.setIndex} isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal} sla={this.state.selected} success={this.submitSuccess} />
+                            <ApplyConstrains isOpen={this.state.applyModal} toggle={this.toggleApplyModal} sla={this.state.selected}  />
                         </div>
                         </Col>
                     </Row>
-                        ): <p>Loading...</p>
+                        ): <p></p>
                     }
                 </Container>
             </Container>

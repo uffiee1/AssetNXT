@@ -115,6 +115,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\constrains\actions\createConstrains.js" />
+    <Content Include="src\components\constrains\actions\applyConstrains.js" />
     <Content Include="src\components\constrains\actions\deleteConstrains.js" />
     <Content Include="src\components\constrains\actions\editConstrains.js" />
     <Content Include="src\components\constrains\ConstrainService.css" />
