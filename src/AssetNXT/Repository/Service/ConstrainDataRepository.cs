@@ -40,12 +40,13 @@ namespace AssetNXT.Repository.Service
             return await Task.FromResult(GetAllLatest());
         }
 
+        // Returns the last saved constrainId.
         public TConstrain GetLastConstrainId()
         {
             return _collection.Find(doc => true).ToList().OrderByDescending(doc => doc.ConstrainId).FirstOrDefault();
         }
 
-        // Returns the last saved constrainId
+        // Returns the last saved constrainId Async.
         public async Task<TConstrain> GetLastConstrainIdAsync()
         {
             return await Task.FromResult(GetLastConstrainId());
