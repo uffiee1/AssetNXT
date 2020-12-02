@@ -245,7 +245,7 @@ export default class ConstrainService extends Component {
                             <CreateConstrains isOpen={this.state.createModal} toggle={this.toggleCreateModal} success={this.submitSuccess} />
                             <EditConstrains isOpen={this.state.editModal} toggle={this.toggleEditModal} sla={this.state.selected} success={this.submitSuccess} />
                             <DeleteConstrains setIndex={this.setIndex} isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal} sla={this.state.selected} success={this.submitSuccess} />
-                            <ApplyConstrains isOpen={this.state.applyModal} toggle={this.toggleApplyModal} sla={this.state.selected}  />
+                            <ApplyConstrains isOpen={this.state.applyModal} toggle={this.toggleApplyModal} sla={this.state.selected} success={this.submitSuccess} />
                         </div>
                         </Col>
                     </Row>
