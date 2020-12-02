@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
-using AssetNXT.Models;
 using AssetNXT.Models.Data;
-using AssetNXT.Settings;
 
-namespace AssetNXT.Repository
+namespace AssetNXT.Repository.Service
 {
     public class MockRuuviStationRepository : IMongoDataRepository<RuuviStation>
     {

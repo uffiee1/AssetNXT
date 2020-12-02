@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using AssetNXT.Models;
 using MongoDB.Bson;
 
-namespace AssetNXT.Models
+namespace AssetNXT.Models.Data
 {
     public abstract class Document : IDocument
     {
