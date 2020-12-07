@@ -119,6 +119,9 @@
     <Content Include="src\components\constrains\actions\editConstrains.js" />
     <Content Include="src\components\constrains\ConstrainService.css" />
     <Content Include="src\components\constrains\ConstrainService.js" />
+    <Content Include="src\components\date\DatePicker.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\geoconfig\GeometricModal.css" />
     <Content Include="src\components\geoconfig\GeometricModal.js">
       <SubType>Code</SubType>
@@ -179,6 +182,7 @@
     <Folder Include="src\components\constrains\actions\" />
     <Folder Include="src\components\geoconfig\" />
     <Folder Include="src\components\navigation\" />
+    <Folder Include="src\components\date\" />
     <Folder Include="src\components\search\" />
     <Folder Include="src\pages\" />
   </ItemGroup>
