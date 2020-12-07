@@ -6,6 +6,7 @@ using AssetNXT.Settings;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,7 +37,7 @@ namespace AssetNXT
 
             ConfigureSwaggerServices(services);
             ConfigureDatabaseServices(services);
-            ConfigureSpaFilesServices(services);
+            // ConfigureSpaFilesServices(services);
             ConfigureCrossOriginResourceSharing(services);
 
             // Scope
@@ -111,17 +112,17 @@ namespace AssetNXT
             });
 
             // Client SPA
-            app.UseSpaStaticFiles();
-            app.UseStaticFiles();
+            //app.UseSpaStaticFiles();
+            //app.UseStaticFiles();
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "../AssetNXT.Client";
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
-            });
+            //app.UseSpa(spa =>
+            //{
+            //    spa.Options.SourcePath = "../AssetNXT.Client";
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseReactDevelopmentServer(npmScript: "start");
+            //    }
+            //});
 
             // Swagger config
             app.UseSwagger();

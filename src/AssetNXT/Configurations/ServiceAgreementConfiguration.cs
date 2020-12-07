@@ -7,7 +7,7 @@ using AssetNXT.Repository;
 
 namespace AssetNXT.Configurations
 {
-    public class ServiceAgreementConfiguration : IServiceAgreementConfiguration
+    public class ServiceAgreementConfiguration : IConfiguration<ServiceAgreement>
     {
         private readonly IMongoDataRepository<Agreement> _repository;
         private RuuviStation _station;
