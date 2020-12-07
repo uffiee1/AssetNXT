@@ -148,14 +148,14 @@ export default class RouteConfig extends Component {
     route.boundaries = route.boundaries.map(
       boundary => ({...boundary, colour: 'dodgerblue'}));
 
-    this.submitRoute(`api/routes/${this.state.route.deviceId}`, 'PUT', route);
+    this.submitRoute(`api/routes/${this.state.route.id}`, 'PUT', route);
     this.invokeStateHasChanged();
     this.invokeUpdateToggle();
   }
 
   deleteRoute = async (route) => {
 
-    this.submitRoute(`api/routes/${this.state.route.deviceId}`, 'DELETE', route);
+    this.submitRoute(`api/routes/${this.state.route.id}`, 'DELETE', route);
   }
 
   selectRoute = async (route) => {
