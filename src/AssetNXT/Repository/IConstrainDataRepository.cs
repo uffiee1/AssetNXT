@@ -20,11 +20,17 @@ namespace AssetNXT.Repository
         // Returns all latest objects from db based on date Async.
         Task<List<TConstrain>> GetAllLatestAsync();
 
-        // Returns an object by the deviceId unique for every RuuviStation.
-        TConstrain GetObjectByDeviceId(string id);
+        // Returns an object by the bson _id of the record.
+        TConstrain GetObjectById(string id);
+
+        // Returns an object by the bson _id of the record Async.
+        Task<TConstrain> GetObjectByIdAsync(string id);
+
+        // Returns an object by the TagId unique for every RuuviStation.
+        TConstrain GetObjectByTagId(string id);
 
         // Returns an object by the constrainId unique for every RuuviStation Async.
-        Task<TConstrain> GetObjectByDeviceIdAsync(string id);
+        Task<TConstrain> GetObjectByTagIdAsync(string id);
 
         // Returns an object by the constrainId unique for every RuuviStation.
         TConstrain GetObjectByConstrainId(string id);

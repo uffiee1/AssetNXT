@@ -77,17 +77,31 @@ namespace AssetNXT.Repository.Service
             return await Task.FromResult(GetAllObjectsByConstrainId(id));
         }
 
-        // Returns an object by the deviceId unique for every RuuviStation.
-        public TConstrain GetObjectByDeviceId(string id)
+        // Returns an object by the bson _id of the record.
+        public TConstrain GetObjectById(string id)
         {
-            var matches = _collection.Find(doc => true).ToList().OrderByDescending(doc => doc.UpdatedAt).ToList().Where(doc => doc.Devices.Contains(id));
+            var matches = _collection.Find(doc => doc.Id == new ObjectId(id)).ToList().OrderByDescending(doc => doc.UpdatedAt);
             return matches.FirstOrDefault();
         }
 
-        // Returns an object by the deviceId unique for every RuuviStation Async.
-        public async Task<TConstrain> GetObjectByDeviceIdAsync(string id)
+        // Returns an object by the bson _id of the record Async.
+        public async Task<TConstrain> GetObjectByIdAsync(string id)
         {
-            return await Task.FromResult(GetObjectByDeviceId(id));
+            return await Task.FromResult(GetObjectById(id));
+        }
+
+        // Returns an object by the tagId unique for every RuuviStation.
+        public TConstrain GetObjectByTagId(string id)
+        {
+            var matches = _collection.Find(doc => true).ToList().OrderByDescending(doc => doc.UpdatedAt).ToList().Where(constrain => constrain.Tags.Any(tag => tag.Id == id)).ToList();
+
+            return matches.FirstOrDefault();
+        }
+
+        // Returns an object by the tagId unique for every RuuviStation Async.
+        public async Task<TConstrain> GetObjectByTagIdAsync(string id)
+        {
+            return await Task.FromResult(GetObjectByTagId(id));
         }
 
         // Creates a record from the model.
@@ -109,17 +123,15 @@ namespace AssetNXT.Repository.Service
         // Updates the record from the model by bson _id.
         public void UpdateObject(string id, TConstrain document)
         {
-            var objectId = new ObjectId(id);
             document.UpdatedAt = DateTime.UtcNow;
-            _collection.ReplaceOne(doc => doc.Id == objectId, document);
+            _collection.ReplaceOne(doc => doc.Id == new ObjectId(id), document);
         }
 
         // Updates the record from the model by bson _id Async.
         public async Task UpdateObjectAsync(string id, TConstrain document)
         {
-            var objectId = new ObjectId(id);
             document.UpdatedAt = DateTime.UtcNow;
-            await _collection.ReplaceOneAsync(doc => doc.Id == objectId, document);
+            await _collection.ReplaceOneAsync(doc => doc.Id == new ObjectId(id), document);
         }
 
         // Removes the record from the db.
@@ -137,15 +149,13 @@ namespace AssetNXT.Repository.Service
         // Removes the record from the db based on the bason _id.
         public void RemoveObjectById(string id)
         {
-            var objectId = new ObjectId(id);
-            _collection.DeleteOne(doc => doc.Id == objectId);
+            _collection.DeleteOne(doc => doc.Id == new ObjectId(id));
         }
 
         // Removes the record from the db based on the bason _id Async.
         public async Task RemoveObjectByIdAsync(string id)
         {
-            var objectId = new ObjectId(id);
-            await _collection.DeleteOneAsync(doc => doc.Id == objectId);
+            await _collection.DeleteOneAsync(doc => doc.Id == new ObjectId(id));
         }
     }
 }

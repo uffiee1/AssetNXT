@@ -21,22 +21,22 @@ namespace AssetNXT.Controllers
 
         public ServiceAgreementController(IConstrainDataRepository<Agreement> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
         {
-            this._repositoryConstrain = repositoryConstrain;
             this._repositoryRuuviStation = repositoryRuuviStation;
+            this._repositoryConstrain = repositoryConstrain;
             _mapper = mapper;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValadatedDeviceById(string id)
         {
-            var constrain = await _repositoryConstrain.GetObjectByDeviceIdAsync(id);
             var station = await _repositoryRuuviStation.GetObjectByDeviceIdAsync(id);
 
-            if (constrain != null && station != null)
+            if (station != null)
             {
-                var serviceAgreement = new ServiceAgreementConfiguration(station.Tags, constrain);
+                var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryConstrain);
 
-                return Ok(_mapper.Map<IEnumerable<ServiceConfigurationReadDto>>(serviceAgreement.IsBreached(station.DeviceId)));
+                var breachedStations = await serviceAgreement.IsBreached();
+                return Ok(_mapper.Map<IEnumerable<ServiceConfigurationReadDto>>(breachedStations));
             }
 
             return NotFound();
