@@ -143,6 +143,7 @@
     <Content Include="src\components\constrains\geometric\modal\GeometricTable.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\constrains\telemetric\TablePagination.js" />
     <Content Include="src\components\Layout.css">
       <SubType>Code</SubType>
     </Content>

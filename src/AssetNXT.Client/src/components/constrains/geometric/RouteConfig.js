@@ -7,8 +7,8 @@ import ReactNotification from 'react-notifications-component'
 
 import './RouteConfig.css'
 import RouteTable from './RouteTable';
-import GeometricMap from '../geoconfig/GeometricMap';
-import GeometricModal from '../geoconfig/GeometricModal';
+import GeometricMap from './modal/GeometricMap';
+import GeometricModal from './modal/GeometricModal';
 
 export default class RouteConfig extends Component {
 

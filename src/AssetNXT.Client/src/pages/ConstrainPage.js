@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import Layout from '../components/Layout';
-import ConstrainService from '../components/constrains/ConstrainService';
+import ConstrainService from '../components/constrains/telemetric/ConstrainService';
 
 export default class ConstrainPage extends Component{
     static displayName = ConstrainPage.displayName
