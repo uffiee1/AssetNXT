@@ -119,28 +119,28 @@
     <Content Include="src\components\constrains\telemetric\actions\editConstrains.js" />
     <Content Include="src\components\constrains\telemetric\ConstrainService.css" />
     <Content Include="src\components\constrains\telemetric\ConstrainService.js" />
-    <Content Include="src\components\constrains\geometric\modal\GeometricModal.css" />
-    <Content Include="src\components\constrains\geometric\modal\GeometricModal.js">
+    <Content Include="src\components\constrains\geometrics\modal\GeometricModal.css" />
+    <Content Include="src\components\constrains\geometrics\modal\GeometricModal.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\constrains\geometric\modal\GeometricForm.css">
+    <Content Include="src\components\constrains\geometrics\modal\GeometricForm.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\constrains\geometric\modal\GeometricForm.js">
+    <Content Include="src\components\constrains\geometrics\modal\GeometricForm.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\constrains\geometric\modal\GeometricMap.css" />
-    <Content Include="src\components\constrains\geometric\modal\GeometricMap.js" />
-    <Content Include="src\components\constrains\geometric\RouteConfig.css">
+    <Content Include="src\components\constrains\geometrics\modal\GeometricMap.css" />
+    <Content Include="src\components\constrains\geometrics\modal\GeometricMap.js" />
+    <Content Include="src\components\constrains\geometrics\RouteConfig.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\constrains\geometric\RouteConfig.js">
+    <Content Include="src\components\constrains\geometrics\RouteConfig.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\constrains\geometric\modal\GeometricTable.css">
+    <Content Include="src\components\constrains\geometrics\modal\GeometricTable.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\constrains\geometric\modal\GeometricTable.js">
+    <Content Include="src\components\constrains\geometrics\modal\GeometricTable.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\constrains\telemetric\TablePagination.js" />
@@ -152,10 +152,10 @@
     </Content>
     <Content Include="src\components\navigation\Navigation.css" />
     <Content Include="src\components\navigation\Navigation.js" />
-    <Content Include="src\components\constrains\geometric\RouteTable.js">
+    <Content Include="src\components\constrains\geometrics\RouteTable.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\constrains\geometric\RouteTable.css">
+    <Content Include="src\components\constrains\geometrics\RouteTable.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\search\Searchbar.css" />
@@ -189,8 +189,8 @@
     <Folder Include="src\components\assets\telemetric\" />
     <Folder Include="src\components\assets\telemetric\graphs\" />
     <Folder Include="src\components\constrains\" />
-    <Folder Include="src\components\constrains\geometric\" />
-    <Folder Include="src\components\constrains\geometric\modal\" />
+    <Folder Include="src\components\constrains\geometrics\" />
+    <Folder Include="src\components\constrains\geometrics\modal\" />
     <Folder Include="src\components\constrains\telemetric\actions\" />
     <Folder Include="src\components\constrains\telemetric\" />
     <Folder Include="src\components\navigation\" />
