@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using AssetNXT.Models;
 using MongoDB.Bson;
 
 namespace AssetNXT.Models.Data

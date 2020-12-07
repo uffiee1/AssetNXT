@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using AssetNXT.Models.Data;
-using AssetNXT.Repository.Service;
+using AssetNXT.Repository;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
