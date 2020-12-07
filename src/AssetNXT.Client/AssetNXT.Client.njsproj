@@ -114,33 +114,33 @@
     <Content Include="src\components\assets\telemetric\TelemetricTabs.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\constrains\actions\createConstrains.js" />
-    <Content Include="src\components\constrains\actions\deleteConstrains.js" />
-    <Content Include="src\components\constrains\actions\editConstrains.js" />
-    <Content Include="src\components\constrains\ConstrainService.css" />
-    <Content Include="src\components\constrains\ConstrainService.js" />
-    <Content Include="src\components\geoconfig\GeometricModal.css" />
-    <Content Include="src\components\geoconfig\GeometricModal.js">
+    <Content Include="src\components\constrains\telemetric\actions\createConstrains.js" />
+    <Content Include="src\components\constrains\telemetric\actions\deleteConstrains.js" />
+    <Content Include="src\components\constrains\telemetric\actions\editConstrains.js" />
+    <Content Include="src\components\constrains\telemetric\ConstrainService.css" />
+    <Content Include="src\components\constrains\telemetric\ConstrainService.js" />
+    <Content Include="src\components\constrains\geometric\modal\GeometricModal.css" />
+    <Content Include="src\components\constrains\geometric\modal\GeometricModal.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\geoconfig\GeometricForm.css">
+    <Content Include="src\components\constrains\geometric\modal\GeometricForm.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\geoconfig\GeometricForm.js">
+    <Content Include="src\components\constrains\geometric\modal\GeometricForm.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\geoconfig\GeometricMap.css" />
-    <Content Include="src\components\geoconfig\GeometricMap.js" />
-    <Content Include="src\components\routes\RouteConfig.css">
+    <Content Include="src\components\constrains\geometric\modal\GeometricMap.css" />
+    <Content Include="src\components\constrains\geometric\modal\GeometricMap.js" />
+    <Content Include="src\components\constrains\geometric\RouteConfig.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\routes\RouteConfig.js">
+    <Content Include="src\components\constrains\geometric\RouteConfig.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\geoconfig\GeometricTable.css">
+    <Content Include="src\components\constrains\geometric\modal\GeometricTable.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\geoconfig\GeometricTable.js">
+    <Content Include="src\components\constrains\geometric\modal\GeometricTable.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\Layout.css">
@@ -151,10 +151,10 @@
     </Content>
     <Content Include="src\components\navigation\Navigation.css" />
     <Content Include="src\components\navigation\Navigation.js" />
-    <Content Include="src\components\routes\RouteTable.js">
+    <Content Include="src\components\constrains\geometric\RouteTable.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\routes\RouteTable.css">
+    <Content Include="src\components\constrains\geometric\RouteTable.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\search\Searchbar.css" />
@@ -188,10 +188,11 @@
     <Folder Include="src\components\assets\telemetric\" />
     <Folder Include="src\components\assets\telemetric\graphs\" />
     <Folder Include="src\components\constrains\" />
-    <Folder Include="src\components\constrains\actions\" />
-    <Folder Include="src\components\geoconfig\" />
+    <Folder Include="src\components\constrains\geometric\" />
+    <Folder Include="src\components\constrains\geometric\modal\" />
+    <Folder Include="src\components\constrains\telemetric\actions\" />
+    <Folder Include="src\components\constrains\telemetric\" />
     <Folder Include="src\components\navigation\" />
-    <Folder Include="src\components\routes\" />
     <Folder Include="src\components\search\" />
     <Folder Include="src\pages\" />
   </ItemGroup>
