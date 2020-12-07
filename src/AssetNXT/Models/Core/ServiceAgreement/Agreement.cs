@@ -1,33 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AssetNXT.Models.Data;
+using AssetNXT.Repository;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
-namespace AssetNXT.Dtos
+namespace AssetNXT.Models.Core.ServiceAgreement
 {
-    public class AgreementConstrainReadDto
+    [BsonCollection("agreement_constrains")]
+    public class Agreement : Document
     {
-        public string Id { get; set; }
-
+        [BsonElement]
         public List<Tag> Tags { get; set; }
 
+        [BsonElement]
         public string Name { get; set; }
 
+        [BsonElement]
         public string Description { get; set; }
 
+        [BsonElement]
         public double TemperatureMin { get; set; }
 
+        [BsonElement]
         public double TemperatureMax { get; set; }
 
+        [BsonElement]
         public double HumidityMin { get; set; }
 
+        [BsonElement]
         public double HumidityMax { get; set; }
 
+        [BsonElement]
         public double PressureMin { get; set; }
 
+        [BsonElement]
         public double PressureMax { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-
-        public DateTime UpdatedAt { get; set; }
     }
 }

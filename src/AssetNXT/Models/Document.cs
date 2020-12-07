@@ -1,7 +1,7 @@
 ﻿using System;
 using MongoDB.Bson;
 
-namespace AssetNXT.Models.Data
+namespace AssetNXT.Models
 {
     public abstract class Document : IDocument
     {

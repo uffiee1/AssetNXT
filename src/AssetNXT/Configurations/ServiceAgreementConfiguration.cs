@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AssetNXT.Models.Core;
+using AssetNXT.Models.Core.ServiceAgreement;
 using AssetNXT.Models.Data;
 using AssetNXT.Repository;
 
