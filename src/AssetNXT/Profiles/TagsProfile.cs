@@ -1,4 +1,5 @@
 ﻿using AssetNXT.Dtos;
+using AssetNXT.Models.Core;
 using AssetNXT.Models.Data;
 
 using AutoMapper;
@@ -10,6 +11,7 @@ namespace AssetNXT.Profiles
         public TagsProfile()
         {
             CreateMap<RuuviStation, TagReadDto>();
+            CreateMap<Constrain, TagReadDto>();
         }
     }
 }

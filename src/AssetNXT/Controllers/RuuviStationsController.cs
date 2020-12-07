@@ -95,10 +95,10 @@ namespace AssetNXT.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateRuuviStation(string id, RuuviStationCreateDto stationCreateDto)
+        public async Task<IActionResult> UpdateRuuviStationByDeviceId(string id, RuuviStationCreateDto stationCreateDto)
         {
             var stationModel = _mapper.Map<RuuviStation>(stationCreateDto);
-            var station = await _repository.GetObjectByIdAsync(id);
+            var station = await _repository.GetObjectByDeviceIdAsync(id);
 
             if (station != null)
             {
@@ -114,7 +114,7 @@ namespace AssetNXT.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteRuuviStation(string id)
+        public async Task<ActionResult> DeleteRuuviStationByDeviceId(string id)
         {
             var stationModel = await _repository.GetObjectByDeviceIdAsync(id);
 

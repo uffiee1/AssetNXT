@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AssetNXT.Models.Data;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -19,6 +20,6 @@ namespace AssetNXT.Models
         DateTime UpdatedAt { get; set; }
 
         [BsonElement]
-        List<string> Devices { get; set; }
+        List<Tag> Tags { get; set; }
     }
 }

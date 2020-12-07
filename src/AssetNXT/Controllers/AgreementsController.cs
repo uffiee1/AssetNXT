@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Dtos;
 using AssetNXT.Models.Core;
-using AssetNXT.Models.Data;
 using AssetNXT.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+
+using MongoDB.Bson;
 
 namespace AssetNXT.Controllers
 {
@@ -70,15 +70,14 @@ namespace AssetNXT.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateConstrain(string id, AgreementConstrainCreateDto constrainCreateDto)
+        public async Task<IActionResult> UpdateConstrainByObjectId(string id, AgreementConstrainCreateDto constrainCreateDto)
         {
             var constrainModel = _mapper.Map<Agreement>(constrainCreateDto);
-            var constrain = await _repository.GetObjectByConstrainIdAsync(id);
+            var constrain = await _repository.GetObjectByIdAsync(id);
 
             if (constrain != null)
             {
                 constrainModel.UpdatedAt = DateTime.UtcNow;
-                constrainModel.Id = new MongoDB.Bson.ObjectId(id);
                 _repository.UpdateObject(id, constrainModel);
                 return Ok(_mapper.Map<AgreementConstrainReadDto>(constrainModel));
             }
@@ -87,9 +86,9 @@ namespace AssetNXT.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteConstrain(string id)
+        public async Task<ActionResult> DeleteConstrainByObjectId(string id)
         {
-            var constrainModel = await _repository.GetObjectByConstrainIdAsync(id);
+            var constrainModel = await _repository.GetObjectByIdAsync(id);
 
             if (constrainModel != null)
             {

@@ -38,10 +38,10 @@ namespace Ruuvi.Controllers
             return NotFound();
         }
 
-        [HttpGet("{id}", Name = "GetRouteByDeviceId")]
-        public async Task<IActionResult> GetRouteByDeviceId(string id)
+        [HttpGet("{id}", Name = "GetRouteByTagId")]
+        public async Task<IActionResult> GetRouteByTagId(string id)
         {
-            var route = await _repository.GetObjectByDeviceIdAsync(id);
+            var route = await _repository.GetObjectByTagIdAsync(id);
 
             if (route != null)
             {
@@ -66,7 +66,7 @@ namespace Ruuvi.Controllers
                 var routeReadDto = _mapper.Map<RouteReadDto>(route);
 
                 // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
-                return CreatedAtRoute(nameof(GetRouteByDeviceId), new { Id = routeReadDto.Id }, routeReadDto);
+                return CreatedAtRoute(nameof(GetRouteByTagId), new { Id = routeReadDto.Id }, routeReadDto);
             }
 
             return NotFound();

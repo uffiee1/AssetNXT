@@ -86,6 +86,16 @@ namespace AssetNXT.Repository.Service
             throw new NotSupportedException();
         }
 
+        public RuuviStation GetObjectByTagId(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<RuuviStation> GetObjectByTagIdAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemoveObject(RuuviStation document)
         {
             throw new NotSupportedException();
