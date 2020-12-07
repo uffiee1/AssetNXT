@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AssetNXT.Models.Data;
 
 namespace AssetNXT.Dtos
 {
@@ -7,7 +8,7 @@ namespace AssetNXT.Dtos
     {
         public string Id { get; set; }
 
-        public List<string> Devices { get; set; }
+        public List<Tag> Tags { get; set; }
 
         public int ConstrainId { get; set; }
 

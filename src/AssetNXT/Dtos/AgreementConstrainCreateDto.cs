@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using AssetNXT.Models.Data;
 
 namespace AssetNXT.Dtos
 {
@@ -7,7 +8,7 @@ namespace AssetNXT.Dtos
     {
         [MaxLength(250)]
         [Required]
-        public List<string> Devices { get; set; }
+        public List<Tag> Tags { get; set; }
 
         [MaxLength(250)]
         [Required]
