@@ -30,3 +30,7 @@
         height: 100%;
         position: absolute !important;
     }
+
+.notification-container--bottom-right {
+    bottom: 90px !important;
+}
