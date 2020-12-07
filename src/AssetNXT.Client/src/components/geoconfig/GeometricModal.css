@@ -4,33 +4,29 @@
     height: 100%;
 }
 
-.geometric-modal > .row > * {
-    display:flex;
-    flex-direction: column;
-}
+    .geometric-modal > .row > * {
+        display: flex;
+        flex-direction: column;
+    }
 
 .geometric-table {
     min-height: 0;
 }
 
-.geometric-table,
-.geometric-table > * {
-    max-height: 100%;
-}
+    .geometric-table,
+    .geometric-table > * {
+        max-height: 100%;
+    }
 
 .aspect-box {
     padding-top: 100%;
-    position:relative;
+    position: relative;
 }
 
-.aspect-box > * {
-    top:0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    position:absolute !important;
-}
-
-.notification-container--bottom-right{
-    bottom: 90px !important;
-}
+    .aspect-box > * {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute !important;
+    }

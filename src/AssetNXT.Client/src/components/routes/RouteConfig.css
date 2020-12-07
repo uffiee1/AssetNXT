@@ -43,6 +43,12 @@
 
 .modal-content {
     height: 100%;
+    overflow: auto;
     padding: 2.5rem;
     
+}
+
+.modal-body {
+    min-height: 0;
+    overflow: auto;
 }
