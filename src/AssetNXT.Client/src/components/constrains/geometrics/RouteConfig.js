@@ -45,7 +45,7 @@ export default class RouteConfig extends Component {
 
         <ReactNotification />
 
-        <Modal className="p-5" 
+        <Modal className="route-modal p-5" 
           isOpen={this.state.createModalState}>    
           <ModalHeader toggle={this.invokeCreateToggle}>
             Create a route
@@ -59,7 +59,7 @@ export default class RouteConfig extends Component {
         </Modal>
 
         { this.state.route && 
-          <Modal className="p-5"
+          <Modal className="route-modal p-5"
             isOpen={this.state.updateModalState}>
             <ModalHeader toggle={this.invokeUpdateToggle}>
               Update a route
@@ -74,7 +74,7 @@ export default class RouteConfig extends Component {
 
         }
         { this.state.route && 
-           <Modal className="p-5"
+           <Modal className="route-modal p-5"
             isOpen={this.state.deleteModalState}>
             <ModalHeader toggle={this.invokeDeleteToggle}>
               Update a route

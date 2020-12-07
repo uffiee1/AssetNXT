@@ -35,19 +35,19 @@
       position: absolute !important;
   }
 
-.route-config .modal-dialog {
+.route-modal.modal-dialog {
     margin: 0;
     height: 100%;
     max-width: none;
 }
 
-.route-config .modal-content {
+.route-modal .modal-content {
     height: 100%;
     overflow: auto;
     padding: 2.5rem;
 }
 
-.route-config .modal-body {
+.route-modal .modal-body {
     min-height: 0;
     overflow: auto;
 }
