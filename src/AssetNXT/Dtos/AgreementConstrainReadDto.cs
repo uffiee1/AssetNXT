@@ -1,36 +1,34 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
 namespace AssetNXT.Dtos
 {
-    public class ConstrainCreateDto
+    public class AgreementConstrainReadDto
     {
-        [MaxLength(250)]
-        [Required]
-        public string DeviceId { get; set; }
+        public string Id { get; set; }
 
-        [MaxLength(250)]
-        [Required]
+        public List<string> Devices { get; set; }
+
+        public int ConstrainId { get; set; }
+
         public string Name { get; set; }
 
-        [Required(AllowEmptyStrings = true)]
         public string Description { get; set; }
 
-        [Required]
         public double TemperatureMin { get; set; }
 
-        [Required]
         public double TemperatureMax { get; set; }
 
-        [Required]
         public double HumidityMin { get; set; }
 
-        [Required]
         public double HumidityMax { get; set; }
 
-        [Required]
         public double PressureMin { get; set; }
 
-        [Required]
         public double PressureMax { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime UpdatedAt { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using AssetNXT.Settings;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace AssetNXT.Repository
+namespace AssetNXT.Repository.Service
 {
     public class MongoDataRepository<TDocument> : IMongoDataRepository<TDocument>
     where TDocument : IDocument

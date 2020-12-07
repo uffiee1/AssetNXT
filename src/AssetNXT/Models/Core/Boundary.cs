@@ -1,7 +1,8 @@
-﻿using MongoDB.Bson;
+﻿using AssetNXT.Models.Data;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace AssetNXT.Models.Data
+namespace AssetNXT.Models.Core
 {
     public class Boundary
     {

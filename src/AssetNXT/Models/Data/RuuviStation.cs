@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using AssetNXT.Repository;
+using AssetNXT.Repository.Service;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace AssetNXT.Models.Data
 {
-    [BsonCollection("ruuvistations")]
+    [BsonCollection("ruuvi_stations")]
     public class RuuviStation : Document
     {
         [BsonElement]
