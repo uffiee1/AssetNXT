@@ -1,4 +1,4 @@
-﻿using AssetNXT.Dtos;
+﻿using AssetNXT.Dtos.Core;
 using AssetNXT.Models.Core;
 
 using AutoMapper;
