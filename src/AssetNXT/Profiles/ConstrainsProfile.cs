@@ -1,5 +1,5 @@
 ﻿using AssetNXT.Dtos;
-using AssetNXT.Models.Data;
+using AssetNXT.Models.Core;
 
 using AutoMapper;
 
@@ -9,9 +9,9 @@ namespace AssetNXT.Profiles
     {
         public ConstrainsProfile()
         {
-            CreateMap<Constrain, ConstrainReadDto>();
-            CreateMap<ConstrainCreateDto, Constrain>();
-            CreateMap<Constrain, ConstrainCreateDto>();
+            CreateMap<Agreement, AgreementConstrainReadDto>();
+            CreateMap<AgreementConstrainCreateDto, Agreement>();
+            CreateMap<Agreement, AgreementConstrainCreateDto>();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AssetNXT.Configurations;
 using AssetNXT.Dtos;
+using AssetNXT.Models.Core;
 using AssetNXT.Models.Data;
 using AssetNXT.Repository;
 using AutoMapper;
@@ -10,15 +11,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace AssetNXT.Controllers
 {
     [Produces("application/json")]
-    [Route("api/configurations")]
+    [Route("api/agreement/configurations")]
     [ApiController]
-    public class ConfigurationsController : ControllerBase
+    public class ServiceAgreementController : ControllerBase
     {
-        private readonly IMongoDataRepository<Constrain> _repositoryConstrain;
+        private readonly IConstrainDataRepository<Agreement> _repositoryConstrain;
         private readonly IMongoDataRepository<RuuviStation> _repositoryRuuviStation;
         private readonly IMapper _mapper;
 
-        public ConfigurationsController(IMongoDataRepository<Constrain> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
+        public ServiceAgreementController(IConstrainDataRepository<Agreement> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
         {
             this._repositoryConstrain = repositoryConstrain;
             this._repositoryRuuviStation = repositoryRuuviStation;
@@ -26,16 +27,16 @@ namespace AssetNXT.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetValadatedTagById(string id)
+        public async Task<IActionResult> GetValadatedDeviceById(string id)
         {
             var constrain = await _repositoryConstrain.GetObjectByDeviceIdAsync(id);
             var station = await _repositoryRuuviStation.GetObjectByDeviceIdAsync(id);
 
             if (constrain != null && station != null)
             {
-                var serviceAgreement = new ServiceAgreement(station.Tags, constrain);
+                var serviceAgreement = new ServiceAgreementConfiguration(station.Tags, constrain);
 
-                return Ok(_mapper.Map<IEnumerable<ConfigurationsReadDto>>(serviceAgreement.IsBreached(station.DeviceId)));
+                return Ok(_mapper.Map<IEnumerable<ServiceConfigurationReadDto>>(serviceAgreement.IsBreached(station.DeviceId)));
             }
 
             return NotFound();

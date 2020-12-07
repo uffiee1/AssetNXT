@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Dtos;
-using AssetNXT.Models.Data;
+using AssetNXT.Models.Core;
 using AssetNXT.Repository;
 
 using AutoMapper;
@@ -16,10 +16,10 @@ namespace Ruuvi.Controllers
     [ApiController]
     public class RoutesController : ControllerBase
     {
-        private readonly IMongoDataRepository<Route> _repository;
+        private readonly IConstrainDataRepository<Route> _repository;
         private readonly IMapper _mapper;
 
-        public RoutesController(IMongoDataRepository<Route> repository, IMapper mapper)
+        public RoutesController(IConstrainDataRepository<Route> repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
@@ -28,7 +28,7 @@ namespace Ruuvi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllRoutes()
         {
-            var routes = await _repository.GetAllAsync();
+            var routes = await _repository.GetAllLatestAsync();
 
             if (routes != null)
             {
@@ -41,7 +41,7 @@ namespace Ruuvi.Controllers
         [HttpGet("{id}", Name = "GetRouteByDeviceId")]
         public async Task<IActionResult> GetRouteByDeviceId(string id)
         {
-            var route = await _repository.GetObjectByIdAsync(id);
+            var route = await _repository.GetObjectByDeviceIdAsync(id);
 
             if (route != null)
             {
@@ -56,12 +56,20 @@ namespace Ruuvi.Controllers
         {
             var route = _mapper.Map<Route>(routeCreateDto);
 
-            await _repository.CreateObjectAsync(route);
+            if (route != null)
+            {
+                var lastRoute = await _repository.GetLastConstrainIdAsync();
+                route.ConstrainId = lastRoute != null ? lastRoute.ConstrainId + 1 : 0;
 
-            var routeReadDto = _mapper.Map<RouteReadDto>(route);
+                await _repository.CreateObjectAsync(route);
 
-            // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
-            return CreatedAtRoute(nameof(GetRouteByDeviceId), new { Id = routeReadDto.Id }, routeReadDto);
+                var routeReadDto = _mapper.Map<RouteReadDto>(route);
+
+                // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
+                return CreatedAtRoute(nameof(GetRouteByDeviceId), new { Id = routeReadDto.Id }, routeReadDto);
+            }
+
+            return NotFound();
         }
     }
 }

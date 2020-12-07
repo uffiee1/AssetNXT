@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AssetNXT.Repository
+namespace AssetNXT.Repository.Service
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     internal class BsonCollectionAttribute : Attribute
