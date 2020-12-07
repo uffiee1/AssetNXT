@@ -10,8 +10,6 @@ namespace AssetNXT.Dtos
 
         public List<Tag> Tags { get; set; }
 
-        public int ConstrainId { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }

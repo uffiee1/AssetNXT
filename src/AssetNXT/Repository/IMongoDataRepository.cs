@@ -15,29 +15,11 @@ namespace AssetNXT.Repository
         // Returns all objects from the db Async.
         Task<List<TDocument>> GetAllAsync();
 
-        // Returns all latest objects from db based on date.
-        List<TDocument> GetAllLatest();
-
-        // Returns all latest objects from db based on date Async.
-        Task<List<TDocument>> GetAllLatestAsync();
-
         // Returns an object by the bson _id of the record.
         TDocument GetObjectById(string id);
 
         // Returns an object by the bson _id of the record Async.
         Task<TDocument> GetObjectByIdAsync(string id);
-
-        // Returns an object by the deviceId unique for every RuuviStation.
-        TDocument GetObjectByDeviceId(string id);
-
-        // Returns an object by the deviceId unique for every RuuviStation Async.
-        Task<TDocument> GetObjectByDeviceIdAsync(string id);
-
-        // Returns all records by the unique deviceId.
-        List<TDocument> GetAllObjectsByDeviceId(string id);
-
-        // Returns all records by the unique deviceId Async.
-        Task<List<TDocument>> GetAllObjectsByDeviceIdAsync(string id);
 
         // Creates a record from the model.
         void CreateObject(TDocument document);

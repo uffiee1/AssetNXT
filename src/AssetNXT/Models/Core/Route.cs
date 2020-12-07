@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AssetNXT.Models.Data;
 using AssetNXT.Repository.Service;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
@@ -6,8 +7,11 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace AssetNXT.Models.Core
 {
     [BsonCollection("geometric_constrains")]
-    public class Route : Constrain
+    public class Route : Document
     {
+        [BsonElement]
+        public List<string> Devices { get; set; }
+
         [BsonElement]
         public string Name { get; set; }
 

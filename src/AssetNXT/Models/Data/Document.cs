@@ -12,8 +12,5 @@ namespace AssetNXT.Models.Data
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
-
-        [MaxLength(250)]
-        public string DeviceId { get; set; }
     }
 }

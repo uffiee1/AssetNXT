@@ -43,8 +43,6 @@ namespace AssetNXT
             ConfigureCrossOriginResourceSharing(services);
 
             // Scope
-            services.AddScoped(typeof(IConstrainDataRepository<>), typeof(ConstrainDataRepository<>));
-
             services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
             // services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
 
