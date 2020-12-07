@@ -10,9 +10,10 @@ import GeometricTable from './GeometricTable';
 export default class GeometricModal extends Component {
 
   state = {
-    name: '',
-    description: '',
-    boundaries: [],
+    name: this.props.name,
+    deviceId: this.props.deviceId,
+    boundaries: this.props.boundaries,
+    description: this.props.description,
     boundaryRadius: 0,
     boundaryLatitude: 0,
     boundaryLongitude: 0,

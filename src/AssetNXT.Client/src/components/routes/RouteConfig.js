@@ -13,8 +13,11 @@ import GeometricModal from '../geoconfig/GeometricModal';
 export default class RouteConfig extends Component {
 
   state = {
+    route: null,
     boundaries: [],
-    createModalState: false
+    createModalState: false,
+    updateModalState: false,
+    deleteModalState: false
   }
 
   invokeCreateToggle = () => {
@@ -22,26 +25,65 @@ export default class RouteConfig extends Component {
     this.setState({createModalState: !createModalState});
   }
 
-  invokeUpdate = () => {
+  invokeUpdateToggle = () => {
+    const { updateModalState } = this.state;
+    this.setState({ updateModalState: !updateModalState});
+  }
+
+  invokeDeleteToggle = () => {
+    const { deleteModalState } = this.state;
+    this.setState({ deleteModalState: !deleteModalState });
+  }
+
+  invokeStateHasChanged = () => {
     this.props.stateHasChanged();
   }
 
   render() {
     return(
       <Container className="route-config" fluid>
+
         <ReactNotification />
 
         <Modal className="p-5" 
-          isOpen={this.state.createModalState}>
-          
+          isOpen={this.state.createModalState}>    
           <ModalHeader toggle={this.invokeCreateToggle}>
             Create a route
           </ModalHeader>
           <ModalBody>
-            <GeometricModal onSubmit={this.addRoute}/>
+            <GeometricModal onSubmit={this.addRoute}
+              description={''} 
+              boundaries={[]}
+              name={''}/>
           </ModalBody>
-
         </Modal>
+
+        { this.state.route && 
+          <Modal className="p-5"
+            isOpen={this.state.updateModalState}>
+            <ModalHeader toggle={this.invokeUpdateToggle}>
+              Update a route
+            </ModalHeader>
+            <ModalBody>
+             <GeometricModal onSubmit={this.updateRoute}
+                description={this.state.route.description}
+                boundaries={this.state.boundaries}
+                name={this.state.route.name}/>
+            </ModalBody>
+          </Modal>
+
+        }
+        { this.state.route && 
+           <Modal className="p-5"
+            isOpen={this.state.deleteModalState}>
+            <ModalHeader toggle={this.invokeDeleteToggle}>
+              Update a route
+            </ModalHeader>
+            <ModalBody>
+             <GeometricModal onSubmit={this.deleteRoute}/>
+            </ModalBody>
+          </Modal>
+        }
 
         <Row className="py-3">
           <Col xs="4">
@@ -62,13 +104,13 @@ export default class RouteConfig extends Component {
               </Col>
 
               <Col xs="auto">
-                <Button color="info">
+                <Button color="info" disabled={this.state.route ? false : true} onClick={e => this.invokeUpdateToggle()}>
                   <i className="fas fa-edit"></i> Edit
                 </Button>
               </Col>
 
               <Col xs="auto">
-                <Button color="danger">
+                <Button color="danger" disabled={this.state.route ? false : true } onClick={e => this.invokeDeleteToggle()}>
                   <i className="fas fa-trash-alt"></i> Delete
                 </Button>
               </Col>
@@ -77,28 +119,72 @@ export default class RouteConfig extends Component {
             <Row className="route-table">
               <Col className="pt-4">
                   <RouteTable routes={this.props.routes}
-                    onRouteSelected={e => this.selectRoute(e)}/>
+                    onRouteSelected={this.selectRoute}/>
               </Col>
             </Row>
 
           </Col>
         </Row>
+
       </Container>
     );
 
   }
 
   addRoute = async (route) => {
+
+    route.devices = ['<null>'];
+    route.boundaries = route.boundaries.map(
+      boundary => ({...boundary, colour:'dodgerblue'}));
+
+    this.submitRoute('api/routes', 'POST', route);
+    this.invokeStateHasChanged();
+    this.invokeCreateToggle();
+  }
+
+  updateRoute = async (route) => {
+
+    route.devices = this.state.route.devices;
+    route.boundaries = route.boundaries.map(
+      boundary => ({...boundary, colour: 'dodgerblue'}));
+
+    this.submitRoute(`api/routes/${this.state.route.deviceId}`, 'PUT', route);
+    this.invokeStateHasChanged();
+    this.invokeUpdateToggle();
+  }
+
+  deleteRoute = async (route) => {
+
+    this.submitRoute(`api/routes/${this.state.route.deviceId}`, 'DELETE', route);
+  }
+
+  selectRoute = async (route) => {
+
+    var { boundaries } = this.state;
+    boundaries = route.points.map(route => {
+      return {
+        radius: route.radius,
+        position: {
+          lat: route.location.latitude,
+          lng: route.location.longitude,
+        }
+      }
+    });
+
+    this.setState({route, boundaries});
+  }
+
+  submitRoute = async (request, method, route) => {
+
     const data = {
       name: route.name,
-      devices: route.devices || ['<null>'],
+      devices: route.devices,
       description: route.description,
-      points: route.boundaries.map(
-        boundary => { return {
-          colour: 'dodgerblue',
+      points: route.boundaries.map(boundary => {
+        return {
+          colour: boundary.colour,
           radius: boundary.radius,
           location: {
-            accuracy: 100,
             latitude: boundary.position.lat,
             longitude: boundary.position.lng
           }
@@ -106,16 +192,12 @@ export default class RouteConfig extends Component {
       })
     }
 
-    const request = 'api/routes';
-    const requestHeaders = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
+    console.log(data);
 
     await fetch(request, {
-      method: 'POST',
-      headers: requestHeaders,
-      body: JSON.stringify(data)
+      method: method,
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' }
 
     }).then(response => {
       if (response.ok) {
@@ -132,15 +214,6 @@ export default class RouteConfig extends Component {
             onScreen: false
           }
         });
-
-        this.setState({
-          boundaries: [],
-          boundaryRadius: 0,
-          boundaryLatitude: 0,
-          boundaryLongitude: 0,
-          boundaryIndex: Number.NaN
-        });
-
       }
       else {
         store.addNotification({
@@ -159,22 +232,5 @@ export default class RouteConfig extends Component {
       }
     });
 
-    this.invokeCreateToggle();
-    this.invokeUpdate();
-  }
-
-  selectRoute(route) {
-    var { boundaries } = this.state;
-    boundaries = route.points.map(route => {
-      return {
-        radius: route.radius,
-        position: {
-          lat: route.location.latitude,
-          lng: route.location.longitude,
-        }
-      }
-    });
-
-    this.setState({boundaries});
   }
 }
