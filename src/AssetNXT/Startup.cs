@@ -1,11 +1,11 @@
 using System;
+
 using AssetNXT.Hubs;
-using AssetNXT.Models.Data;
 using AssetNXT.Repository;
-using AssetNXT.Repository.Service;
 using AssetNXT.Settings;
 
 using AutoMapper;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+
 using Newtonsoft.Json.Serialization;
 
 namespace AssetNXT
@@ -43,8 +44,6 @@ namespace AssetNXT
             ConfigureCrossOriginResourceSharing(services);
 
             // Scope
-            services.AddScoped(typeof(IConstrainDataRepository<>), typeof(ConstrainDataRepository<>));
-
             services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
             // services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
 

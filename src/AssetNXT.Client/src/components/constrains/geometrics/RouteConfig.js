@@ -17,7 +17,6 @@ export default class RouteConfig extends Component {
     boundaries: [],
     createModalState: false,
     updateModalState: false,
-    deleteModalState: false
   }
 
   invokeCreateToggle = () => {
@@ -73,17 +72,6 @@ export default class RouteConfig extends Component {
           </Modal>
 
         }
-        { this.state.route && 
-           <Modal className="route-modal p-5"
-            isOpen={this.state.deleteModalState}>
-            <ModalHeader toggle={this.invokeDeleteToggle}>
-              Update a route
-            </ModalHeader>
-            <ModalBody>
-             <GeometricModal onSubmit={this.deleteRoute}/>
-            </ModalBody>
-          </Modal>
-        }
 
         <Row className="py-3">
           <Col xs="4">
@@ -110,7 +98,7 @@ export default class RouteConfig extends Component {
               </Col>
 
               <Col xs="auto">
-                <Button color="danger" disabled={this.state.route ? false : true } onClick={e => this.invokeDeleteToggle()}>
+                <Button color="danger" disabled={this.state.route ? false : true } onClick={e => this.deleteRoute(this.state.route)}>
                   <i className="fas fa-trash-alt"></i> Delete
                 </Button>
               </Col>
@@ -137,9 +125,9 @@ export default class RouteConfig extends Component {
     route.boundaries = route.boundaries.map(
       boundary => ({...boundary, colour:'dodgerblue'}));
 
-    this.submitRoute('api/routes', 'POST', route);
-    this.invokeStateHasChanged();
+    await this.submitRoute('api/routes', 'POST', route);
     this.invokeCreateToggle();
+    this.invokeStateHasChanged();
   }
 
   updateRoute = async (route) => {
@@ -148,14 +136,19 @@ export default class RouteConfig extends Component {
     route.boundaries = route.boundaries.map(
       boundary => ({...boundary, colour: 'dodgerblue'}));
 
-    this.submitRoute(`api/routes/${this.state.route.id}`, 'PUT', route);
-    this.invokeStateHasChanged();
+    this.setState({boundaries: []});
+    this.setState({boundaries: route.boundaries});
+
+    await this.submitRoute(`api/routes/${this.state.route.id}`, 'PUT', route);
     this.invokeUpdateToggle();
+    this.invokeStateHasChanged();
   }
 
   deleteRoute = async (route) => {
 
-    this.submitRoute(`api/routes/${this.state.route.id}`, 'DELETE', route);
+    await fetch(`api/routes/${this.state.route.id}`, {method: 'DELETE'});
+    this.setState({route: null, boundaries: []});
+    this.invokeStateHasChanged();
   }
 
   selectRoute = async (route) => {
@@ -191,8 +184,6 @@ export default class RouteConfig extends Component {
         }
       })
     }
-
-    console.log(data);
 
     await fetch(request, {
       method: method,
