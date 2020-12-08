@@ -43,8 +43,8 @@ namespace AssetNXT
 
             // Scope
             services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
-            services.AddScoped(typeof(IMongoDataRepository<Constrain>), typeof(MockConstrainRepository));
+            //services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
+            //services.AddScoped(typeof(IMongoDataRepository<Constrain>), typeof(MockConstrainRepository));
 
             // Controllers Serialization
             services.AddControllers().AddNewtonsoftJson(s => { s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });

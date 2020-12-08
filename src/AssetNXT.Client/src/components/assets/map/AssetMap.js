@@ -5,7 +5,7 @@ import './AssetMap.css'
 import MarkerGold from "../../images/marker-icon-gold.png"
 import MarkerRed from "../../images/marker-icon-red.png"
 import Asset from '../Asset';
-
+var L = require('leaflet');
 
 export default class AssetMap extends Component {
 
@@ -23,23 +23,26 @@ export default class AssetMap extends Component {
     this.ensureWithinBounds(this.props.assets);
   }
 
-    assetIsBreached(asset) {
-        return asset.breach.includes(false);
-    }
+  returnIcon(asset)
+  {
+    console.log("passed icon");
+    var Red = new L.Icon({
+      iconUrl: MarkerRed,
+      iconAnchor: new L.Point(16, 16)
+    });
+    var Default = new L.Icon.Default();
+    console.log(asset.breach);
+    return asset.breach.includes(false) ? Default : Red;
+  }
 
   renderAssets(assets, AssetTemplate) {
-      var L = require('leaflet')
-      var normal = new L.Icon()
-      var Red = new L.Icon({
-      iconUrl: MarkerRed
-    });
 
     var query = this.props.query;
     var queryInactive = !this.props.query;
 
     return assets.map(asset => {
       if (queryInactive || asset.deviceId.indexOf(query) > -1) {
-        return <Marker icon={this.assetIsBreached(asset)} position={this.getAssetLatLng(asset)}
+        return <Marker icon={this.returnIcon(asset)} position={this.getAssetLatLng(asset)}
           onclick={() => this.ensureInCenter(asset)}> {
 
             AssetTemplate && <Popup>
