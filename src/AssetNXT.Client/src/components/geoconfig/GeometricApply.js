@@ -6,10 +6,10 @@ export default class DeleteConstrains extends Component {
     state = {
         isLoaded: false,
         searchQuery: "",
-        setTags: [],
-        filteredTags: [],
+        setStations: [],
+        filteredStations: [],
         sla: null,
-        tags: [],
+        stations: [],
     }
 
     constructor(props) {
@@ -22,15 +22,15 @@ export default class DeleteConstrains extends Component {
     }
 
     componentWillReceiveProps() {
-        this.setState({ sla: this.props.sla, setTags: this.props.sla.tags });
+        this.setState({ sla: this.props.sla, tags: this.props.sla.tags });
     }
 
     renderSearchResults() {
-        const listItems = this.state.filteredTags.map((tag,i) => {
+        const listItems = this.state.filteredStations.map((tag,i) => {
             if (i < 5) {
                 return (
                     <Row className="mt-1">
-                        <Col key={tag.id} xs="9">{tag}</Col><Col xs="3" className="d-flex justify-content-end"><Button onClick={() => this.applyData(tag)} size="sm" color="info">Apply</Button></Col>
+                        <Col key={tag.id} xs="9">{tag.id}</Col><Col xs="3" className="d-flex justify-content-end"><Button onClick={() => this.applyData(tag.id)} size="sm" color="info">Apply</Button></Col>
                     </Row>
                 )
             }
@@ -39,7 +39,7 @@ export default class DeleteConstrains extends Component {
     }
 
     renderApplied() {
-        const listItems = this.state.setTags.map((device,i) => {
+        const listItems = this.state.tags.map((device,i) => {
             return (
                 <Row className="mt-1">
                     <Col key={i} xs="9">{device}</Col><Col xs="3" className="d-flex justify-content-end"><span className="text-danger font-weight-bold px-3">X</span></Col>
@@ -51,8 +51,8 @@ export default class DeleteConstrains extends Component {
 
     changeFilteredTags(input) {
         let filtered = [];
-        if(input != "") filtered = this.state.tags.filter((tag) => tag.id.includes(input));
-        this.setState({ filteredTags: filtered });
+        if(input != "") filtered = this.state.stations.filter((tag) => station.deviceId.includes(input));
+        this.setState({ filteredStations: filtered });
     }
 
     async fetchStations() {
@@ -60,15 +60,9 @@ export default class DeleteConstrains extends Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    let arr = [];
-                    result.map(station => {
-                        station.tags.map(tag => {
-                            arr.push(tag);
-                        })
-                    })
                     this.setState({
                         isLoaded: true,
-                        tags: arr,
+                        tags: result,
                     });
                 },
                 () => {
@@ -79,30 +73,20 @@ export default class DeleteConstrains extends Component {
             )
     }
 
-    async applyData(tag) {
+    async applyData(station) {
         const data = { ...this.state.sla };
-        data.tags = [...this.state.setTags, tag];
-        await this.postData(data);
-       
-    }
-    async deleteData(tag) {
-        const data = { ...this.state.sla };
-        data.tags.splice(data.tags.indexOf(tag),1);;
-        await this.postData(data);
-
-    }
-    async postData(sla) {
+        data.stations = [...this.state.stations, station];
         await fetch("api/constrains/" + this.state.sla.id, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(sla)
+            body: JSON.stringify(data)
 
         }).then(response => {
             if (response.ok) {
                 this.props.toggle();
-                this.props.success(true, "Template applied");
+                this.props.success(true,"Template applied");
             }
             else
                 this.props.success(false, "Something went wrong")

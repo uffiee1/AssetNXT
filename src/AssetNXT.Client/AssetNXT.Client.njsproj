@@ -120,6 +120,7 @@
     <Content Include="src\components\constrains\actions\editConstrains.js" />
     <Content Include="src\components\constrains\ConstrainService.css" />
     <Content Include="src\components\constrains\ConstrainService.js" />
+    <Content Include="src\components\geoconfig\GeometricApply.js" />
     <Content Include="src\components\geoconfig\GeometricModal.css" />
     <Content Include="src\components\geoconfig\GeometricModal.js">
       <SubType>Code</SubType>
