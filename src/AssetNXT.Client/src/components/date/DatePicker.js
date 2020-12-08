@@ -1,16 +1,13 @@
-import React, { useState }from 'react';
+import React from 'react';
 import { Container, Col, Row } from 'reactstrap';
-import DateFnsUtils from '@date-io/date-fns';
-//import { format } from 'date-fns'
+import moment from "moment";
+import MomentUtils from "@date-io/moment"
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 const DatePicker = (props) => {
-
-    const [selectedFromDate, handleFromDateChange] = useState(null);
-    const [selectedToDate, handleToDateChange] = useState(null);
     return (
-        <Container fluid className="mb-5">
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Container fluid className="mt-5">
+            <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
                 <Row>
                     <Col xs="auto">
                         <KeyboardDateTimePicker
@@ -19,12 +16,14 @@ const DatePicker = (props) => {
                             showTodayButton={true}
 
                             disableFuture
+                            maxDate={props.maxDate || moment.utc().toISOString()}
+
                             format="yyyy/MM/dd HH:mm"
                             onError={console.log}
 
                             name="selectedFromDate"
-                            value={selectedFromDate}
-                            onChange={handleFromDateChange}
+                            value={props.minDate} 
+                            onChange={date => props.minDateChanged(date)}
                         />
                     </Col>
                     <Col xs="auto">
@@ -33,13 +32,15 @@ const DatePicker = (props) => {
                             inputVariant="outlined"
                             showTodayButton={true}
 
-                            disablePast
+                            disableFuture
+                            minDate={props.minDate || moment.utc().toISOString()}
+
                             format="yyyy/MM/dd HH:mm"
                             onError={console.log}
 
                             name="selectedToDate"
-                            value={selectedToDate}
-                            onChange={handleToDateChange}
+                            value={props.maxDate}
+                            onChange={date => props.maxDateChanged(date)}
                         />
                     </Col>
                 </Row>

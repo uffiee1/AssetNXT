@@ -58,6 +58,7 @@ namespace AssetNXT.Repository.Service
                 stations.Add(station);
             }
 
+            stations.Reverse();
             return stations;
         }
 
@@ -153,7 +154,7 @@ namespace AssetNXT.Repository.Service
         {
             var station = new RuuviStation
             {
-                Time = ancestor.Time + TimeSpan.FromMinutes(5),
+                Time = ancestor.Time - TimeSpan.FromMinutes(5),
                 EventId = Guid.NewGuid().ToString().Substring(0, 18),
                 DeviceId = ancestor.DeviceId,
 
