@@ -22,27 +22,30 @@ export default class DeleteConstrains extends Component {
     }
 
     componentWillReceiveProps() {
-        this.setState({ sla: this.props.sla, setTags: this.props.sla.tags });
+        if (this.props.sla.tags !== undefined) {
+            this.setState({ sla: this.props.sla, setTags: this.props.sla.tags })
+        }
     }
 
     renderSearchResults() {
-        const listItems = this.state.filteredTags.map((tag,i) => {
-            if (i < 5) {
-                return (
+        const listItems = this.state.filteredTags.map((tag, i) => {
+            console.log(this.state.setTags);
+            if (i < 5 && !this.state.setTags.includes(tag)) {
+                  return (
                     <Row className="mt-1">
-                        <Col key={tag.id} xs="9">{tag}</Col><Col xs="3" className="d-flex justify-content-end"><Button onClick={() => this.applyData(tag)} size="sm" color="info">Apply</Button></Col>
+                        <Col key={tag.id} xs="9">{tag.id}</Col><Col xs="3" className="d-flex justify-content-end"><Button onClick={() => this.applyData(tag)} size="sm" color="info">Apply</Button></Col>
                     </Row>
                 )
             }
         })
-        return listItems;
+        return listItems; 
     }
 
     renderApplied() {
-        const listItems = this.state.setTags.map((device,i) => {
+        const listItems = this.state.setTags.map((tag,i) => {
             return (
                 <Row className="mt-1">
-                    <Col key={i} xs="9">{device}</Col><Col xs="3" className="d-flex justify-content-end"><span className="text-danger font-weight-bold px-3">X</span></Col>
+                    <Col key={tag.id} xs="9">{tag.id}</Col><Col xs="3" className="d-flex justify-content-end"><Button color="link" size="sm" onClick={() => this.deleteData(tag)} className="text-danger font-weight-bold px-3">X</Button></Col>
                 </Row>
                 )
         })
@@ -51,7 +54,7 @@ export default class DeleteConstrains extends Component {
 
     changeFilteredTags(input) {
         let filtered = [];
-        if(input != "") filtered = this.state.tags.filter((tag) => tag.id.includes(input));
+        if (input != "") filtered = this.state.tags.filter((tag) => tag.id.toLowerCase().includes(input.toLowerCase()));
         this.setState({ filteredTags: filtered });
     }
 
@@ -70,18 +73,15 @@ export default class DeleteConstrains extends Component {
                         isLoaded: true,
                         tags: arr,
                     });
-                },
-                () => {
-                    this.setState({
-                        isLoaded: false
-                    });
-                }
-            )
+                    console.log(result);
+                });
+               
+            
     }
 
     async applyData(tag) {
         const data = { ...this.state.sla };
-        data.tags = [...this.state.setTags, tag];
+        data.tags.push(tag);
         await this.postData(data);
        
     }
@@ -101,12 +101,16 @@ export default class DeleteConstrains extends Component {
 
         }).then(response => {
             if (response.ok) {
-                this.props.toggle();
-                this.props.success(true, "Template applied");
+                this.props.success(true, "Success");
             }
             else
                 this.props.success(false, "Something went wrong")
         });
+    }
+
+    closeModal() {
+        this.setState({ filteredTags: [], searchQuery: "" });
+        this.props.toggle();
     }
 
     render() {
@@ -135,15 +139,15 @@ export default class DeleteConstrains extends Component {
                         <Row className="px-2">
                             <Col md="12" className="bg-info rounded text-light">Search Results</Col>
                         </Row>
-                        {this.renderSearchResults()}
+                        {this.state.isLoaded ? this.renderSearchResults() : null}
                         <Row className="px-2 pt-1">
                             <Col md="12" className="bg-info rounded text-light">Applied tags</Col>
                         </Row>
-                        {this.state.sla ? this.renderApplied() : null}
+                        {this.state.isLoaded ? this.renderApplied(): null}
                             </Container>
                     </ModalBody>
                 <ModalFooter>
-                    <Button color="secondary" onClick={this.props.toggle}>Close</Button>
+                    <Button color="secondary" onClick={() => this.closeModal()}>Close</Button>
                     </ModalFooter>
             </Modal>
         );
