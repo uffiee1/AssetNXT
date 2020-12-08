@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Models.Data;
 
-namespace AssetNXT.Repository.Service
+namespace AssetNXT.Repository
 {
     public class MockRuuviStationRepository : IMongoDataRepository<RuuviStation>
     {
@@ -84,6 +84,16 @@ namespace AssetNXT.Repository.Service
         public Task<RuuviStation> GetObjectByIdAsync(string id)
         {
             throw new NotSupportedException();
+        }
+
+        public RuuviStation GetObjectByTagId(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<RuuviStation> GetObjectByTagIdAsync(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public void RemoveObject(RuuviStation document)

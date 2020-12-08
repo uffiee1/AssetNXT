@@ -1,8 +1,6 @@
 using System;
 using AssetNXT.Hubs;
-using AssetNXT.Models.Data;
 using AssetNXT.Repository;
-using AssetNXT.Repository.Service;
 using AssetNXT.Settings;
 
 using AutoMapper;
@@ -43,10 +41,8 @@ namespace AssetNXT
             ConfigureCrossOriginResourceSharing(services);
 
             // Scope
-            services.AddScoped(typeof(IConstrainDataRepository<>), typeof(ConstrainDataRepository<>));
-
             services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            //services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
+            // services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
 
             // Controllers Serialization
             services.AddControllers().AddNewtonsoftJson(s => { s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
@@ -115,7 +111,7 @@ namespace AssetNXT
                 endpoints.MapHub<RuuviStationHub>("/hubs/stations");
             });
 
-            // Client SPA
+            //Client SPA
             app.UseSpaStaticFiles();
             app.UseStaticFiles();
 

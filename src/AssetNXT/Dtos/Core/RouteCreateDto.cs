@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using AssetNXT.Models.Core;
 
-namespace AssetNXT.Dtos
+namespace AssetNXT.Dtos.Core
 {
     public class RouteCreateDto
     {

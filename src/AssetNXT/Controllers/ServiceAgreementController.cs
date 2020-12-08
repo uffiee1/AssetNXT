@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+
 using AssetNXT.Configurations;
-using AssetNXT.Dtos;
-using AssetNXT.Models.Core;
+using AssetNXT.Dtos.Core;
+using AssetNXT.Models.Core.ServiceAgreement;
 using AssetNXT.Models.Data;
 using AssetNXT.Repository;
+
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,28 +18,35 @@ namespace AssetNXT.Controllers
     [ApiController]
     public class ServiceAgreementController : ControllerBase
     {
-        private readonly IConstrainDataRepository<Agreement> _repositoryConstrain;
+        private readonly IMongoDataRepository<Agreement> _repositoryConstrain;
         private readonly IMongoDataRepository<RuuviStation> _repositoryRuuviStation;
         private readonly IMapper _mapper;
 
-        public ServiceAgreementController(IConstrainDataRepository<Agreement> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
+        public ServiceAgreementController(IMongoDataRepository<Agreement> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
         {
-            this._repositoryConstrain = repositoryConstrain;
             this._repositoryRuuviStation = repositoryRuuviStation;
+            this._repositoryConstrain = repositoryConstrain;
             _mapper = mapper;
+        }
+
+        private async Task<List<RuuviStation>> GetAllObjectsAsync()
+        {
+            var stations = await _repositoryRuuviStation.GetAllAsync();
+            return stations.GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValadatedDeviceById(string id)
         {
-            var constrain = await _repositoryConstrain.GetObjectByDeviceIdAsync(id);
-            var station = await _repositoryRuuviStation.GetObjectByDeviceIdAsync(id);
+            var stations = await GetAllObjectsAsync();
+            var station = stations.Find(doc => doc.DeviceId == id);
 
-            if (constrain != null && station != null)
+            if (station != null)
             {
-                var serviceAgreement = new ServiceAgreementConfiguration(station.Tags, constrain);
+                var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryConstrain);
 
-                return Ok(_mapper.Map<IEnumerable<ServiceConfigurationReadDto>>(serviceAgreement.IsBreached(station.DeviceId)));
+                var breachedStations = await serviceAgreement.IsBreached();
+                return Ok(_mapper.Map<IEnumerable<ServiceConfigurationReadDto>>(breachedStations));
             }
 
             return NotFound();

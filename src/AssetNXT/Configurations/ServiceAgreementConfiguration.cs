@@ -1,47 +1,52 @@
 ﻿using System.Collections.Generic;
-using AssetNXT.Models.Core;
+using System.Linq;
+using System.Threading.Tasks;
+using AssetNXT.Models.Core.ServiceAgreement;
 using AssetNXT.Models.Data;
+using AssetNXT.Repository;
 
 namespace AssetNXT.Configurations
 {
-    public class ServiceAgreementConfiguration : IServiceAgreementConfiguration
+    public class ServiceAgreementConfiguration : IConfiguration<ServiceAgreement>
     {
+        private readonly IMongoDataRepository<Agreement> _repository;
+        private RuuviStation _station;
         private List<Tag> _tags;
-        private Agreement _constrain;
         private List<ServiceAgreement> _collection;
 
-        public ServiceAgreementConfiguration(List<Tag> tags, Agreement constrain)
+        public ServiceAgreementConfiguration(RuuviStation station, IMongoDataRepository<Agreement> repository)
         {
-            this.Tags = tags;
-            this.Constrain = constrain;
-            this.Collection = new List<ServiceAgreement>();
+            this._tags = station.Tags;
+            this._station = station;
+            this._collection = new List<ServiceAgreement>();
+            this._repository = repository;
         }
 
-        public List<Tag> Tags { get => _tags; set => _tags = value; }
-
-        public Agreement Constrain { get => _constrain; set => _constrain = value; }
-
-        public List<ServiceAgreement> Collection { get => _collection; set => _collection = value; }
-
-        public List<ServiceAgreement> IsBreached(string id)
+        public async Task<List<ServiceAgreement>> IsBreached()
         {
-            foreach (var tag in this.Tags)
+            foreach (var tag in _tags)
             {
-                ServiceAgreement configuration = new ServiceAgreement();
+                var constrains = await _repository.GetAllAsync();
+                var constrain = constrains.ToList().Where(constrain => constrain.Tags.Any(t => t.Id == tag.Id)).FirstOrDefault();
 
-                configuration.DeviceId = id;
-                configuration.TagId = tag.Id;
-                configuration.IsActive = tag.IsActive;
-                configuration.UpdateAt = tag.UpdateAt;
-                configuration.CreateDate = tag.CreateDate;
-                configuration.Humidity = (tag.Humidity >= this.Constrain.HumidityMin && tag.Humidity <= Constrain.HumidityMax) ? true : false;
-                configuration.Pressure = (tag.Pressure >= this.Constrain.PressureMin && tag.Pressure <= Constrain.PressureMax) ? true : false;
-                configuration.Temperature = (tag.Temperature >= this.Constrain.TemperatureMin && tag.Temperature <= Constrain.TemperatureMax) ? true : false;
+                if (constrain != null)
+                {
+                    ServiceAgreement configuration = new ServiceAgreement();
 
-                this.Collection.Add(configuration);
+                    configuration.DeviceId = _station.DeviceId;
+                    configuration.TagId = tag.Id;
+                    configuration.IsActive = tag.IsActive;
+                    configuration.UpdateAt = tag.UpdateAt;
+                    configuration.CreateDate = tag.CreateDate;
+                    configuration.Humidity = (tag.Humidity >= constrain.HumidityMin && tag.Humidity <= constrain.HumidityMax) ? true : false;
+                    configuration.Pressure = (tag.Pressure >= constrain.PressureMin && tag.Pressure <= constrain.PressureMax) ? true : false;
+                    configuration.Temperature = (tag.Temperature >= constrain.TemperatureMin && tag.Temperature <= constrain.TemperatureMax) ? true : false;
+
+                    this._collection.Add(configuration);
+                }
             }
 
-            return this.Collection;
+            return this._collection;
         }
     }
 }

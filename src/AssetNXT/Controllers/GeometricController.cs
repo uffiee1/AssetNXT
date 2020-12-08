@@ -11,11 +11,11 @@ namespace AssetNXT.Controllers
     [ApiController]
     public class GeometricController : ControllerBase
     {
-        private readonly IConstrainDataRepository<Route> _repositoryConstrain;
+        private readonly IMongoDataRepository<Route> _repositoryConstrain;
         private readonly IMongoDataRepository<RuuviStation> _repositoryRuuviStation;
         private readonly IMapper _mapper;
 
-        public GeometricController(IConstrainDataRepository<Route> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
+        public GeometricController(IMongoDataRepository<Route> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
         {
             this._repositoryConstrain = repositoryConstrain;
             this._repositoryRuuviStation = repositoryRuuviStation;

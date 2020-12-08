@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using AssetNXT.Models.Core;
 
-namespace AssetNXT.Dtos
+namespace AssetNXT.Dtos.Core
 {
-    public class AgreementConstrainReadDto
+    public class RouteReadDto
     {
         public string Id { get; set; }
 
@@ -15,17 +16,7 @@ namespace AssetNXT.Dtos
 
         public string Description { get; set; }
 
-        public double TemperatureMin { get; set; }
-
-        public double TemperatureMax { get; set; }
-
-        public double HumidityMin { get; set; }
-
-        public double HumidityMax { get; set; }
-
-        public double PressureMin { get; set; }
-
-        public double PressureMax { get; set; }
+        public List<Boundary> Points { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

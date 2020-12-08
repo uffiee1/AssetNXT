@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using AssetNXT.Dtos;
+using AssetNXT.Dtos.Core;
 using AssetNXT.Models.Core;
 using AssetNXT.Repository;
 
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace Ruuvi.Controllers
 {
@@ -16,10 +16,10 @@ namespace Ruuvi.Controllers
     [ApiController]
     public class RoutesController : ControllerBase
     {
-        private readonly IConstrainDataRepository<Route> _repository;
+        private readonly IMongoDataRepository<Route> _repository;
         private readonly IMapper _mapper;
 
-        public RoutesController(IConstrainDataRepository<Route> repository, IMapper mapper)
+        public RoutesController(IMongoDataRepository<Route> repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
@@ -28,7 +28,7 @@ namespace Ruuvi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllRoutes()
         {
-            var routes = await _repository.GetAllLatestAsync();
+            var routes = await _repository.GetAllAsync();
 
             if (routes != null)
             {
@@ -38,10 +38,10 @@ namespace Ruuvi.Controllers
             return NotFound();
         }
 
-        [HttpGet("{id}", Name = "GetRouteByDeviceId")]
-        public async Task<IActionResult> GetRouteByDeviceId(string id)
+        [HttpGet("{id}", Name = "GetRouteById")]
+        public async Task<IActionResult> GetRouteById(string id)
         {
-            var route = await _repository.GetObjectByDeviceIdAsync(id);
+            var route = await _repository.GetObjectByIdAsync(id);
 
             if (route != null)
             {
@@ -58,15 +58,43 @@ namespace Ruuvi.Controllers
 
             if (route != null)
             {
-                var lastRoute = await _repository.GetLastConstrainIdAsync();
-                route.ConstrainId = lastRoute != null ? lastRoute.ConstrainId + 1 : 0;
-
                 await _repository.CreateObjectAsync(route);
 
                 var routeReadDto = _mapper.Map<RouteReadDto>(route);
 
                 // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
-                return CreatedAtRoute(nameof(GetRouteByDeviceId), new { Id = routeReadDto.Id }, routeReadDto);
+                return CreatedAtRoute(nameof(GetRouteById), new { Id = routeReadDto.Id }, routeReadDto);
+            }
+
+            return NotFound();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateRouteByObjectId(string id, RouteCreateDto routeCreateDto)
+        {
+            var routeModel = _mapper.Map<Route>(routeCreateDto);
+            var route = await _repository.GetObjectByIdAsync(id);
+
+            if (route != null)
+            {
+                routeModel.UpdatedAt = DateTime.UtcNow;
+                routeModel.Id = new ObjectId(id);
+                await _repository.UpdateObjectAsync(id, routeModel);
+                return Ok(_mapper.Map<RouteReadDto>(routeModel));
+            }
+
+            return NotFound();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteRouteByObjectId(string id)
+        {
+            var routeModel = await _repository.GetObjectByIdAsync(id);
+
+            if (routeModel != null)
+            {
+                await _repository.RemoveObjectAsync(routeModel);
+                return Ok("Successfully deleted from collection!");
             }
 
             return NotFound();
