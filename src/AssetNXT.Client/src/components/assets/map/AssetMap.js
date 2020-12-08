@@ -10,7 +10,8 @@ var L = require('leaflet');
 export default class AssetMap extends Component {
 
   state = {
-    markers: []
+    markers: [],
+      isLoaded: false
   }
 
   getAssetLatLng(asset) {
@@ -19,19 +20,22 @@ export default class AssetMap extends Component {
   }
 
   componentDidMount() {
+
     this.ensureInCenter(this.props.assets[0]);
     this.ensureWithinBounds(this.props.assets);
+      this.setState({
+          isLoaded: true
+      })
   }
 
   returnIcon(asset)
   {
-    console.log("passed icon");
+    console.log(asset.breach);
     var Red = new L.Icon({
       iconUrl: MarkerRed,
       iconAnchor: new L.Point(16, 16)
     });
     var Default = new L.Icon.Default();
-    console.log(asset.breach);
     return asset.breach.includes(false) ? Default : Red;
   }
 
@@ -41,7 +45,7 @@ export default class AssetMap extends Component {
     var queryInactive = !this.props.query;
 
     return assets.map(asset => {
-      if (queryInactive || asset.deviceId.indexOf(query) > -1) {
+      if (queryInactive || asset.deviceId.indexOf(query) > -1 && this.state.isLoaded) {
         return <Marker icon={this.returnIcon(asset)} position={this.getAssetLatLng(asset)}
           onclick={() => this.ensureInCenter(asset)}> {
 
