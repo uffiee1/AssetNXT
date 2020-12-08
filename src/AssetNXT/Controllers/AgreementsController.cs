@@ -32,7 +32,7 @@ namespace AssetNXT.Controllers
 
             if (constrains != null)
             {
-                return Ok(_mapper.Map<IEnumerable<AgreementConstrainReadDto>>(constrains));
+                return Ok(_mapper.Map<IEnumerable<AgreementReadDto>>(constrains));
             }
 
             return NotFound();
@@ -45,14 +45,14 @@ namespace AssetNXT.Controllers
 
             if (constrain != null)
             {
-                return Ok(_mapper.Map<AgreementConstrainReadDto>(constrain));
+                return Ok(_mapper.Map<AgreementReadDto>(constrain));
             }
 
             return NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateConstrain(AgreementConstrainCreateDto constrainCreateDto)
+        public async Task<IActionResult> CreateConstrain(AgreementCreateDto constrainCreateDto)
         {
             var constrain = _mapper.Map<Agreement>(constrainCreateDto);
 
@@ -60,14 +60,14 @@ namespace AssetNXT.Controllers
             {
                 await _repository.CreateObjectAsync(constrain);
 
-                return Ok(_mapper.Map<AgreementConstrainReadDto>(constrain));
+                return Ok(_mapper.Map<AgreementReadDto>(constrain));
             }
 
             return NotFound();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateConstrainByObjectId(string id, AgreementConstrainCreateDto constrainCreateDto)
+        public async Task<IActionResult> UpdateConstrainByObjectId(string id, AgreementCreateDto constrainCreateDto)
         {
             var constrainModel = _mapper.Map<Agreement>(constrainCreateDto);
             var constrain = await _repository.GetObjectByIdAsync(id);
@@ -77,7 +77,7 @@ namespace AssetNXT.Controllers
                 constrainModel.UpdatedAt = DateTime.UtcNow;
                 constrainModel.Id = new ObjectId(id);
                 await _repository.UpdateObjectAsync(id, constrainModel);
-                return Ok(_mapper.Map<AgreementConstrainReadDto>(constrainModel));
+                return Ok(_mapper.Map<AgreementReadDto>(constrainModel));
             }
 
             return NotFound();

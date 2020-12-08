@@ -4,7 +4,7 @@ using AssetNXT.Models.Data;
 
 namespace AssetNXT.Dtos.Core
 {
-    public class AgreementConstrainReadDto
+    public class AgreementReadDto
     {
         public string Id { get; set; }
 

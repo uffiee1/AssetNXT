@@ -37,7 +37,7 @@ namespace AssetNXT
 
             ConfigureSwaggerServices(services);
             ConfigureDatabaseServices(services);
-            ConfigureSpaFilesServices(services);
+            // ConfigureSpaFilesServices(services);
             ConfigureCrossOriginResourceSharing(services);
 
             // Scope
@@ -111,18 +111,18 @@ namespace AssetNXT
                 endpoints.MapHub<RuuviStationHub>("/hubs/stations");
             });
 
-            //Client SPA
-            app.UseSpaStaticFiles();
-            app.UseStaticFiles();
+            // Client SPA
+            // app.UseSpaStaticFiles();
+            // app.UseStaticFiles();
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "../AssetNXT.Client";
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
-            });
+            // app.UseSpa(spa =>
+            // {
+            //    spa.Options.SourcePath = "../AssetNXT.Client";
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseReactDevelopmentServer(npmScript: "start");
+            //    }
+            // });
 
             // Swagger config
             app.UseSwagger();
