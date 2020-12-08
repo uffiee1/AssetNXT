@@ -1,31 +1,33 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using AssetNXT.Models.Core;
+using AssetNXT.Models.Core.ServiceAgreement;
 using AssetNXT.Models.Data;
 using AssetNXT.Repository;
 
 namespace AssetNXT.Configurations
 {
-    public class ServiceAgreementConfiguration : IServiceAgreementConfiguration
+    public class ServiceAgreementConfiguration : IConfiguration<ServiceAgreement>
     {
-        private readonly IConstrainDataRepository<Agreement> _repositoryConstrain;
+        private readonly IMongoDataRepository<Agreement> _repository;
         private RuuviStation _station;
         private List<Tag> _tags;
         private List<ServiceAgreement> _collection;
 
-        public ServiceAgreementConfiguration(RuuviStation station, IConstrainDataRepository<Agreement> repositoryConstrain)
+        public ServiceAgreementConfiguration(RuuviStation station, IMongoDataRepository<Agreement> repository)
         {
             this._tags = station.Tags;
             this._station = station;
             this._collection = new List<ServiceAgreement>();
-            this._repositoryConstrain = repositoryConstrain;
+            this._repository = repository;
         }
 
         public async Task<List<ServiceAgreement>> IsBreached()
         {
             foreach (var tag in _tags)
             {
-                var constrain = await _repositoryConstrain.GetObjectByTagIdAsync(tag.Id);
+                var constrains = await _repository.GetAllAsync();
+                var constrain = constrains.ToList().Where(constrain => constrain.Tags.Any(t => t.Id == tag.Id)).FirstOrDefault();
 
                 if (constrain != null)
                 {

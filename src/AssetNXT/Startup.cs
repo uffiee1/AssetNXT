@@ -1,8 +1,6 @@
 using System;
 using AssetNXT.Hubs;
-using AssetNXT.Models.Data;
 using AssetNXT.Repository;
-using AssetNXT.Repository.Service;
 using AssetNXT.Settings;
 
 using AutoMapper;
@@ -43,8 +41,6 @@ namespace AssetNXT
             ConfigureCrossOriginResourceSharing(services);
 
             // Scope
-            services.AddScoped(typeof(IConstrainDataRepository<>), typeof(ConstrainDataRepository<>));
-
             services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
             // services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
 
@@ -116,17 +112,17 @@ namespace AssetNXT
             });
 
             // Client SPA
-            // app.UseSpaStaticFiles();
-            // app.UseStaticFiles();
+            //app.UseSpaStaticFiles();
+            //app.UseStaticFiles();
 
-            // app.UseSpa(spa =>
-            // {
+            //app.UseSpa(spa =>
+            //{
             //    spa.Options.SourcePath = "../AssetNXT.Client";
             //    if (env.IsDevelopment())
             //    {
             //        spa.UseReactDevelopmentServer(npmScript: "start");
             //    }
-            // });
+            //});
 
             // Swagger config
             app.UseSwagger();

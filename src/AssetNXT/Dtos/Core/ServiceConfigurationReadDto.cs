@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AssetNXT.Dtos
+namespace AssetNXT.Dtos.Core
 {
     public class ServiceConfigurationReadDto
     {

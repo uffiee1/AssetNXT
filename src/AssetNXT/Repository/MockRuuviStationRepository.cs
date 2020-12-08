@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Models.Data;
 
-namespace AssetNXT.Repository.Service
+namespace AssetNXT.Repository
 {
     public class MockRuuviStationRepository : IMongoDataRepository<RuuviStation>
     {
