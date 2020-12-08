@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AssetNXT.Dtos;
-using AssetNXT.Models.Core;
+using AssetNXT.Dtos.Core;
+using AssetNXT.Models.Core.ServiceAgreement;
 using AssetNXT.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +16,10 @@ namespace AssetNXT.Controllers
     [ApiController]
     public class AgreementsController : ControllerBase
     {
-        private readonly IConstrainDataRepository<Agreement> _repository;
+        private readonly IMongoDataRepository<Agreement> _repository;
         private readonly IMapper _mapper;
 
-        public AgreementsController(IConstrainDataRepository<Agreement> repository, IMapper mapper)
+        public AgreementsController(IMongoDataRepository<Agreement> repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
@@ -28,7 +28,7 @@ namespace AssetNXT.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllConstrains()
         {
-            var constrains = await _repository.GetAllLatestAsync();
+            var constrains = await _repository.GetAllAsync();
 
             if (constrains != null)
             {
@@ -38,14 +38,14 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
-        [HttpGet("{id}", Name = "GetConstrainByConstrainId")]
-        public async Task<IActionResult> GetConstrainByConstrainId(string id)
+        [HttpGet("{id}", Name = "GetConstrainByObjectId")]
+        public async Task<IActionResult> GetConstrainByObjectId(string id)
         {
-            var constrains = await _repository.GetAllObjectsByConstrainIdAsync(id);
+            var constrain = await _repository.GetObjectByIdAsync(id);
 
-            if (constrains != null)
+            if (constrain != null)
             {
-                return Ok(_mapper.Map<IEnumerable<AgreementConstrainReadDto>>(constrains));
+                return Ok(_mapper.Map<AgreementConstrainReadDto>(constrain));
             }
 
             return NotFound();
@@ -58,9 +58,6 @@ namespace AssetNXT.Controllers
 
             if (constrain != null)
             {
-                var lastConstrain = await _repository.GetLastConstrainIdAsync();
-                constrain.ConstrainId = lastConstrain != null ? lastConstrain.ConstrainId + 1 : 0;
-
                 await _repository.CreateObjectAsync(constrain);
 
                 return Ok(_mapper.Map<AgreementConstrainReadDto>(constrain));
@@ -78,7 +75,8 @@ namespace AssetNXT.Controllers
             if (constrain != null)
             {
                 constrainModel.UpdatedAt = DateTime.UtcNow;
-                _repository.UpdateObject(id, constrainModel);
+                constrainModel.Id = new ObjectId(id);
+                await _repository.UpdateObjectAsync(id, constrainModel);
                 return Ok(_mapper.Map<AgreementConstrainReadDto>(constrainModel));
             }
 

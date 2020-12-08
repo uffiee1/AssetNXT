@@ -11,7 +11,6 @@ namespace AssetNXT.Profiles
         public TagsProfile()
         {
             CreateMap<RuuviStation, TagReadDto>();
-            CreateMap<Constrain, TagReadDto>();
         }
     }
 }

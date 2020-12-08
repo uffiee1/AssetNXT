@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AssetNXT.Models.Core
+namespace AssetNXT.Models.Core.ServiceAgreement
 {
     public class ServiceAgreement
     {

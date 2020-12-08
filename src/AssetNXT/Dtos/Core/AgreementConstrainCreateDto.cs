@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using AssetNXT.Models.Data;
 
-namespace AssetNXT.Dtos
+namespace AssetNXT.Dtos.Core
 {
     public class AgreementConstrainCreateDto
     {
