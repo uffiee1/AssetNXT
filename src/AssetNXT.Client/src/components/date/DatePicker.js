@@ -1,42 +1,51 @@
-import React, { Component } from 'react';
+import React, { useState }from 'react';
 import { Container, Col, Row } from 'reactstrap';
-import { TextField } from '@material-ui/core';
+import DateFnsUtils from '@date-io/date-fns';
+//import { format } from 'date-fns'
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
-export default class DatePicker extends Component {
-    render() {
-        return (
-            <Container fluid>
+const DatePicker = (props) => {
+
+    const [selectedFromDate, handleFromDateChange] = useState(null);
+    const [selectedToDate, handleToDateChange] = useState(null);
+    return (
+        <Container fluid className="mb-5">
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Row>
                     <Col xs="auto">
-                        <form noValidate>
-                            <TextField 
-                                id="datetime-local"
-                                label="From"
-                                type="datetime-local"
-                                defaultValue="2015-05-24T10:30"
-                                onChange=""
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-                        </form>
+                        <KeyboardDateTimePicker
+                            label="From"
+                            inputVariant="outlined"
+                            showTodayButton={true}
+
+                            disableFuture
+                            format="yyyy/MM/dd HH:mm"
+                            onError={console.log}
+
+                            name="selectedFromDate"
+                            value={selectedFromDate}
+                            onChange={handleFromDateChange}
+                        />
                     </Col>
                     <Col xs="auto">
-                        <form noValidate>
-                            <TextField
-                                id="datetime-local"
-                                label="To"
-                                type="datetime-local"
-                                defaultValue="2020-05-24T10:30"
-                                onChange=""
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-                        </form>
+                        <KeyboardDateTimePicker
+                            label="To"
+                            inputVariant="outlined"
+                            showTodayButton={true}
+
+                            disablePast
+                            format="yyyy/MM/dd HH:mm"
+                            onError={console.log}
+
+                            name="selectedToDate"
+                            value={selectedToDate}
+                            onChange={handleToDateChange}
+                        />
                     </Col>
                 </Row>
-            </Container>
-        )
-    }
+            </MuiPickersUtilsProvider>
+        </Container>
+    )
 }
+
+export default DatePicker;
