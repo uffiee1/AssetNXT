@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup, } from 'react-leaflet';
 
 import './AssetMap.css'
+import MarkerGold from "../../images/marker-icon-gold.png"
+import MarkerRed from "../../images/marker-icon-red.png"
+import Asset from '../Asset';
+
 
 export default class AssetMap extends Component {
 
@@ -19,15 +23,23 @@ export default class AssetMap extends Component {
     this.ensureWithinBounds(this.props.assets);
   }
 
+    assetIsBreached(asset) {
+        return asset.breach.includes(false);
+    }
+
   renderAssets(assets, AssetTemplate) {
+      var L = require('leaflet')
+      var normal = new L.Icon()
+      var Red = new L.Icon({
+      iconUrl: MarkerRed
+    });
 
     var query = this.props.query;
     var queryInactive = !this.props.query;
 
     return assets.map(asset => {
       if (queryInactive || asset.deviceId.indexOf(query) > -1) {
-
-        return <Marker position={this.getAssetLatLng(asset)}
+        return <Marker icon={this.assetIsBreached(asset)} position={this.getAssetLatLng(asset)}
           onclick={() => this.ensureInCenter(asset)}> {
 
             AssetTemplate && <Popup>

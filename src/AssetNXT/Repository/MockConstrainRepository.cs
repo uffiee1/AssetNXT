@@ -105,11 +105,11 @@ namespace AssetNXT.Repository
                 Name = "sla-config-1",
                 Description = "test",
                 TemperatureMin = 0,
-                TemperatureMax = 5,
+                TemperatureMax = 35,
                 HumidityMin = 0,
-                HumidityMax = 99,
+                HumidityMax = 800,
                 PressureMin = 0,
-                PressureMax = 5000
+                PressureMax = 1000
             };
         }
     }

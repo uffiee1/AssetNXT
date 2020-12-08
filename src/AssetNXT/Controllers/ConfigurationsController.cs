@@ -29,6 +29,17 @@ namespace AssetNXT.Controllers
         public async Task<IActionResult> GetValidatedTagById(string id)
         {
             var constrain = await _repositoryConstrain.GetObjectByDeviceIdAsync(id);
+            //var constrain = new Constrain()
+            //{
+            //    Name = "sla-config-1",
+            //    Description = "test",
+            //    TemperatureMin = 0,
+            //    TemperatureMax = 25,
+            //    HumidityMin = 30,
+            //    HumidityMax = 50,
+            //    PressureMin = 100614,
+            //    PressureMax = 102615
+            //};
             var station = await _repositoryRuuviStation.GetObjectByDeviceIdAsync(id);
 
             if (constrain != null && station != null)
