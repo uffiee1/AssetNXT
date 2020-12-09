@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Dtos;
 using AssetNXT.Models.Data;
@@ -7,6 +8,7 @@ using AssetNXT.Repository;
 
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace AssetNXT.Controllers
 {
@@ -24,10 +26,17 @@ namespace AssetNXT.Controllers
             _repository = repository;
         }
 
+        private async Task<List<RuuviStation>> GetAllObjectsAsync()
+        {
+            var stations = await _repository.GetAllAsync();
+            return stations.GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();  // Groups By DeviceId
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllRuuviStations()
         {
-            var stations = await _repository.GetAllLatestAsync();
+            var stations = await GetAllObjectsAsync();
+            stations.ForEach(station => station.Tags.RemoveAll(tag => tag.IsActive != true)); // Shows only the active tags
 
             if (stations != null)
             {
@@ -40,7 +49,8 @@ namespace AssetNXT.Controllers
         [HttpGet("{id}", Name="GetRuuviStationByDeviceId")]
         public async Task<IActionResult> GetRuuviStationByDeviceId(string id)
         {
-            var station = await _repository.GetObjectByDeviceIdAsync(id);
+            var stations = await GetAllObjectsAsync();
+            var station = stations.Find(doc => doc.DeviceId == id);
 
             if (station != null)
             {
@@ -53,7 +63,8 @@ namespace AssetNXT.Controllers
         [HttpGet("all/{id}", Name = "GetAllByDeviceId")]
         public async Task<IActionResult> GetAllByDeviceId(string id)
         {
-            var stations = await _repository.GetAllObjectsByDeviceIdAsync(id);
+            var stations = await _repository.GetAllAsync();
+            stations = stations.FindAll(doc => doc.DeviceId == id).ToList();
 
             if (stations != null)
             {
@@ -63,10 +74,10 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
-        [HttpGet("all-tags/{id}", Name = "GetAllTagsByDeviceId")]
+        [HttpGet("tags/{id}", Name = "GetAllTagsByDeviceId")]
         public async Task<IActionResult> GetAllTagsByDeviceId(string id)
         {
-            var stations = await _repository.GetAllObjectsByDeviceIdAsync(id);
+            var stations = await GetAllObjectsAsync();
 
             if (stations != null)
             {
@@ -83,6 +94,7 @@ namespace AssetNXT.Controllers
 
             station.Tags.ForEach(tag => tag.CreateDate = DateTime.UtcNow);
             station.Tags.ForEach(tag => tag.UpdateAt = DateTime.UtcNow);
+            station.Tags.ForEach(tag => tag.IsActive = true);
 
             await _repository.CreateObjectAsync(station);
 
@@ -93,15 +105,17 @@ namespace AssetNXT.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateRuuviStation(string id, RuuviStationCreateDto stationCreateDto)
+        public async Task<IActionResult> UpdateRuuviStationByDeviceId(string id, RuuviStationCreateDto stationCreateDto)
         {
             var stationModel = _mapper.Map<RuuviStation>(stationCreateDto);
-            var station = await _repository.GetObjectByIdAsync(id);
+
+            var stations = await GetAllObjectsAsync();
+            var station = stations.Find(doc => doc.DeviceId == id);
 
             if (station != null)
             {
                 stationModel.UpdatedAt = DateTime.UtcNow;
-                stationModel.Id = new MongoDB.Bson.ObjectId(id);
+                stationModel.Id = new ObjectId(id);
                 stationModel.Tags.ForEach(tag => tag.UpdateAt = DateTime.UtcNow);
 
                 _repository.UpdateObject(id, stationModel);
@@ -112,13 +126,14 @@ namespace AssetNXT.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteRuuviStation(string id)
+        public async Task<ActionResult> DeleteRuuviStationByDeviceId(string id)
         {
-            var stationModel = await _repository.GetObjectByIdAsync(id);
+            var stations = await GetAllObjectsAsync();
+            var station = stations.Find(doc => doc.DeviceId == id);
 
-            if (stationModel != null)
+            if (station != null)
             {
-                await _repository.RemoveObjectAsync(stationModel);
+                await _repository.RemoveObjectAsync(station);
                 return Ok("Successfully deleted from collection!");
             }
 

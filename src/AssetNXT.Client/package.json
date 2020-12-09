@@ -3,14 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@microsoft/signalr": "^5.0.0",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
+    "immer": "8.0.0",
     "jquery": "^3.5.1",
     "leaflet": "^1.7.1",
+    "lodash": "4.17.20",
     "merge": "^1.2.1",
     "oidc-client": "^1.9.0",
     "react": "^16.14.0",
-    "react-chartjs-2": "^2.10.0",
+    "react-chartjs-2": "^2.11.1",
     "react-dom": "^16.14.0",
     "react-leaflet": "^2.8.0",
     "react-notifications-component": "^3.0.2",
@@ -18,7 +21,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",
     "react-tabs": "^3.1.1",
-    "reactstrap": "^8.6.0",
+    "reactstrap": "^8.7.1",
     "rimraf": "^2.6.2"
   },
   "devDependencies": {

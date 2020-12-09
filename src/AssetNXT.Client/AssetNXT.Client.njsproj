@@ -40,6 +40,9 @@
     <Content Include="public\manifest.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="src\App.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\App.js" />
     <Content Include="src\App.test.js" />
     <Content Include="src\components\assets\Asset.css">
@@ -72,10 +75,31 @@
     <Content Include="src\components\assets\map\AssetMarkerInfo.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\assets\settings\SettingsButton.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\settings\SettingsButton.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\settings\SettingsList.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\assets\telemetric\graphs\TelemetricLineGraph.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\assets\telemetric\graphs\TelemetricLineGraph.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\telemetric\TelemetricDataList.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\telemetric\TelemetricDataList.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\telemetric\TelemetricDataListItem.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\assets\telemetric\TelemetricDataListItem.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\assets\telemetric\TelemetricDataTemplate.css">
@@ -95,30 +119,32 @@
     <Content Include="src\components\constrains\actions\editConstrains.js" />
     <Content Include="src\components\constrains\ConstrainService.css" />
     <Content Include="src\components\constrains\ConstrainService.js" />
-    <Content Include="src\components\geoconfig\GeometricConfig.css" />
-    <Content Include="src\components\geoconfig\GeometricConfig.js">
+    <Content Include="src\components\geoconfig\GeometricModal.css" />
+    <Content Include="src\components\geoconfig\GeometricModal.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\notifications\NotificationList.css">
+    <Content Include="src\components\geoconfig\GeometricForm.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\notifications\NotificationList.js">
+    <Content Include="src\components\geoconfig\GeometricForm.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\notifications\NotificationListItem.css">
+    <Content Include="src\components\geoconfig\GeometricMap.css" />
+    <Content Include="src\components\geoconfig\GeometricMap.js" />
+    <Content Include="src\components\geoconfig\GeometricTable.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\notifications\NotificationListItem.js">
+    <Content Include="src\components\geoconfig\GeometricTable.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\Banner.css" />
-    <Content Include="src\components\Banner.js" />
     <Content Include="src\components\Layout.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\Layout.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\navigation\Navigation.css" />
+    <Content Include="src\components\navigation\Navigation.js" />
     <Content Include="src\components\search\Searchbar.css" />
     <Content Include="src\components\search\Searchbar.js" />
     <Content Include="src\index.js" />
@@ -146,12 +172,13 @@
     <Folder Include="src\components\" />
     <Folder Include="src\components\assets\" />
     <Folder Include="src\components\assets\map\" />
+    <Folder Include="src\components\assets\settings\" />
     <Folder Include="src\components\assets\telemetric\" />
     <Folder Include="src\components\assets\telemetric\graphs\" />
     <Folder Include="src\components\constrains\" />
     <Folder Include="src\components\constrains\actions\" />
     <Folder Include="src\components\geoconfig\" />
-    <Folder Include="src\components\notifications\" />
+    <Folder Include="src\components\navigation\" />
     <Folder Include="src\components\search\" />
     <Folder Include="src\pages\" />
   </ItemGroup>

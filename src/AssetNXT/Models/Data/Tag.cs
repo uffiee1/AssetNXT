@@ -62,5 +62,8 @@ namespace AssetNXT.Models.Data
 
         [BsonElement]
         public double Voltage { get; set; }
+
+        [BsonElement]
+        public bool IsActive { get; set; }
     }
 }

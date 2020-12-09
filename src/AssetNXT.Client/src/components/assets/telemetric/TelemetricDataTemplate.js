@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Container, Row, Col } from 'reactstrap';
 
 import './TelemetricDataTemplate.css';
+import TelemetricDataList from "./TelemetricDataList";
 import TelemetricLineGraph from "./graphs/TelemetricLineGraph";
-import NotificationList from "../../notifications/NotificationList";
 
 
 export default class TelemetricDataTemplate extends Component {
@@ -13,14 +13,16 @@ export default class TelemetricDataTemplate extends Component {
       <Container className="data-template-container" fluid>
         <Row className="data-template-row">
           <Col lg="8" className="data-template-col">
-            <TelemetricLineGraph assets={this.props.assets} 
+            <TelemetricLineGraph stations={this.props.stations} 
               telemetricData={this.props.telemetricData}
-              telemetricName={this.props.telemetricName} />
+              telemetricName={this.props.telemetricName} 
+              telemetricId={this.props.telemetricId}/>
           </Col>
           <Col lg="4" className="data-template-col">
-            <NotificationList assets={this.props.assets} 
+             <TelemetricDataList stations={this.props.stations} 
               telemetricData={this.props.telemetricData}
-              telemetricName={this.props.telemetricName} />
+              telemetricName={this.props.telemetricName} 
+              telemetricId={this.props.telemetricId}/>
           </Col>
         </Row>
       </Container>

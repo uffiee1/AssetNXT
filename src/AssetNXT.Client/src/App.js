@@ -16,7 +16,7 @@ export default class App extends Component {
             <Route path='/' exact component={Home} />
             <Route path='/geo' exact component={GeometricPage} />
             <Route path='/constrains' exact component={ConstrainPage} />
-            <Route path='/:deviceId' exact component={StationPage} />
+            <Route path='/station/:deviceId' exact component={StationPage} />
         </Switch>
     );
   }

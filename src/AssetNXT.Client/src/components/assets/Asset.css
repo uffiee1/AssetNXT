@@ -1,15 +1,32 @@
+.asset-container-row {
+    flex-wrap:nowrap;
+}
+
 .asset-icon-container {
     display:flex;
     align-items: center;
     padding-left: 0 !important;
 }
 
+.asset-contents-container{
+    min-width: 0;
+}
+
+
 .asset-contents-label {
     margin: 0 !important;
     font-size: 1.0rem;
     font-weight: bold;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .asset-contents-description {
     margin: 0 !important;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }

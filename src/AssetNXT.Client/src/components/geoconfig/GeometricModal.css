@@ -1,0 +1,32 @@
+.geometric-modal,
+.geometric-modal > .row,
+.geometric-modal > .row > * {
+    height: 100%;
+}
+
+.geometric-modal > .row > * {
+    display:flex;
+    flex-direction: column;
+}
+
+.geometric-table {
+    min-height: 0;
+}
+
+.geometric-table,
+.geometric-table > * {
+    max-height: 100%;
+}
+
+.aspect-box {
+    padding-top: 100%;
+    position:relative;
+}
+
+.aspect-box > * {
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position:absolute !important;
+}
