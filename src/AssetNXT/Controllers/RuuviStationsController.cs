@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Dtos;
+using AssetNXT.Hubs;
 using AssetNXT.Models.Data;
 using AssetNXT.Repository;
 
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using MongoDB.Bson;
 
 namespace AssetNXT.Controllers
@@ -18,12 +20,14 @@ namespace AssetNXT.Controllers
     public class RuuviStationsController : ControllerBase
     {
         private readonly IMongoDataRepository<RuuviStation> _repository;
+        private readonly IHubContext<RuuviStationHub> _hub;
         private readonly IMapper _mapper;
 
-        public RuuviStationsController(IMongoDataRepository<RuuviStation> repository, IMapper mapper)
+        public RuuviStationsController(IMongoDataRepository<RuuviStation> repository, IMapper mapper, IHubContext<RuuviStationHub> hub)
         {
-            _mapper = mapper;
             _repository = repository;
+            _mapper = mapper;
+            _hub = hub;
         }
 
         private async Task<List<RuuviStation>> GetAllObjectsAsync()
@@ -97,6 +101,9 @@ namespace AssetNXT.Controllers
             station.Tags.ForEach(tag => tag.IsActive = true);
 
             await _repository.CreateObjectAsync(station);
+
+            // SignalR event
+            await _hub.Clients.All.SendAsync("GetNewRuuviStations", station);
 
             var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(station);
 
