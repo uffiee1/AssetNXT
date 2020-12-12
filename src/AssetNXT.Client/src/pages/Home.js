@@ -43,10 +43,14 @@ export default class Home extends Component {
                 console.log("Connected!");
         
                 this.connection.on("GetNewRuuviStations", (a) => {
-                      
-                    this.setState( state => {
+
+                    this.setState(state => {
+                        state.assets = state.assets.filter(function (obj) {
+                            return obj.deviceId !== a.deviceId;
+                        });        
                         return state.assets.unshift(a);
                     });
+                    
                 });
                 })
                 .catch((e) => console.log("Connection failed: ", e));
