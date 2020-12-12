@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace AssetNXT.Hubs
 {
-    public class RuuviStationHub : Hub, IRuuviStationClient
+    public class RuuviStationHub : Hub
     {
         public Task ReceiveRuuviStation(RuuviStation station)
         {
             // boradcast request
-            return Clients.All.SendAsync("GetNewStations", station);
+            return Clients.All.SendAsync("GetNewRuuviStations", station);
         }
     }
 }
