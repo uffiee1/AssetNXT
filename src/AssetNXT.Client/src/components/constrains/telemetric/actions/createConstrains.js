@@ -8,6 +8,7 @@ export default class CreateConstrains extends Component {
         this.state = {
             name: "",
             description: "",
+            tags: [],
             temperatureMin: "",
             temperatureMax: "",
             humidityMin: "",
@@ -24,6 +25,7 @@ export default class CreateConstrains extends Component {
         const data = {
             deviceId: "5",
             name: this.state.name,
+            tags: this.state.tags,
             description: this.state.description,
             temperatureMin: this.state.temperatureMin,
             temperatureMax: this.state.temperatureMax,

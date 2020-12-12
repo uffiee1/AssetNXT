@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button, Input, Table } from 'reactstrap';
+import { Container, Row, Col, Button, Input, UncontrolledTooltip } from 'reactstrap';
 import { store } from 'react-notifications-component';
 import ReactNotification from 'react-notifications-component'
 
@@ -39,7 +39,6 @@ export default class ConstrainService extends Component {
     }
 
     componentDidMount() {
-        this.table = this.tableRef.current;
         this.fetchData();    
     }
 
@@ -70,7 +69,7 @@ export default class ConstrainService extends Component {
     }
 
     splitTemplates(array) {
-        var i, j, tempArray = [], chunk = 10;
+        var i, j, tempArray = [], chunk = 5;
         for (i = 0, j = array.length; i < j; i += chunk) {
             tempArray = [...tempArray, array.slice(i, i + chunk)];
         }
@@ -137,50 +136,47 @@ export default class ConstrainService extends Component {
         this.setState({ tablePageIndex : value })
     }
 
-    hideOnSearch() {
-        if (this.state.tableSlaTemplates[0] === this.state.slaTemplates) return "d-none"
-        else return "d-block"
-    }
-
-    searchChange(event, table) {
-        this.setState({selected : 0})
-        var  filter, tr, td, i, txtValue;
-        filter = event.target.value.toUpperCase();
-        if (filter !== "") this.setState({ tableSlaTemplates: [this.state.slaTemplates], tablePageIndex: 0 })
-        else if (filter === "") this.setState({ tableSlaTemplates: this.splitTemplates(this.state.slaTemplates), tablePageIndex: 0 });
-        table = this.table;
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
+    searchChange(event) {
+        let arr = [];
+        if (this.state.slaTemplates !== undefined) {
+            if (event.target.value === "") {
+                this.setState({ tableSlaTemplates: this.splitTemplates(this.state.slaTemplates) });
+            }
+            else {
+                this.state.slaTemplates.map((sla, i) => {
+                    console.log(this.state.setTags);
+                    if (arr.length < 5 && sla.name.toLowerCase().includes(event.target.value.toLowerCase())) {
+                        arr.push(sla)
+                    }
+                })
+                this.setState({ tableSlaTemplates: [arr], tablePageIndex: 0 });
             }
         }
+
     }
 
     renderTableContent() {
-        if (this.state.isLoaded) {
-            const listItems = this.state.tableSlaTemplates[this.state.tablePageIndex].map((slaTemplate) => {
-                let className = "";
-                if (this.state.selected === slaTemplate) className = "selected";  
+        if (this.state.isLoaded && this.state.tableSlaTemplates != undefined) {
+            const listItems = this.state.tableSlaTemplates[this.state.tablePageIndex].map((slaTemplate,i) => {
+                let className = "p-3";
+                if (this.state.selected === slaTemplate) className = "p-3 selected";  
                 return (
-                    <tr className={className} key={slaTemplate.id} onClick={() => this.setState({ selected: slaTemplate })}>
-                        <td>{slaTemplate.name}</td>
-                        <td>{slaTemplate.description}</td>
-                        <td className="tooltiptd">
-                            <b>minTemp: {slaTemplate.temperatureMin} </b>
-                            <b>maxTemp: {slaTemplate.temperatureMax} </b>
-                            <b>minHumid: {slaTemplate.humidityMin} </b>
-                            <b>maxHumid: {slaTemplate.humidityMax} </b>
-                            <b>minPress: {slaTemplate.pressureMax} </b>
-                            <b>maxPress: {slaTemplate.pressureMin} </b>
-                        </td>
-                    </tr>
+                    <>
+                    <Row className={className}  onClick={() => this.setState({ selected: slaTemplate })}>
+                            <Col id={"tooltip" + i.toString()}>{slaTemplate.name}</Col>      
+                        <Col>{slaTemplate.description}</Col>
+                    </Row>
+                        <UncontrolledTooltip placement="left" target={"tooltip" + i.toString()}>
+                            <Container fluid>
+                            <Row>MinTemp : {slaTemplate.temperatureMin}</Row>
+                            <Row>MaxTemp : {slaTemplate.temperatureMax}</Row>
+                            <Row>MinHumid : {slaTemplate.humidityMin}</Row>
+                            <Row>MaxHumid : {slaTemplate.humidityMax}</Row>
+                            <Row>MinPress : {slaTemplate.pressureMin}</Row>
+                            <Row>MaxPress : {slaTemplate.pressureMax}</Row>
+                            </Container>
+                        </UncontrolledTooltip>
+                    </>
                 );           
             });
             return listItems;
@@ -206,7 +202,7 @@ export default class ConstrainService extends Component {
                                 type="search"
                                 name="search"
                                 placeholder="search..."
-                                onChange={(e) => this.searchChange(e, this.table)}
+                                onChange={(e) => this.searchChange(e)}
                                 className="nested-input"
                             />
                             <div className="input-group-btn">
@@ -225,24 +221,33 @@ export default class ConstrainService extends Component {
 
                     <Row className="py-1">
                         <Col>
-                            <Table innerRef={this.tableRef} className="overflow-auto" bordered>
-                                <thead>
-                                    <tr>
-                                        <th className="w-25">Name</th>
-                                        <th>Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.renderTableContent()}
-                                </tbody>
-                            </Table>
+                            <Container fluid className="table-container">
+                                <Row>
+                                    <Col>
+
+                                        <Row>
+                                            <Col className="table-head">
+                                                <Row className="p-3">
+                                                    <Col>Name</Col>
+                                                    <Col>Description</Col>
+                                                </Row>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col className="table-body">
+                                                {this.renderTableContent()}
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </Container>
                         </Col>
                     </Row>
                     {this.state.isLoaded ? (
                     <Row className="py-1">
                         <Col>
                         <div>
-                            <div className={this.hideOnSearch()}> <TablePagination min={0} max={this.state.tableSlaTemplates.length} index={this.state.tablePageIndex} setIndex={this.setIndex} /></div>          
+                            <TablePagination min={0} max={this.state.tableSlaTemplates.length} index={this.state.tablePageIndex} setIndex={this.setIndex} />         
                             <CreateConstrains isOpen={this.state.createModal} toggle={this.toggleCreateModal} success={this.submitSuccess} />
                             <EditConstrains isOpen={this.state.editModal} toggle={this.toggleEditModal} sla={this.state.selected} success={this.submitSuccess} />
                             <DeleteConstrains setIndex={this.setIndex} isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal} sla={this.state.selected} success={this.submitSuccess} />

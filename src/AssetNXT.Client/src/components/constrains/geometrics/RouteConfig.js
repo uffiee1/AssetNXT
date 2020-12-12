@@ -9,6 +9,7 @@ import './RouteConfig.css'
 import RouteTable from './RouteTable';
 import GeometricMap from './modal/GeometricMap';
 import GeometricModal from './modal/GeometricModal';
+import GeoApplyModal from './modal/GeoApplyModal';
 
 export default class RouteConfig extends Component {
 
@@ -17,6 +18,7 @@ export default class RouteConfig extends Component {
     boundaries: [],
     createModalState: false,
     updateModalState: false,
+    applyModalState: false,
   }
 
   invokeCreateToggle = () => {
@@ -27,7 +29,11 @@ export default class RouteConfig extends Component {
   invokeUpdateToggle = () => {
     const { updateModalState } = this.state;
     this.setState({ updateModalState: !updateModalState});
-  }
+    }
+
+  invokeApplyToggle = () => {
+        this.setState({ applyModalState: !this.state.applyModalState });
+    }
 
   invokeDeleteToggle = () => {
     const { deleteModalState } = this.state;
@@ -95,7 +101,13 @@ export default class RouteConfig extends Component {
                 <Button color="info" disabled={this.state.route ? false : true} onClick={e => this.invokeUpdateToggle()}>
                   <i className="fas fa-edit"></i> Edit
                 </Button>
-              </Col>
+                 </Col>
+
+                <Col xs="auto">
+                  <Button color="info" disabled={this.state.route ? false : true} onClick={e => this.invokeApplyToggle()}>
+                     <i className="fas fa-check"></i> Apply
+                  </Button>
+                </Col>
 
               <Col xs="auto">
                 <Button color="danger" disabled={this.state.route ? false : true } onClick={e => this.deleteRoute(this.state.route)}>
@@ -109,8 +121,8 @@ export default class RouteConfig extends Component {
                   <RouteTable routes={this.props.routes}
                     onRouteSelected={this.selectRoute}/>
               </Col>
-            </Row>
-
+                    </Row>
+                    <GeoApplyModal geo={this.state.route} isOpen={this.state.applyModalState} toggle={this.invokeApplyToggle} submit={this.applyRoute} />
           </Col>
         </Row>
 
@@ -128,10 +140,14 @@ export default class RouteConfig extends Component {
     await this.submitRoute('api/routes', 'POST', route);
     this.invokeCreateToggle();
     this.invokeStateHasChanged();
-  }
+    }
+
+    applyRoute = async (route) => {
+        route.boundaries = this.state.boundaries;
+       await this.submitRoute(`api/routes/${this.state.route.id}`, 'PUT', route);
+    }
 
   updateRoute = async (route) => {
-
     route.devices = this.state.route.devices;
     route.boundaries = route.boundaries.map(
       boundary => ({...boundary, colour: 'dodgerblue'}));
@@ -184,7 +200,7 @@ export default class RouteConfig extends Component {
         }
       })
     }
-
+      console.log(data);
     await fetch(request, {
       method: method,
       body: JSON.stringify(data),

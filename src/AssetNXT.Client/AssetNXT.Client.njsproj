@@ -114,6 +114,7 @@
     <Content Include="src\components\assets\telemetric\TelemetricTabs.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\constrains\geometrics\modal\GeoApplyModal.js" />
     <Content Include="src\components\constrains\telemetric\actions\applyConstrains.js" />
     <Content Include="src\components\constrains\telemetric\actions\createConstrains.js" />
     <Content Include="src\components\constrains\telemetric\actions\deleteConstrains.js" />
