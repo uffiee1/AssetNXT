@@ -1,5 +1,6 @@
 using System;
 using AssetNXT.Hubs;
+using AssetNXT.Models.Data;
 using AssetNXT.Repository;
 using AssetNXT.Settings;
 
@@ -33,7 +34,7 @@ namespace AssetNXT
 
             // Scope
             services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            // services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
+            services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
