@@ -5,9 +5,9 @@ using AutoMapper;
 
 namespace AssetNXT.Profiles
 {
-    public class ConstrainsProfile : Profile
+    public class ConstraintsProfile : Profile
     {
-        public ConstrainsProfile()
+        public ConstraintsProfile()
         {
             CreateMap<Agreement, AgreementReadDto>();
             CreateMap<AgreementCreateDto, Agreement>();
