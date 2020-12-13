@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { HubConnectionBuilder } from "@microsoft/signalr";
 import { Container, Row, Col } from 'reactstrap';
 
 import './Home.css';
@@ -16,6 +17,7 @@ export default class Home extends Component {
         assets: [],
         loading: true,
         settingsModal: false,
+        connection: null
     }
 
     constructor(props) {
@@ -28,6 +30,31 @@ export default class Home extends Component {
 
     componentDidMount() {
         this.fetchStationData();
+
+        this.connection = new HubConnectionBuilder()
+        .withUrl("https://localhost:5001/livestations")
+        .withAutomaticReconnect()
+            .build();
+        
+        if (this.connection) {
+            this.connection
+                .start()
+                .then((result) => {
+                console.log("Connected!");
+        
+                this.connection.on("GetNewRuuviStations", (a) => {
+
+                    this.setState(state => {
+                        state.assets = state.assets.filter(function (obj) {
+                            return obj.deviceId !== a.deviceId;
+                        });        
+                        return state.assets.unshift(a);
+                    });
+                    
+                });
+                })
+                .catch((e) => console.log("Connection failed: ", e));
+        }
     }
 
     searchQuery(query) {

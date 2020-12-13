@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using AssetNXT.Models.Data;
 
-namespace AssetNXT.Hubs.Clients
+namespace AssetNXT.Hubs
 {
     public interface IRuuviStationClient
     {
-        Task ReceiveRuuviStation(RuuviStation station);
+        Task ReceiveRuuviStation(RuuviStation value);
     }
 }
