@@ -45,7 +45,7 @@ namespace AssetNXT.Controllers
             {
                 var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryConstrain);
 
-                var breachedStations = await serviceAgreement.IsBreached();
+                var breachedStations = await serviceAgreement.IsBreachedCollection();
                 return Ok(_mapper.Map<IEnumerable<ServiceAgreementReadDto>>(breachedStations));
             }
 
