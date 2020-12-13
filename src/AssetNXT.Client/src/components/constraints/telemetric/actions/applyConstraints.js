@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Row, Col, Input } from 'reactstrap';
 
-export default class DeleteConstrains extends Component {
+export default class DeleteConstraints extends Component {
 
     state = {
         isLoaded: false,
@@ -92,7 +92,7 @@ export default class DeleteConstrains extends Component {
 
     }
     async postData(sla) {
-        await fetch("api/constrains/" + this.state.sla.id, {
+        await fetch("api/constraints/" + this.state.sla.id, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

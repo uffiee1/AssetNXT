@@ -5,13 +5,13 @@ import ReactNotification from 'react-notifications-component'
 
 import './ConstrainService.css';
 import TablePagination from "./TablePagination";
-import CreateConstrains from "./actions/createConstrains";
-import EditConstrains from "./actions/editConstrains";
-import ApplyConstrains from "./actions/applyConstrains";
-import DeleteConstrains from "./actions/deleteConstrains";
+import CreateConstraints from "./actions/createConstraints";
+import EditConstraints from "./actions/editConstraints";
+import ApplyConstraints from "./actions/applyConstraints";
+import DeleteConstraints from "./actions/deleteConstraints";
 
 import 'react-notifications-component/dist/theme.css'
-export default class ConstrainService extends Component {
+export default class ConstraintService extends Component {
 
     constructor(props) {
         super(props);
@@ -47,7 +47,7 @@ export default class ConstrainService extends Component {
     }
 
     async fetchData() {
-        await fetch("api/constrains")
+        await fetch("api/constraints")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -248,10 +248,10 @@ export default class ConstrainService extends Component {
                         <Col>
                         <div>
                             <TablePagination min={0} max={this.state.tableSlaTemplates.length} index={this.state.tablePageIndex} setIndex={this.setIndex} />         
-                            <CreateConstrains isOpen={this.state.createModal} toggle={this.toggleCreateModal} success={this.submitSuccess} />
-                            <EditConstrains isOpen={this.state.editModal} toggle={this.toggleEditModal} sla={this.state.selected} success={this.submitSuccess} />
-                            <DeleteConstrains setIndex={this.setIndex} isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal} sla={this.state.selected} success={this.submitSuccess} />
-                            <ApplyConstrains isOpen={this.state.applyModal} toggle={this.toggleApplyModal} sla={this.state.selected} success={this.submitSuccess} />
+                            <CreateConstraints isOpen={this.state.createModal} toggle={this.toggleCreateModal} success={this.submitSuccess} />
+                            <EditConstraints isOpen={this.state.editModal} toggle={this.toggleEditModal} sla={this.state.selected} success={this.submitSuccess} />
+                            <DeleteConstraints setIndex={this.setIndex} isOpen={this.state.deleteModal} toggle={this.toggleDeleteModal} sla={this.state.selected} success={this.submitSuccess} />
+                            <ApplyConstraints isOpen={this.state.applyModal} toggle={this.toggleApplyModal} sla={this.state.selected} success={this.submitSuccess} />
                         </div>
                         </Col>
                     </Row>
