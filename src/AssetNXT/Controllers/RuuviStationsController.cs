@@ -92,6 +92,20 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
+        [HttpGet("all/{id}", Name = "GetAllByDeviceId")]
+        public async Task<IActionResult> GetAllByDeviceId(string id)
+        {
+            var stations = await _repositoryRuuviStation.GetAllAsync();
+            stations = stations.FindAll(doc => doc.DeviceId == id).ToList();
+
+            if (stations != null)
+            {
+                return Ok(_mapper.Map<List<RuuviStationReadDto>>(stations));
+            }
+
+            return NotFound();
+        }
+
         [HttpGet("tags/{id}", Name = "GetAllTagsByDeviceId")]
         public async Task<IActionResult> GetAllTagsByDeviceId(string id)
         {

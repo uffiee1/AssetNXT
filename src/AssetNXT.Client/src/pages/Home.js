@@ -26,32 +26,39 @@ export default class Home extends Component {
         this.onAssetAdded = this.onAssetAdded.bind(this);
         this.onAssetRemoved = this.onAssetRemoved.bind(this);
         this.onAssetSelected = this.onAssetSelected.bind(this);
+        this.onSignalRConnection = this.onSignalRConnection.bind(this);
     }
 
     componentDidMount() {
         this.fetchStationData();
+       // SignalR connection
+       //  this.onSignalRConnection();
+    }
 
+    async onSignalRConnection() {
         this.connection = new HubConnectionBuilder()
-        .withUrl("https://localhost:5001/livestations")
-        .withAutomaticReconnect()
+            .withUrl("https://localhost:5001/livestations")
+            .withAutomaticReconnect()
             .build();
-        
+
         if (this.connection) {
             this.connection
                 .start()
                 .then((result) => {
-                console.log("Connected!");
-        
-                this.connection.on("GetNewRuuviStations", (a) => {
+                    console.log("Connected!");
 
-                    this.setState(state => {
-                        state.assets = state.assets.filter(function (obj) {
-                            return obj.deviceId !== a.deviceId;
-                        });        
-                        return state.assets.unshift(a);
+                    this.connection.on("GetNewRuuviStations", (a) => {
+
+                        // Set the state of the assets with the updated information
+                        this.setState(state => {
+                            // filters the copied records
+                            state.assets = state.assets.filter(function (obj) {
+                                return obj.deviceId !== a.deviceId;
+                            });
+                            return state.assets.unshift(a);
+                        });
+
                     });
-                    
-                });
                 })
                 .catch((e) => console.log("Connection failed: ", e));
         }
@@ -106,11 +113,11 @@ export default class Home extends Component {
         const request = 'api/stations';
 
         const response = await fetch(request);
-        console.log("Response:");
+        console.log("Fetch Stations Response:");
         console.log(response);
 
         const data = await response.json();
-        console.log("Data:");
+        console.log("Fetch Stations Data:");
         console.log(data);
 
         this.setState({ loading: false, assets: data });
