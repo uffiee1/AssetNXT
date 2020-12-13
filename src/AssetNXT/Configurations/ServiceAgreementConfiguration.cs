@@ -22,7 +22,7 @@ namespace AssetNXT.Configurations
             this._repository = repository;
         }
 
-        public async Task<List<ServiceAgreement>> IsBreached()
+        public async Task<List<ServiceAgreement>> IsBreachedCollection()
         {
             foreach (var tag in _tags)
             {

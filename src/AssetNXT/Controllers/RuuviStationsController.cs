@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AssetNXT.Configurations;
 using AssetNXT.Dtos;
 using AssetNXT.Hubs;
+using AssetNXT.Models.Core;
+using AssetNXT.Models.Core.ServiceAgreement;
 using AssetNXT.Models.Data;
 using AssetNXT.Repository;
 
@@ -19,20 +22,24 @@ namespace AssetNXT.Controllers
     [ApiController]
     public class RuuviStationsController : ControllerBase
     {
-        private readonly IMongoDataRepository<RuuviStation> _repository;
+        private readonly IMongoDataRepository<Agreement> _repositoryAgreement;
+        private readonly IMongoDataRepository<Route> _repositoryGeometric;
+        private readonly IMongoDataRepository<RuuviStation> _repositoryRuuviStation;
         private readonly IHubContext<RuuviStationHub> _hub;
         private readonly IMapper _mapper;
 
-        public RuuviStationsController(IMongoDataRepository<RuuviStation> repository, IMapper mapper, IHubContext<RuuviStationHub> hub)
+        public RuuviStationsController(IMongoDataRepository<Route> repositoryGeometric, IMongoDataRepository<Agreement> repositoryAgreement, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper, IHubContext<RuuviStationHub> hub)
         {
-            _repository = repository;
+            _repositoryRuuviStation = repositoryRuuviStation;
+            _repositoryAgreement = repositoryAgreement;
+            _repositoryGeometric = repositoryGeometric;
             _mapper = mapper;
             _hub = hub;
         }
 
         private async Task<List<RuuviStation>> GetAllObjectsAsync()
         {
-            var stations = await _repository.GetAllAsync();
+            var stations = await _repositoryRuuviStation.GetAllAsync();
             return stations.GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();  // Groups By DeviceId
         }
 
@@ -44,7 +51,20 @@ namespace AssetNXT.Controllers
 
             if (stations != null)
             {
-                return Ok(_mapper.Map<IEnumerable<RuuviStationReadDto>>(stations));
+                List<RuuviStationReadDto> listStationDtos = new List<RuuviStationReadDto>();
+                foreach (var station in stations)
+                {
+                    var stationDto = _mapper.Map<RuuviStationReadDto>(station);
+                    var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement);
+                    var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric);
+
+                    List<ServiceAgreement> breachedAgreements = await serviceAgreement.IsBreachedCollection();
+                    List<ServiceGeometric> breachedGeometrics = await serviceGeometric.IsBreachedCollection();
+                    stationDto.ServiceAgreements = breachedAgreements;
+                    stationDto.ServiceGeometrics = breachedGeometrics;
+                    listStationDtos.Add(stationDto);
+                }
+                return Ok(listStationDtos);
             }
 
             return NotFound();
@@ -58,21 +78,15 @@ namespace AssetNXT.Controllers
 
             if (station != null)
             {
-                return Ok(_mapper.Map<RuuviStationReadDto>(station));
-            }
+                var stationDto = _mapper.Map<RuuviStationReadDto>(station);
+                var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement);
+                var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric);
 
-            return NotFound();
-        }
-
-        [HttpGet("all/{id}", Name = "GetAllByDeviceId")]
-        public async Task<IActionResult> GetAllByDeviceId(string id)
-        {
-            var stations = await _repository.GetAllAsync();
-            stations = stations.FindAll(doc => doc.DeviceId == id).ToList();
-
-            if (stations != null)
-            {
-                return Ok(_mapper.Map<List<RuuviStationReadDto>>(stations));
+                List<ServiceAgreement> breachedAgreements = await serviceAgreement.IsBreachedCollection();
+                List<ServiceGeometric> breachedGeometrics = await serviceGeometric.IsBreachedCollection();
+                stationDto.ServiceAgreements = breachedAgreements;
+                stationDto.ServiceGeometrics = breachedGeometrics;
+                return Ok(stationDto);
             }
 
             return NotFound();
@@ -100,7 +114,7 @@ namespace AssetNXT.Controllers
             station.Tags.ForEach(tag => tag.UpdateAt = DateTime.UtcNow);
             station.Tags.ForEach(tag => tag.IsActive = true);
 
-            await _repository.CreateObjectAsync(station);
+            await _repositoryRuuviStation.CreateObjectAsync(station);
 
             // SignalR event
             await _hub.Clients.All.SendAsync("GetNewRuuviStations", station);
@@ -125,7 +139,7 @@ namespace AssetNXT.Controllers
                 stationModel.Id = new ObjectId(id);
                 stationModel.Tags.ForEach(tag => tag.UpdateAt = DateTime.UtcNow);
 
-                _repository.UpdateObject(id, stationModel);
+                _repositoryRuuviStation.UpdateObject(id, stationModel);
                 return Ok(_mapper.Map<RuuviStationReadDto>(stationModel));
             }
 
@@ -140,7 +154,7 @@ namespace AssetNXT.Controllers
 
             if (station != null)
             {
-                await _repository.RemoveObjectAsync(station);
+                await _repositoryRuuviStation.RemoveObjectAsync(station);
                 return Ok("Successfully deleted from collection!");
             }
 

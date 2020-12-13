@@ -22,7 +22,7 @@ namespace AssetNXT.Configurations
             this._repository = repository;
         }
 
-        public async Task<List<ServiceGeometric>> IsBreached()
+        public async Task<List<ServiceGeometric>> IsBreachedCollection()
         {
             var constrains = await _repository.GetAllAsync();
             var filterConstrains = constrains.ToList().Where(constrain => constrain.Devices.Any(d => d == _station.DeviceId)).ToList();

@@ -43,7 +43,7 @@ namespace AssetNXT.Controllers
             {
                 var geometricAgreement = new ServiceGeometricConfiguration(station, _repositoryConstrain);
 
-                var breachedStations = await geometricAgreement.IsBreached();
+                var breachedStations = await geometricAgreement.IsBreachedCollection();
                 return Ok(_mapper.Map<IEnumerable<ServiceGeometricReadDto>>(breachedStations));
             }
 
