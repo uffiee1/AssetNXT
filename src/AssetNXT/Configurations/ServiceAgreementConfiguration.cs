@@ -7,7 +7,7 @@ using AssetNXT.Repository;
 
 namespace AssetNXT.Configurations
 {
-    public class ServiceAgreementConfiguration : IConfiguration<ServiceAgreement>
+    public class ServiceAgreementConfiguration : IServiceConfiguration<ServiceAgreement>
     {
         private readonly IMongoDataRepository<Agreement> _repository;
         private RuuviStation _station;
@@ -22,7 +22,7 @@ namespace AssetNXT.Configurations
             this._repository = repository;
         }
 
-        public async Task<List<ServiceAgreement>> IsBreached()
+        public async Task<List<ServiceAgreement>> IsBreachedCollection()
         {
             foreach (var tag in _tags)
             {

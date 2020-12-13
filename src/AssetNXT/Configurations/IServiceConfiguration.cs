@@ -4,8 +4,8 @@ using AssetNXT.Models.Core;
 
 namespace AssetNXT.Configurations
 {
-    public interface IConfiguration<TConfiguration>
+    public interface IServiceConfiguration<TConfiguration>
     {
-        Task<List<TConfiguration>> IsBreached();
+        Task<List<TConfiguration>> IsBreachedCollection();
     }
 }

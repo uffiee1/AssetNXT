@@ -10,8 +10,6 @@ namespace AssetNXT.Dtos.Core
 
         public List<string> Devices { get; set; }
 
-        public int ConstrainId { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }

@@ -4,7 +4,7 @@ using AssetNXT.Models.Data;
 
 namespace AssetNXT.Dtos.Core
 {
-    public class AgreementConstrainCreateDto
+    public class AgreementCreateDto
     {
         [MaxLength(250)]
         [Required]

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AssetNXT.Models.Core
+namespace AssetNXT.Dtos.Core
 {
-    public class ServiceGeometric
+    public class ServiceGeometricReadDto
     {
         public string DeviceId { get; set; }
 

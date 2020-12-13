@@ -12,7 +12,7 @@ using MongoDB.Bson;
 namespace AssetNXT.Controllers
 {
     [Produces("application/json")]
-    [Route("api/constrains")]
+    [Route("api/constraints")]
     [ApiController]
     public class AgreementsController : ControllerBase
     {
@@ -26,71 +26,71 @@ namespace AssetNXT.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllConstrains()
+        public async Task<IActionResult> GetAllConstraints()
         {
-            var constrains = await _repository.GetAllAsync();
+            var constraints = await _repository.GetAllAsync();
 
-            if (constrains != null)
+            if (constraints != null)
             {
-                return Ok(_mapper.Map<IEnumerable<AgreementConstrainReadDto>>(constrains));
+                return Ok(_mapper.Map<IEnumerable<AgreementReadDto>>(constraints));
             }
 
             return NotFound();
         }
 
-        [HttpGet("{id}", Name = "GetConstrainByObjectId")]
-        public async Task<IActionResult> GetConstrainByObjectId(string id)
+        [HttpGet("{id}", Name = "GetconstraintByObjectId")]
+        public async Task<IActionResult> GetConstraintByObjectId(string id)
         {
-            var constrain = await _repository.GetObjectByIdAsync(id);
+            var constraint = await _repository.GetObjectByIdAsync(id);
 
-            if (constrain != null)
+            if (constraint != null)
             {
-                return Ok(_mapper.Map<AgreementConstrainReadDto>(constrain));
+                return Ok(_mapper.Map<AgreementReadDto>(constraint));
             }
 
             return NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateConstrain(AgreementConstrainCreateDto constrainCreateDto)
+        public async Task<IActionResult> CreateConstraint(AgreementCreateDto constraintCreateDto)
         {
-            var constrain = _mapper.Map<Agreement>(constrainCreateDto);
+            var constraint = _mapper.Map<Agreement>(constraintCreateDto);
 
-            if (constrain != null)
+            if (constraint != null)
             {
-                await _repository.CreateObjectAsync(constrain);
+                await _repository.CreateObjectAsync(constraint);
 
-                return Ok(_mapper.Map<AgreementConstrainReadDto>(constrain));
+                return Ok(_mapper.Map<AgreementReadDto>(constraint));
             }
 
             return NotFound();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateConstrainByObjectId(string id, AgreementConstrainCreateDto constrainCreateDto)
+        public async Task<IActionResult> UpdateConstraintByObjectId(string id, AgreementCreateDto constraintCreateDto)
         {
-            var constrainModel = _mapper.Map<Agreement>(constrainCreateDto);
-            var constrain = await _repository.GetObjectByIdAsync(id);
+            var constraintModel = _mapper.Map<Agreement>(constraintCreateDto);
+            var constraint = await _repository.GetObjectByIdAsync(id);
 
-            if (constrain != null)
+            if (constraint != null)
             {
-                constrainModel.UpdatedAt = DateTime.UtcNow;
-                constrainModel.Id = new ObjectId(id);
-                await _repository.UpdateObjectAsync(id, constrainModel);
-                return Ok(_mapper.Map<AgreementConstrainReadDto>(constrainModel));
+                constraintModel.UpdatedAt = DateTime.UtcNow;
+                constraintModel.Id = new ObjectId(id);
+                await _repository.UpdateObjectAsync(id, constraintModel);
+                return Ok(_mapper.Map<AgreementReadDto>(constraintModel));
             }
 
             return NotFound();
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteConstrainByObjectId(string id)
+        public async Task<ActionResult> DeleteConstraintByObjectId(string id)
         {
-            var constrainModel = await _repository.GetObjectByIdAsync(id);
+            var constraintModel = await _repository.GetObjectByIdAsync(id);
 
-            if (constrainModel != null)
+            if (constraintModel != null)
             {
-                await _repository.RemoveObjectAsync(constrainModel);
+                await _repository.RemoveObjectAsync(constraintModel);
                 return Ok("Successfully deleted from collection!");
             }
 

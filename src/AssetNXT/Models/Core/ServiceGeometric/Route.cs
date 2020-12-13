@@ -6,7 +6,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace AssetNXT.Models.Core
 {
-    [BsonCollection("geometric_constrains")]
+    [BsonCollection("geometric_constraints")]
     public class Route : Document
     {
         [BsonElement]
