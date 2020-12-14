@@ -119,6 +119,7 @@
     <Content Include="src\components\constraints\actions\editConstraints.js" />
     <Content Include="src\components\constraints\ConstraintService.css" />
     <Content Include="src\components\constraints\ConstraintService.js" />
+    <Content Include="src\components\date\DatePicker.js" />
     <Content Include="src\components\geoconfig\GeometricModal.css" />
     <Content Include="src\components\geoconfig\GeometricModal.js">
       <SubType>Code</SubType>

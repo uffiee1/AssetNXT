@@ -14,23 +14,23 @@ export default class TelemetricDataTemplate extends Component {
   }
 
   onMinDateChanged = (moment) => {
-    console.log("Min Date:");
-    console.log(moment);
-    console.log(moment.toDate());
-    console.log(moment.toString());
-    console.log(moment.toISOString());
-    this.setState({minDate: moment.toISOString()});
+    //console.log("Min Date:");
+    //console.log(moment);
+    //console.log(moment.toDate());
+    //console.log(moment.toString());
+    //console.log(moment.toISOString());
+    this.setState({ minDate: moment.toISOString() });
   }
-  
+
   onMaxDateChanged = (moment) => {
-    console.log("Max Date:");
-    console.log(moment);
-    console.log(moment.toDate());
-    console.log(moment.toString());
-    console.log(moment.toISOString());
-    this.setState({maxDate: moment.toISOString()});
+    //console.log("Max Date:");
+    //console.log(moment);
+    //console.log(moment.toDate());
+    //console.log(moment.toString());
+    //console.log(moment.toISOString());
+    this.setState({ maxDate: moment.toISOString() });
   }
-  
+
   render() {
     return (
       <Container className="data-template-container" fluid>
@@ -38,22 +38,22 @@ export default class TelemetricDataTemplate extends Component {
           <Col lg="8" className="data-template-col">
             <Row className="no-gutters">
               <Col>
-                  <TelemetricLineGraph stations={this.props.stations}
-                    telemetricData={this.props.telemetricData}
-                    telemetricName={this.props.telemetricName}
-                    telemetricId={this.props.telemetricId}
-                    minDate={this.state.minDate}
-                    maxDate={this.state.maxDate}
-                   />
+                <TelemetricLineGraph stations={this.props.stations}
+                  telemetricData={this.props.telemetricData}
+                  telemetricName={this.props.telemetricName}
+                  telemetricId={this.props.telemetricId}
+                  minDate={this.state.minDate}
+                  maxDate={this.state.maxDate}
+                />
               </Col>
             </Row>
             <Row className="no-gutters">
               <Col>
-                <DatePicker 
+                <DatePicker
                   minDate={this.state.minDate}
                   maxDate={this.state.maxDate}
                   minDateChanged={this.onMinDateChanged}
-                  maxDateChanged={this.onMaxDateChanged}/>
+                  maxDateChanged={this.onMaxDateChanged} />
               </Col>
             </Row>
           </Col>
@@ -61,7 +61,9 @@ export default class TelemetricDataTemplate extends Component {
             <TelemetricDataList stations={this.props.stations}
               telemetricData={this.props.telemetricData}
               telemetricName={this.props.telemetricName}
-              telemetricId={this.props.telemetricId} />
+              telemetricId={this.props.telemetricId}
+              minDate={this.state.minDate}
+              maxDate={this.state.maxDate} />
           </Col>
         </Row>
       </Container>
