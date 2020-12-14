@@ -84,17 +84,17 @@ export default class Home extends Component {
 
         const data = await response.json();
         data.map(station => {
-            station.breach = this.fetchSlaData(station);
+             this.fetchSlaData(station).then((breach) => station.breach = breach );
         })
         console.log("Data:");
         console.log(data);
         this.setState({ loading: false, assets: data });
     }
-    fetchSlaData(station) {
+     async fetchSlaData(station) {
         let arr = [];
         const request = 'api/configurations/' + station.deviceId;
 
-        const response = fetch(request).then(response => response.json()).then(data => {
+        await fetch(request).then(response => response.json()).then(data => {
             data.map((i) => {
                 if (i.humidity && i.temperature && i.pressure) {
                     arr.push(true);

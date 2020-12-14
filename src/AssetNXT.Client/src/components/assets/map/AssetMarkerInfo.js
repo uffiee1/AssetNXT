@@ -31,7 +31,6 @@ export default class AssetMarkerInfo extends Component {
   }
 
   componentDidMount() {
-      console.log(this.props.asset.breach);
   }
 
 

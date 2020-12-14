@@ -10,8 +10,8 @@ var L = require('leaflet');
 export default class AssetMap extends Component {
 
   state = {
-    markers: [],
-      isLoaded: false
+      markers: [],
+      isLoaded : false,
   }
 
   getAssetLatLng(asset) {
@@ -22,20 +22,21 @@ export default class AssetMap extends Component {
   componentDidMount() {
 
     this.ensureInCenter(this.props.assets[0]);
-    this.ensureWithinBounds(this.props.assets);
-      this.setState({
-          isLoaded: true
-      })
-  }
+      this.ensureWithinBounds(this.props.assets);
+     
+    }
+    componentDidUpdate(prevProps) {
+        console.log("passed")
+    }
 
   returnIcon(asset)
   {
-    console.log(asset.breach);
+      console.log(JSON.stringify(asset.breach));
     var Red = new L.Icon({
       iconUrl: MarkerRed,
       iconAnchor: new L.Point(16, 16)
     });
-    var Default = new L.Icon.Default();
+      var Default = new L.Icon.Default();
     return asset.breach.includes(false) ? Default : Red;
   }
 
@@ -44,9 +45,10 @@ export default class AssetMap extends Component {
     var query = this.props.query;
     var queryInactive = !this.props.query;
 
-    return assets.map(asset => {
-      if (queryInactive || asset.deviceId.indexOf(query) > -1 && this.state.isLoaded) {
-        return <Marker icon={this.returnIcon(asset)} position={this.getAssetLatLng(asset)}
+      return assets.map(asset => {
+          console.log(asset);
+        if (queryInactive || asset.deviceId.indexOf(query) > -1) {
+            return  < Marker icon = { this.returnIcon(asset) } position = { this.getAssetLatLng(asset) }
           onclick={() => this.ensureInCenter(asset)}> {
 
             AssetTemplate && <Popup>
@@ -54,7 +56,7 @@ export default class AssetMap extends Component {
                 link={`/station/${asset.deviceId}/`}/>
              </Popup>
           }
-        </Marker>
+        </Marker> 
       }
     });
   }
