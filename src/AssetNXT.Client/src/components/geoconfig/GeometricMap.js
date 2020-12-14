@@ -64,7 +64,6 @@ export default class GeometricMap extends Component {
         {this.props.boundaries.map((boundary, idx) => this.renderBoundary(boundary, idx))}
         {this.props.boundaries.map((boundary, idx) => this.renderMarker(boundary.position, idx))}
         <Polyline positions={this.props.boundaries.map(boundary => [boundary.position.lat, boundary.position.lng])} />
-
       </Map>
     );
   }

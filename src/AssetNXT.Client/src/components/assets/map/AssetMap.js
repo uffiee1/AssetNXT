@@ -6,7 +6,8 @@ import './AssetMap.css'
 export default class AssetMap extends Component {
 
   state = {
-    markers: []
+    markers: [],
+    renderLock: 0
   }
 
   getAssetLatLng(asset) {
@@ -17,6 +18,19 @@ export default class AssetMap extends Component {
   componentDidMount() {
     this.ensureInCenter(this.props.assets[0]);
     this.ensureWithinBounds(this.props.assets);
+
+    const map = this.mapInstance.leafletElement;
+    var { renderLock } = this.state;
+
+    map.on('zoomend',   () => this.setState({ renderLock: --renderLock }));
+    map.on('zoomstart', () => this.setState({ renderLock: ++renderLock }));
+
+    map.on('dragend',   () => this.setState({ renderLock: --renderLock }));
+    map.on('dragstart', () => this.setState({ renderLock: ++renderLock }));
+  }
+
+  shouldComponentUpdate() {
+    return this.state.renderLock == 0;
   }
 
   renderAssets(assets, AssetTemplate) {

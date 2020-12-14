@@ -34,7 +34,7 @@ namespace AssetNXT
 
             // Scope
             services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            // services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
+            services.AddSingleton(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

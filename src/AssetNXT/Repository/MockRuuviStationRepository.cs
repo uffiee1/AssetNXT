@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+
+using AssetNXT.Hubs;
 using AssetNXT.Models.Data;
+
+using Microsoft.AspNetCore.SignalR;
 
 namespace AssetNXT.Repository
 {
@@ -37,6 +42,27 @@ namespace AssetNXT.Repository
 
                 _stationCollections[station.DeviceId] = stationStates;
             }
+        }
+
+        public MockRuuviStationRepository(IHubContext<RuuviStationHub> hub)
+        {
+            var thread = new Thread(() =>
+            {
+                while (true)
+                {
+                    foreach (var (deviceId, stations) in _stationCollections)
+                    {
+                        var station = MockRuuviStation(stations.Last());
+                        stations.Add(item: station);
+
+                        hub.Clients.All.SendAsync("GetNewRuuviStations", station).Wait();
+                        Thread.Sleep(TimeSpan.FromSeconds(0.1));
+                    }
+                }
+            });
+
+            thread.IsBackground = true;
+            thread.Start();
         }
 
         public void CreateObject(RuuviStation station)
