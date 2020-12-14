@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { store } from 'react-notifications-component';
 import ReactNotification from 'react-notifications-component'
-
 
 import './RouteConfig.css'
 import RouteTable from './RouteTable';
@@ -12,7 +11,6 @@ import GeometricModal from './modal/GeometricModal';
 import GeoApplyModal from './modal/GeoApplyModal';
 
 export default class RouteConfig extends Component {
-
   state = {
     route: null,
     boundaries: [],
