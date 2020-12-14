@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <UserSecretsId>8cc494e7-7ae5-4505-8e88-4cbbc49f23b2</UserSecretsId>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
