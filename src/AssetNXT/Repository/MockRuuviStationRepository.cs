@@ -193,8 +193,8 @@ namespace AssetNXT.Repository
             var station = new RuuviStation
             {
                 Time = DateTime.UtcNow,
-                EventId = Guid.NewGuid().ToString().Substring(0, 18),
-                DeviceId = Guid.NewGuid().ToString().Substring(0, 18),
+                EventId = NewSeededGuid().ToString().Substring(0, 18),
+                DeviceId = NewSeededGuid().ToString().Substring(0, 18),
 
                 Location = new Location
                 {
@@ -218,7 +218,7 @@ namespace AssetNXT.Repository
             var station = new RuuviStation
             {
                 Time = ancestor.Time + TimeSpan.FromMinutes(5),
-                EventId = Guid.NewGuid().ToString().Substring(0, 18),
+                EventId = NewSeededGuid().ToString().Substring(0, 18),
                 DeviceId = ancestor.DeviceId,
 
                 Location = new Location
@@ -252,7 +252,7 @@ namespace AssetNXT.Repository
                 Humidity = _random.NextDouble() * 100,
                 Temperature = _random.NextDouble() + _random.Next(-5, 10),
 
-                Id = Guid.NewGuid().ToString().Substring(0, 8)
+                Id = NewSeededGuid().ToString().Substring(0, 8)
             };
         }
 
@@ -291,5 +291,13 @@ namespace AssetNXT.Repository
         }
 
         private static int OneOrMinusOne() => (_random.Next(0, 2) * 2) - 1;
+
+        private static Guid NewSeededGuid()
+        {
+            var bytes = new byte[16];
+            _random.NextBytes(buffer: bytes);
+
+            return new Guid(bytes);
+        }
     }
 }
