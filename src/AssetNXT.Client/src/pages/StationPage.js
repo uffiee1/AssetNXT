@@ -28,7 +28,7 @@ export default class StationPage extends Component {
   render() {
 
      var contents = this.state.loading
-      ? <Layout dock={<p><em>Loading...</em></p>}/>
+      ? <Layout dock={<p><em>Nothing found</em></p>}/>
       : this.renderComponent(this.state.stations);
 
     return contents;

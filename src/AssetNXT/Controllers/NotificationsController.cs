@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Dtos;
 using AssetNXT.Models.Data;
@@ -23,10 +24,16 @@ namespace AssetNXT.Controllers
             _repository = repository;
         }
 
+        private async Task<List<Notification>> GetAllObjectsAsync()
+        {
+            var stations = await _repository.GetAllAsync();
+            return stations.GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();  // Groups By DeviceId
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllNotifications()
         {
-            var notifications = await _repository.GetAllLatestAsync();
+            var notifications = await _repository.GetAllAsync();
 
             if (notifications != null)
             {
@@ -39,7 +46,8 @@ namespace AssetNXT.Controllers
         [HttpGet("{id}", Name = "GetNotificationByDeviceId")]
         public async Task<IActionResult> GetNotificationByDeviceId(string id)
         {
-            var notification = await _repository.GetObjectByDeviceIdAsync(id);
+            var notifications = await GetAllObjectsAsync();
+            var notification = notifications.Find(doc => doc.DeviceId == id);
 
             if (notification != null)
             {
