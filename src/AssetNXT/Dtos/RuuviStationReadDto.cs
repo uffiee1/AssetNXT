@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using AssetNXT.Models.Core;
+using AssetNXT.Models.Core.ServiceAgreement;
 using AssetNXT.Models.Data;
 
 namespace AssetNXT.Dtos
@@ -17,6 +19,10 @@ namespace AssetNXT.Dtos
         public string EventId { get; set; }
 
         public Location Location { get; set; }
+
+        public List<ServiceAgreement> ServiceAgreements { get; set; }
+
+        public List<ServiceGeometric> ServiceGeometrics { get; set; }
 
         public DateTime Time { get; set; }
 

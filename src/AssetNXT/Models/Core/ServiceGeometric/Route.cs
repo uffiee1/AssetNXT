@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
+using AssetNXT.Models.Data;
 using AssetNXT.Repository;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace AssetNXT.Models.Data
+namespace AssetNXT.Models.Core
 {
-    [BsonCollection("routes")]
+    [BsonCollection("geometric_constraints")]
     public class Route : Document
     {
+        [BsonElement]
+        public List<string> Devices { get; set; }
+
         [BsonElement]
         public string Name { get; set; }
 

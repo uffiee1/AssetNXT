@@ -3,10 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <UserSecretsId>8cc494e7-7ae5-4505-8e88-4cbbc49f23b2</UserSecretsId>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\mihai\.nuget\packages\mongodb.driver.core\2.11.2\contentFiles\any\netstandard2.0\Core\Compression\Snappy\lib\win\snappy32.dll" />
+    <Content Remove="C:\Users\mihai\.nuget\packages\mongodb.driver.core\2.11.2\contentFiles\any\netstandard2.0\Core\Compression\Snappy\lib\win\snappy64.dll" />
+    <Content Remove="C:\Users\mihai\.nuget\packages\mongodb.driver.core\2.11.2\contentFiles\any\netstandard2.0\Core\Compression\Zstandard\lib\win\libzstd.dll" />
+  </ItemGroup>
 
   <!-- <ItemGroup>
     <Content Remove="C:\Users\mihai\.nuget\packages\mongodb.driver.core\2.11.2\contentFiles\any\netstandard2.0\Core\Compression\Snappy\lib\win\snappy32.dll" />

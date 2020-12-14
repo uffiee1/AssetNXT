@@ -1,11 +1,17 @@
-﻿using AssetNXT.Repository;
+﻿using System.Collections.Generic;
+using AssetNXT.Models.Data;
+using AssetNXT.Repository;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace AssetNXT.Models.Data
+namespace AssetNXT.Models.Core.ServiceAgreement
 {
-    [BsonCollection("constrains")]
-    public class Constrain : Document
+    [BsonCollection("agreement_constraints")]
+    public class Agreement : Document
     {
+        [BsonElement]
+        public List<Tag> Tags { get; set; }
+
         [BsonElement]
         public string Name { get; set; }
 

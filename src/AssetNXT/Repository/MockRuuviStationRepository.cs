@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
-using AssetNXT.Models;
 using AssetNXT.Models.Data;
-using AssetNXT.Settings;
 
 namespace AssetNXT.Repository
 {
@@ -88,6 +84,16 @@ namespace AssetNXT.Repository
         public Task<RuuviStation> GetObjectByIdAsync(string id)
         {
             throw new NotSupportedException();
+        }
+
+        public RuuviStation GetObjectByTagId(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<RuuviStation> GetObjectByTagIdAsync(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public void RemoveObject(RuuviStation document)

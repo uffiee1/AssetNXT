@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using AssetNXT.Models.Data;
 
-namespace AssetNXT.Dtos
+namespace AssetNXT.Dtos.Core
 {
-    public class ConstrainReadDto
+    public class AgreementReadDto
     {
         public string Id { get; set; }
 
-        public string DeviceId { get; set; }
+        public List<Tag> Tags { get; set; }
 
         public string Name { get; set; }
 

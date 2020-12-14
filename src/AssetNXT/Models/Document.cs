@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 
 namespace AssetNXT.Models
@@ -11,8 +10,5 @@ namespace AssetNXT.Models
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
-
-        [MaxLength(250)]
-        public string DeviceId { get; set; }
     }
 }

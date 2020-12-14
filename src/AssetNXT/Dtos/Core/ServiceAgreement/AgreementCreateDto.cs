@@ -1,12 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using AssetNXT.Models.Data;
 
-namespace AssetNXT.Dtos
+namespace AssetNXT.Dtos.Core
 {
-    public class ConstrainCreateDto
+    public class AgreementCreateDto
     {
         [MaxLength(250)]
         [Required]
-        public string DeviceId { get; set; }
+        public List<Tag> Tags { get; set; }
 
         [MaxLength(250)]
         [Required]

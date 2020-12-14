@@ -32,26 +32,14 @@ namespace AssetNXT.Repository
         // Returns all objects from the db.
         public List<TDocument> GetAll()
         {
-            var matches = _collection.Find(doc => true);
-            return matches.ToList();
+            var matches = _collection.Find(doc => true).ToList().OrderByDescending(doc => doc.UpdatedAt).ToList();
+            return matches;
         }
 
         // Returns all objects from the db Async.
         public async Task<List<TDocument>> GetAllAsync()
         {
             return await Task.FromResult(GetAll());
-        }
-
-        // Returns all latest objects from db based on date.
-        public List<TDocument> GetAllLatest()
-        {
-            return _collection.Find(doc => true).ToList().OrderByDescending(doc => doc.UpdatedAt).GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();
-        }
-
-        // Returns all latest objects from db based on date Async.
-        public async Task<List<TDocument>> GetAllLatestAsync()
-        {
-            return await Task.FromResult(GetAllLatest());
         }
 
         // Returns an object by the bson _id of the record.
@@ -65,31 +53,6 @@ namespace AssetNXT.Repository
         public async Task<TDocument> GetObjectByIdAsync(string id)
         {
             return await Task.FromResult(GetObjectById(id));
-        }
-
-        // Returns an object by the deviceId unique for every RuuviStation.
-        public TDocument GetObjectByDeviceId(string id)
-        {
-            var matches = _collection.Find(doc => doc.DeviceId == id).ToList().OrderByDescending(doc => doc.UpdatedAt).ToList();
-            return matches.FirstOrDefault();
-        }
-
-        // Returns an object by the deviceId unique for every RuuviStation Async.
-        public async Task<TDocument> GetObjectByDeviceIdAsync(string id)
-        {
-            return await Task.FromResult(GetObjectByDeviceId(id));
-        }
-
-        // Returns all records by the unique deviceId.
-        public List<TDocument> GetAllObjectsByDeviceId(string id)
-        {
-            return _collection.Find(doc => doc.DeviceId == id).ToList().OrderByDescending(doc => doc.UpdatedAt).ToList();
-        }
-
-        // Returns all records by the unique deviceId Async.
-        public async Task<List<TDocument>> GetAllObjectsByDeviceIdAsync(string id)
-        {
-            return await Task.FromResult(GetAllObjectsByDeviceId(id));
         }
 
         // Creates a record from the model.

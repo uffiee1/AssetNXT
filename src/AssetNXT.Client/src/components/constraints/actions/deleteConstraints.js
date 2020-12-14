@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form } from 'reactstrap';
 
-export default class DeleteConstrains extends Component {
+export default class DeleteConstraints extends Component {
 
     constructor(props) {
         super(props)
@@ -11,7 +11,7 @@ export default class DeleteConstrains extends Component {
     async deleteData(e) {
         e.preventDefault()
         this.props.setIndex(0);
-        await fetch("api/constrains/" + this.props.sla.id, {
+        await fetch("api/constraints/" + this.props.sla.id, {
             method: 'DELETE',
         }).then(response => {
             if (response.ok) {

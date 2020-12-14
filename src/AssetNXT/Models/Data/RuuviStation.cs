@@ -10,6 +10,9 @@ namespace AssetNXT.Models.Data
     [BsonCollection("ruuvi_stations")]
     public class RuuviStation : Document
     {
+        [MaxLength(250)]
+        public string DeviceId { get; set; }
+
         [BsonElement]
         public List<Tag> Tags { get; set; }
 

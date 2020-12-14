@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace AssetNXT.Models.Data
+namespace AssetNXT.Models.Core.ServiceAgreement
 {
-    public class Configuration
+    public class ServiceAgreement
     {
         public string DeviceId { get; set; }
 

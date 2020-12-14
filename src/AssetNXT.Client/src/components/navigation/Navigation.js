@@ -47,8 +47,8 @@ const Navigation = () => {
                     </NavItem>
                     
                     <NavItem className="mx-3">
-                        <NavLink tag={Link} to={"/constrains"}>
-                            Constrains
+                        <NavLink tag={Link} to={"/constraints"}>
+                            Constraints
                         </NavLink>
                     </NavItem>
 
