@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { HubConnectionBuilder } from "@microsoft/signalr";
-import { Container, Row, Col } from 'reactstrap';
 
 import './Home.css';
 import Layout from '../components/Layout';
@@ -112,12 +111,13 @@ export default class Home extends Component {
         const request = 'api/stations';
 
         const response = await fetch(request);
-        console.log("Fetch Stations Response:");
-        console.log(response);
+        //console.log("Fetch Stations Response:");
+        //console.log(response);
 
         const data = await response.json();
-        console.log("Fetch Stations Data:");
-        console.log(data);
+        //console.log("Fetch Stations Data:");
+        //console.log(data);
+
         this.setState({ loading: false, assets: data });
     }
     

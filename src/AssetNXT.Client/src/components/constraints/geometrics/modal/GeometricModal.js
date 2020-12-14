@@ -102,7 +102,7 @@ export default class GeometricModal extends Component {
     boundaries[index] = boundary;
     this.setState({ boundaries })
 
-    if (this.state.boundaryIndex == index) {
+    if (this.state.boundaryIndex === index) {
       this.setState({
         boundaryIndex: index,
         boundaryRadius: boundaries[index].radius,

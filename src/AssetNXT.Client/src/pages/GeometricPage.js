@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'reactstrap';
 
 import Layout from '../components/Layout';
 import RouteConfig from '../components/constraints/geometrics/RouteConfig';
-import GeometricMap from '../components/constraints/geometrics/modal/GeometricMap';
-import GeometricModal from '../components/constraints/geometrics/modal/GeometricModal';
 
 export default class GeometricPage extends Component
 {

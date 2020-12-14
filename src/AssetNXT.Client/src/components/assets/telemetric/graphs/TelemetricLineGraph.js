@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from 'reactstrap';
 import { Line } from "react-chartjs-2";
 
 import './TelemetricLineGraph.css';
@@ -13,7 +12,6 @@ export default class TelemetricLineGraph extends Component {
   }
 
   render() {
-
     const options = {
       responsive: true,
       maintainAspectRatio: true,
