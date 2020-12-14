@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Models.Data;
@@ -8,126 +10,139 @@ namespace AssetNXT.Repository
 {
     public class MockRuuviStationRepository : IMongoDataRepository<RuuviStation>
     {
-        private static readonly Random _random
-        = new Random(Seed: 0);
+        private static readonly Random _random =
+        new Random(Seed: 0);
 
-        public void CreateObject(RuuviStation document)
+        private static readonly ConcurrentDictionary<string, List<RuuviStation>> _stationCollections =
+        new ConcurrentDictionary<string, List<RuuviStation>>(concurrencyLevel: 4, capacity: 128);
+
+        static MockRuuviStationRepository()
         {
-            throw new NotSupportedException();
+            for (int i = 0; i < _random.Next(50, 100); i++)
+            {
+                var station = MockRuuviStation();
+                var stationStates = new List<RuuviStation>();
+
+                for (int j = 0; j < _random.Next(20, 50); j++)
+                {
+                    station = MockRuuviStation(station);
+                    stationStates.Add(item: station);
+                }
+
+                _stationCollections[station.DeviceId] = stationStates;
+            }
         }
 
-        public Task CreateObjectAsync(RuuviStation document)
+        public void CreateObject(RuuviStation station)
         {
-            throw new NotSupportedException();
+            _stationCollections.AddOrUpdate(station.DeviceId, new List<RuuviStation> { station }, (deviceId, stations) =>
+            {
+                lock (stations)
+                {
+                    stations.Add(item: station);
+                }
+
+                return stations;
+            });
+        }
+
+        public Task CreateObjectAsync(RuuviStation station)
+        {
+            return Task.Run(() => CreateObject(station));
         }
 
         public List<RuuviStation> GetAll()
         {
-            var stations = new List<RuuviStation>();
-            for (int i = 0; i < _random.Next(50, 100); i++)
-            {
-                var station = MockRuuviStation();
-                stations.Add(station);
-            }
+            var stations = _stationCollections.Values.SelectMany(x => x);
+            stations = stations.OrderByDescending(x => x.UpdatedAt).ThenByDescending(x => x.CreatedAt);
 
-            return stations;
+            return stations.ToList();
         }
 
         public Task<List<RuuviStation>> GetAllAsync()
         {
-            return Task.FromResult(GetAll());
-        }
-
-        public List<RuuviStation> GetAllLatest()
-        {
-            return GetAll();
-        }
-
-        public Task<List<RuuviStation>> GetAllLatestAsync()
-        {
-            return GetAllAsync();
-        }
-
-        public List<RuuviStation> GetAllObjectsByDeviceId(string id)
-        {
-            var station = MockRuuviStation();
-            var stations = new List<RuuviStation>();
-            for (int i = 0; i < _random.Next(50, 100); i++)
-            {
-                station = MockRuuviStation(station);
-                stations.Add(station);
-            }
-
-            return stations;
-        }
-
-        public Task<List<RuuviStation>> GetAllObjectsByDeviceIdAsync(string id)
-        {
-            return Task.FromResult(GetAllObjectsByDeviceId(id));
-        }
-
-        public RuuviStation GetObjectByDeviceId(string id)
-        {
-            throw new NotSupportedException();
-        }
-
-        public Task<RuuviStation> GetObjectByDeviceIdAsync(string id)
-        {
-            throw new NotSupportedException();
+            return Task.Run(() => GetAll());
         }
 
         public RuuviStation GetObjectById(string id)
         {
-            throw new NotSupportedException();
+            // NESTED LOOPS X_X
+            foreach (var (deviceId, stations) in _stationCollections)
+            {
+                foreach (var station in stations)
+                {
+                    if (station.Id == new MongoDB.Bson.ObjectId(id))
+                    {
+                        return station;
+                    }
+                }
+            }
+
+            return null;
         }
 
         public Task<RuuviStation> GetObjectByIdAsync(string id)
         {
-            throw new NotSupportedException();
+            return Task.FromResult(GetObjectById(id));
         }
 
-        public RuuviStation GetObjectByTagId(string id)
+        public void RemoveObject(RuuviStation station)
         {
-            throw new NotImplementedException();
+            if (_stationCollections.TryGetValue(station.DeviceId, out List<RuuviStation> stations))
+            {
+                stations.Remove(station);
+            }
         }
 
-        public Task<RuuviStation> GetObjectByTagIdAsync(string id)
+        public Task RemoveObjectAsync(RuuviStation station)
         {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveObject(RuuviStation document)
-        {
-            throw new NotSupportedException();
-        }
-
-        public Task RemoveObjectAsync(RuuviStation document)
-        {
-            throw new NotSupportedException();
+            return Task.Run(() => RemoveObject(station));
         }
 
         public void RemoveObjectById(string id)
         {
-            throw new NotSupportedException();
+            // NESTED LOOPS X_X
+            foreach (var (deviceId, stations) in _stationCollections)
+            {
+                foreach (var station in stations)
+                {
+                    if (station.Id == new MongoDB.Bson.ObjectId(id))
+                    {
+                        _stationCollections[deviceId].Remove(station);
+                    }
+                }
+            }
         }
 
         public Task RemoveObjectByIdAsync(string id)
         {
-            throw new NotSupportedException();
+            return Task.Run(() => RemoveObjectById(id));
         }
 
-        public void UpdateObject(string id, RuuviStation document)
+        public void UpdateObject(string id, RuuviStation station)
         {
-            throw new NotSupportedException();
+            // NESTED LOOPS X_X
+            foreach (var (deviceId, stations) in _stationCollections)
+            {
+                lock (stations)
+                {
+                    for (int i = 0; i < stations.Count; i++)
+                    {
+                        if (stations[i].Id == new MongoDB.Bson.ObjectId(id))
+                        {
+                            _stationCollections[deviceId][i] = station;
+                        }
+                    }
+                }
+            }
         }
 
-        public Task UpdateObjectAsync(string id, RuuviStation document)
+        public Task UpdateObjectAsync(string id, RuuviStation station)
         {
-            throw new NotSupportedException();
+            return Task.Run(() => UpdateObject(id, station));
         }
 
-        // Mock methods
-        private RuuviStation MockRuuviStation()
+        private static RuuviStation MockRuuviStation()
         {
             var station = new RuuviStation
             {
@@ -142,14 +157,17 @@ namespace AssetNXT.Repository
                     Longitude = (_random.NextDouble() * (6.8936619 - 4.4777325)) + 4.4777325
                 },
 
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+
                 Tags = Enumerable.Range(0, _random.Next(4, 5))
-                .Select(x => MockRuuviStationTag()).ToList()
+               .Select(x => MockRuuviStationTag()).ToList()
             };
 
             return station;
         }
 
-        private RuuviStation MockRuuviStation(RuuviStation ancestor)
+        private static RuuviStation MockRuuviStation(RuuviStation ancestor)
         {
             var station = new RuuviStation
             {
@@ -164,6 +182,9 @@ namespace AssetNXT.Repository
                     Longitude = ancestor.Location.Longitude + (OneOrMinusOne() * (_random.NextDouble() / 50))
                 },
 
+                CreatedAt = ancestor.Time + TimeSpan.FromMinutes(5),
+                UpdatedAt = ancestor.Time + TimeSpan.FromMinutes(5),
+
                 Tags = Enumerable.Range(0, ancestor.Tags.Count)
                 .Select(x => MockRuuviStationTag(ancestor.Tags[x])).ToList()
             };
@@ -171,7 +192,7 @@ namespace AssetNXT.Repository
             return station;
         }
 
-        private Tag MockRuuviStationTag()
+        private static Tag MockRuuviStationTag()
         {
             return new Tag
             {
@@ -189,7 +210,7 @@ namespace AssetNXT.Repository
             };
         }
 
-        private Tag MockRuuviStationTag(Tag ancestor)
+        private static Tag MockRuuviStationTag(Tag ancestor)
         {
             return new Tag
             {
@@ -207,6 +228,6 @@ namespace AssetNXT.Repository
             };
         }
 
-        private int OneOrMinusOne() => (_random.Next(0, 2) * 2) - 1;
+        private static int OneOrMinusOne() => (_random.Next(0, 2) * 2) - 1;
     }
 }

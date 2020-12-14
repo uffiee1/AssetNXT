@@ -30,9 +30,9 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        this.fetchStationData();
+       this.fetchStationData();
        // SignalR connection
-       //  this.onSignalRConnection();
+       // this.onSignalRConnection();
     }
 
     async onSignalRConnection() {
