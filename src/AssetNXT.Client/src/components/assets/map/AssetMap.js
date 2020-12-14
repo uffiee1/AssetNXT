@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup, } from 'react-leaflet';
 
 import './AssetMap.css'
+import MarkerGold from "../../images/marker-icon-gold.png"
+import MarkerRed from "../../images/marker-icon-red.png"
+import Asset from '../Asset';
+var L = require('leaflet');
 
 export default class AssetMap extends Component {
 
   state = {
-    markers: []
+      markers: [],
+      isLoaded : false,
   }
 
   getAssetLatLng(asset) {
@@ -15,8 +20,29 @@ export default class AssetMap extends Component {
   }
 
   componentDidMount() {
+
     this.ensureInCenter(this.props.assets[0]);
-    this.ensureWithinBounds(this.props.assets);
+      this.ensureWithinBounds(this.props.assets);
+     
+    }
+    componentDidUpdate(prevProps) {
+        console.log("passed")
+    }
+
+  returnIcon(asset)
+  {
+    var isBreach = false;
+    var Red = new L.Icon({
+        iconUrl: MarkerRed,
+        iconAnchor: new L.Point(16, 16)
+    });
+      var Default = new L.Icon.Default();
+      asset.serviceAgreements.map(breach => {
+          if (!breach.humidity || !breach.pressure || !breach.temperature) {
+            isBreach = true
+        }
+    })
+    return isBreach? Red : Default;
   }
 
   renderAssets(assets, AssetTemplate) {
@@ -24,10 +50,10 @@ export default class AssetMap extends Component {
     var query = this.props.query;
     var queryInactive = !this.props.query;
 
-    return assets.map(asset => {
-      if (queryInactive || asset.deviceId.indexOf(query) > -1) {
-
-        return <Marker position={this.getAssetLatLng(asset)}
+      return assets.map(asset => {
+          console.log(asset);
+        if (queryInactive || asset.deviceId.indexOf(query) > -1) {
+            return  < Marker icon = { this.returnIcon(asset) } position = { this.getAssetLatLng(asset) }
           onclick={() => this.ensureInCenter(asset)}> {
 
             AssetTemplate && <Popup>
@@ -35,7 +61,7 @@ export default class AssetMap extends Component {
                 link={`/station/${asset.deviceId}/`}/>
              </Popup>
           }
-        </Marker>
+        </Marker> 
       }
     });
   }

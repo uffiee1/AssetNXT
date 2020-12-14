@@ -119,7 +119,7 @@ export default class Home extends Component {
         const data = await response.json();
         console.log("Fetch Stations Data:");
         console.log(data);
-
         this.setState({ loading: false, assets: data });
     }
+    
 }
