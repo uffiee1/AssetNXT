@@ -1,20 +1,37 @@
-import React, { Component } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import React, { Component } from "react";
+import { Container, Row, Col } from "reactstrap";
 
-import './TelemetricDataList.css'
-import './TelemetricDataListItem.css'
+import "./TelemetricDataList.css";
+import "./TelemetricDataListItem.css";
 
-import TelemetricDataListItem from './TelemetricDataListItem';
+import TelemetricDataListItem from "./TelemetricDataListItem";
 
-export default class TelemetricDataList extends React.Component {
-
+export default class TelemetricDataList extends Component {
   render() {
-    return(
+    return (
       <Container className="telemetric-list-container">
         <Row className="telemetric-list-row">
           <Col className="telemetric-list-column">
-
-            {this.props.stations.map(station => {
+            {this.props.stations
+              .filter(
+                (station) =>
+                  (!this.props.minDate || station.time > this.props.minDate) &&
+                  (!this.props.maxDate || station.time < this.props.maxDate)
+              )
+              .map((station, idx) => {
+                return (
+                  <TelemetricDataListItem
+                    key={idx}
+                    station={station}
+                    telemetric={
+                      this.props.telemetricData[
+                        this.props.stations.indexOf(station)
+                      ]
+                    }
+                  />
+                );
+              })}
+            {/* {this.props.stations.map(station => {
 
               console.log(`minDate: ${this.props.minDate}`);
               console.log(`maxDate: ${this.props.maxDate}`);
@@ -28,9 +45,7 @@ export default class TelemetricDataList extends React.Component {
                 return <TelemetricDataListItem station={station} 
                   telemetric={this.props.telemetricData[this.props.stations.indexOf(station)]} />
               }}
-
-            )}
-
+            )} */}
           </Col>
         </Row>
       </Container>
