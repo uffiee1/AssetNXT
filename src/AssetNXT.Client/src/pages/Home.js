@@ -121,21 +121,5 @@ export default class Home extends Component {
         console.log(data);
         this.setState({ loading: false, assets: data });
     }
-     async fetchSlaData(station) {
-        let arr = [];
-        const request = 'api/configurations/' + station.deviceId;
-
-        await fetch(request).then(response => response.json()).then(data => {
-            data.map((i) => {
-                if (i.humidity && i.temperature && i.pressure) {
-                    arr.push(true);
-                } else {
-                    arr.push(false);
-                }
-            })
-        });
-
-          
-        return arr;
-  }
+    
 }

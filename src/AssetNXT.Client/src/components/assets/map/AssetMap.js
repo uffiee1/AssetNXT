@@ -31,13 +31,18 @@ export default class AssetMap extends Component {
 
   returnIcon(asset)
   {
-      console.log(JSON.stringify(asset.breach));
+    var isBreach = false;
     var Red = new L.Icon({
-      iconUrl: MarkerRed,
-      iconAnchor: new L.Point(16, 16)
+        iconUrl: MarkerRed,
+        iconAnchor: new L.Point(16, 16)
     });
       var Default = new L.Icon.Default();
-    return asset.breach.includes(false) ? Default : Red;
+      asset.serviceAgreements.map(breach => {
+          if (!breach.humidity || !breach.pressure || !breach.temperature) {
+            isBreach = true
+        }
+    })
+    return isBreach? Red : Default;
   }
 
   renderAssets(assets, AssetTemplate) {
