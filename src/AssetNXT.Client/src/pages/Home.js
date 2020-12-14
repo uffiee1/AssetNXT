@@ -31,8 +31,7 @@ export default class Home extends Component {
 
     componentDidMount() {
        this.fetchStationData();
-       // SignalR connection
-       // this.onSignalRConnection();
+       this.onSignalRConnection();
     }
 
     async onSignalRConnection() {
@@ -52,10 +51,10 @@ export default class Home extends Component {
                         // Set the state of the assets with the updated information
                         this.setState(state => {
                             // filters the copied records
-                            state.assets = state.assets.filter(function (obj) {
-                                return obj.deviceId !== a.deviceId;
+                            state.assets = state.assets.map(function (obj) {
+                                return obj.deviceId !== a.deviceId ? obj : a;
                             });
-                            return state.assets.unshift(a);
+                            return state.assets;
                         });
 
                     });
