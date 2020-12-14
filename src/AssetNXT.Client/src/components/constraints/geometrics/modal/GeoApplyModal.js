@@ -29,10 +29,10 @@ export default class DeleteConstrains extends Component {
 
     renderSearchResults() {
         const listItems = this.state.filteredDevices.map((device, i) => {
-            if (i < 5 && !this.state.setDevices.includes(device.id)) {
+            if (i < 5 && !this.state.setDevices.includes(device.deviceId)) {
                   return (
                     <Row className="mt-1">
-                        <Col key={device.id} xs="9">{device.id}</Col><Col xs="3" className="d-flex justify-content-end"><Button onClick={() => this.applyData(device)} size="sm" color="info">Apply</Button></Col>
+                        <Col key={device.deviceId} xs="9">{device.deviceId}</Col><Col xs="3" className="d-flex justify-content-end"><Button onClick={() => this.applyData(device)} size="sm" color="info">Apply</Button></Col>
                     </Row>
                 )
             }
@@ -53,7 +53,7 @@ export default class DeleteConstrains extends Component {
 
     changeFilteredDevices(input) {
         let filtered = [];
-        if (input != "") filtered = this.state.devices.filter((device) => device.id.toLowerCase().includes(input.toLowerCase()));
+        if (input != "") filtered = this.state.devices.filter((device) => device.deviceId.toLowerCase().includes(input.toLowerCase()));
         this.setState({ filteredDevices: filtered });
     }
 
@@ -73,7 +73,7 @@ export default class DeleteConstrains extends Component {
 
     async applyData(device) {
         const data = { ...this.state.geo };
-        data.devices.push(device.id);
+        data.devices.push(device.deviceId);
         this.setState({ geo: data, setDevices: data.devices });
         await this.props.submit(data);
        
