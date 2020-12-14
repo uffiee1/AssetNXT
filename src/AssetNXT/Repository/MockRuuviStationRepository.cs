@@ -18,12 +18,18 @@ namespace AssetNXT.Repository
 
         static MockRuuviStationRepository()
         {
-            for (int i = 0; i < _random.Next(50, 100); i++)
+            var stations = _random.Next(50, 100);
+            for (int i = 0; i < stations; i++)
             {
                 var station = MockRuuviStation();
-                var stationStates = new List<RuuviStation>();
+                var stationStateCount = _random.Next(20, 50);
 
-                for (int j = 0; j < _random.Next(20, 50); j++)
+                station.Time -= TimeSpan.FromMinutes(5 * stationStateCount);
+                station.UpdatedAt -= TimeSpan.FromMinutes(5 * stationStateCount);
+                station.CreatedAt -= TimeSpan.FromMinutes(5 * stationStateCount);
+
+                var stationStates = new List<RuuviStation>();
+                for (int j = 0; j < stationStateCount; j++)
                 {
                     station = MockRuuviStation(station);
                     stationStates.Add(item: station);
