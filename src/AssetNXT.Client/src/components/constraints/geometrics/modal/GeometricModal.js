@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
-import { store } from 'react-notifications-component';
-import ReactNotification from 'react-notifications-component'
 
 import './GeometricModal.css'
 
@@ -12,21 +10,32 @@ import GeometricTable from './GeometricTable';
 export default class GeometricModal extends Component {
 
   state = {
+    name: "",
+    deviceId: "",
     boundaries: [],
+    description: "",
     boundaryRadius: 0,
     boundaryLatitude: 0,
     boundaryLongitude: 0,
     boundaryIndex: Number.NaN
   }
 
+  componentDidMount() {
+    this.setState({
+      name: this.props.name,
+      deviceId: this.props.deviceId,
+      description: this.props.description,
+      boundaries: JSON.parse(JSON.stringify(this.props.boundaries))
+    });
+  }
+
   render() {
     return (
      <Container fluid className="geometric-modal">
-        <ReactNotification />
         <Row>
           <Col xs="12" lg="4">
             <div className="aspect-box">
-              <GeometricMap
+              <GeometricMap draggable
                 boundaries={this.state.boundaries}
                 boundaryIndex={this.state.boundaryIndex}
                 onAddBoundary={this.addBoundary}
@@ -39,9 +48,13 @@ export default class GeometricModal extends Component {
             <Row className="geometric-form">
               <Col>
                 <GeometricForm
+                  name={this.state.name}
+                  description={this.state.description}
                   boundaryRadius={this.state.boundaryRadius}
                   boundaryLatitude={this.state.boundaryLatitude}
                   boundaryLongitude={this.state.boundaryLongitude}
+                  onChangeName={this.changeName}
+                  onChangeDescription={this.changeDescription}
                   onChangeBoundaryRadius={this.changeBoundaryRadius}
                   onChangeBoundaryLatitude={this.changeBoundaryLatitude}
                   onChangeBoundaryLongitude={this.changeBoundaryLongitude}>
@@ -63,86 +76,13 @@ export default class GeometricModal extends Component {
             </Row>
             <Row className="geometric-add">
               <Col className="py-3">
-                <Button color="info"
-                  onClick={e => this.postBoundaries(this.state.boundaries)}>Submit</Button>
+                <Button color="info" onClick={e => this.submitRoute()}>Submit</Button>
               </Col>
             </Row>
           </Col>
         </Row>
       </Container>
     );
-  }
-
-  async postBoundaries(boundaries) {
-    const data = {
-      name: "<null>",
-      deviceId: "<null",
-      description: "<null>",
-      points: boundaries.map(boundary => {
-        return {
-          colour: 'dodgerblue',
-          radius: boundary.radius,
-          location: {
-            accuracy: 100,
-            latitude: boundary.position.lat,
-            longitude: boundary.position.lng
-          }
-        }
-      })
-    }
-
-    const request = 'api/routes';
-    const requestHeaders = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-
-    await fetch(request, {
-      method: 'POST',
-      headers: requestHeaders,
-      body: JSON.stringify(data)
-
-    }).then(response => {
-      if (response.ok) {
-        store.addNotification({
-          type: 'success',
-          title: 'Success',
-          insert: 'top',
-          container: 'bottom-right',
-          message: 'Route has successfully been created.',
-          animationIn: ["animate__animated", "animate__fadeIn"],
-          animationOut: ["animate__animated", "animate__fadeOut"],
-          dismiss: {
-            duration: 2000,
-            onScreen: false
-          }
-        });
-
-        this.setState({
-          boundaries: [],
-          boundaryRadius: 0,
-          boundaryLatitude: 0,
-          boundaryLongitude: 0,
-          boundaryIndex: Number.NaN
-        });
-
-      }
-      else {
-        store.addNotification({
-          type: 'danger',
-          title: 'Error',
-          insert: 'top',
-          container: 'bottom-right',
-          message: 'An error has occured while uploading',
-          animationIn: ["animate__animated", "animate__fadeIn"],
-          animationOut: ["animate__animated", "animate__fadeOut"],
-          dismiss: {
-            duration: 2000,
-            onScreen: false
-          }
-        });
-      }
-    });
   }
 
   addBoundary = (boundary) => {
@@ -180,6 +120,24 @@ export default class GeometricModal extends Component {
       boundaryLatitude: boundaries[index].position.lat,
       boundaryLongitude: boundaries[index].position.lng
     });
+  }
+
+  submitRoute = () => {
+    if (this.props.onSubmit) {
+      this.props.onSubmit({
+        name: this.state.name,
+        boundaries: this.state.boundaries,
+        description: this.state.description,
+      })
+    }
+  }
+
+  changeName = (value) => {
+    this.setState({name: value});
+  }
+
+  changeDescription = (value) => {
+    this.setState({ description: value});
   }
 
   changeBoundaryRadius = (value) => {

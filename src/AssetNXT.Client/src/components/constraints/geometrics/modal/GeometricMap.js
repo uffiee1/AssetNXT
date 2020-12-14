@@ -71,12 +71,12 @@ export default class GeometricMap extends Component {
   renderMarker(position, idx) {
     return (
       <Marker index={idx}
-        draggable={true}
         position={position}
         key={`marker-${idx}`}
         ondrag={this.dragHandler}
         ondragend={this.dragEndHandler}
         ondragstart={this.dragStartHandler}
+        draggable={this.props.draggable}
         onclick={this.clickHandler}>
       </Marker>
     );
