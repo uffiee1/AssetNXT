@@ -21,39 +21,37 @@ export default class AssetMap extends Component {
 
   componentDidMount() {
 
-    this.ensureInCenter(this.props.assets[0]);
+      this.ensureInCenter(this.props.assets[0]);
       this.ensureWithinBounds(this.props.assets);
+
+      const map = this.mapInstance.leafletElement;
+      var { renderLock } = this.state;
+
+      map.on('zoomend', () => this.setState({ renderLock: --renderLock }));
+      map.on('zoomstart', () => this.setState({ renderLock: ++renderLock }));
+
+      map.on('dragend', () => this.setState({ renderLock: --renderLock }));
+      map.on('dragstart', () => this.setState({ renderLock: ++renderLock }));
      
     }
-    componentDidUpdate(prevProps) {
-        console.log("passed")
+
+    returnIcon(asset) {
+        var isBreach = false;
+        var Red = new L.Icon({
+            iconUrl: MarkerRed,
+            iconAnchor: new L.Point(16, 16)
+        });
+        var Default = new L.Icon.Default();
+        asset.serviceAgreements.map(breach => {
+            if (!breach.humidity || !breach.pressure || !breach.temperature) {
+                isBreach = true
+            }
+        })
+        return isBreach ? Red : Default;
     }
 
-  returnIcon(asset)
-  {
-    var isBreach = false;
-    var Red = new L.Icon({
-        iconUrl: MarkerRed,
-        iconAnchor: new L.Point(16, 16)
-    });
-      var Default = new L.Icon.Default();
-      asset.serviceAgreements.map(breach => {
-          if (!breach.humidity || !breach.pressure || !breach.temperature) {
-            isBreach = true
-        }
-    })
-    return isBreach? Red : Default;
-    this.ensureWithinBounds(this.props.assets);
 
-    const map = this.mapInstance.leafletElement;
-    var { renderLock } = this.state;
-
-    map.on('zoomend',   () => this.setState({ renderLock: --renderLock }));
-    map.on('zoomstart', () => this.setState({ renderLock: ++renderLock }));
-
-    map.on('dragend',   () => this.setState({ renderLock: --renderLock }));
-    map.on('dragstart', () => this.setState({ renderLock: ++renderLock }));
-  }
+ 
 
   shouldComponentUpdate() {
     return this.state.renderLock == 0;
@@ -65,9 +63,8 @@ export default class AssetMap extends Component {
     var queryInactive = !this.props.query;
 
       return assets.map(asset => {
-          console.log(asset);
-        if (queryInactive || asset.deviceId.indexOf(query) > -1) {
-            return  < Marker icon = { this.returnIcon(asset) } position = { this.getAssetLatLng(asset) }
+          if (queryInactive || asset.deviceId.indexOf(query) > -1) {
+              return  < Marker icon = { this.returnIcon(asset) } position = { this.getAssetLatLng(asset) }
           onclick={() => this.ensureInCenter(asset)}> {
 
             AssetTemplate && <Popup>
@@ -75,7 +72,7 @@ export default class AssetMap extends Component {
                 link={`/station/${asset.deviceId}/`}/>
              </Popup>
           }
-        </Marker> 
+              </Marker> 
       }
     });
   }

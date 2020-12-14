@@ -36,8 +36,10 @@ export default class AssetMarkerInfo extends Component {
 
 
     render() {
+    var asset = this.props.asset.serviceAgreements[this.state.index] !== null?
+    this.props.asset.serviceAgreements[this.state.index]
+    : null
 
-    var asset = this.props.asset.serviceAgreements[this.state.index]
     return (
       <Container className="tooltip-container">
         <Row className="tooltip-row flex-nowrap">
@@ -90,7 +92,7 @@ export default class AssetMarkerInfo extends Component {
           <Col xs="auto" className="tooltip-column pl-0 pr-4"/>}
 
           <Col className="tooltip-icon" xs="auto">
-              {  asset != undefined ? ( 
+              {  asset != null ? ( 
                 !asset.humidity || !asset.pressure || !asset.temperature
               ? <i className="fa fa-exclamation-triangle fa-2x text-warning" /> 
               : <i className="fa fa-check-circle fa-2x text-success" />
