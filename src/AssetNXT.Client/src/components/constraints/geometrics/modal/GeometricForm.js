@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Container, Row, Col, FormGroup, Label, Input } from 'reactstrap';
 
 import './GeometricForm.css';
 

@@ -14,20 +14,10 @@ export default class TelemetricDataTemplate extends Component {
   }
 
   onMinDateChanged = (moment) => {
-    //console.log("Min Date:");
-    //console.log(moment);
-    //console.log(moment.toDate());
-    //console.log(moment.toString());
-    //console.log(moment.toISOString());
     this.setState({ minDate: moment.toISOString() });
   }
 
   onMaxDateChanged = (moment) => {
-    //console.log("Max Date:");
-    //console.log(moment);
-    //console.log(moment.toDate());
-    //console.log(moment.toString());
-    //console.log(moment.toISOString());
     this.setState({ maxDate: moment.toISOString() });
   }
 

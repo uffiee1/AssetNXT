@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from 'reactstrap';
-import { Map, TileLayer, Marker, Popup, Polyline, Circle } from 'react-leaflet';
+import { Map, TileLayer, Marker, Polyline, Circle } from 'react-leaflet';
 
 import './GeometricMap.css';
 
