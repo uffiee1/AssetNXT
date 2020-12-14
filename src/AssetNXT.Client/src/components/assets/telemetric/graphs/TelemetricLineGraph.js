@@ -22,10 +22,11 @@ export default class TelemetricLineGraph extends Component {
           type: 'time',
           ticks: {
             autoskip: true,
+            maxTicksLimit: 35,
             autoskipPadding: 30,
-            maxTicksLimit: 35
-          }
-        }]
+            min: this.props.minDate,
+            max: this.props.maxDate
+        }}]
       }
     }
 
