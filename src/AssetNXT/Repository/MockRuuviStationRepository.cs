@@ -6,8 +6,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using AssetNXT.Configurations;
+using AssetNXT.Dtos;
 using AssetNXT.Hubs;
+using AssetNXT.Models.Core;
+using AssetNXT.Models.Core.ServiceAgreement;
 using AssetNXT.Models.Data;
+
+using AutoMapper;
 
 using Microsoft.AspNetCore.SignalR;
 
@@ -15,14 +21,26 @@ namespace AssetNXT.Repository
 {
     public class MockRuuviStationRepository : IMongoDataRepository<RuuviStation>
     {
-        private static readonly Random _random =
-        new Random(Seed: 0);
+        private static readonly Random _random = new Random(Seed: 0);
+        private readonly ConcurrentDictionary<string, List<RuuviStation>> _stationCollections =
+        new ConcurrentDictionary<string, List<RuuviStation>>(concurrencyLevel: 2, capacity: 128);
 
-        private static readonly ConcurrentDictionary<string, List<RuuviStation>> _stationCollections =
-        new ConcurrentDictionary<string, List<RuuviStation>>(concurrencyLevel: 4, capacity: 128);
+        private readonly IMapper _mapper;
+        private readonly IHubContext<RuuviStationHub> _context;
+        private readonly IMongoDataRepository<Route> _repositoryGeometric;
+        private readonly IMongoDataRepository<Agreement> _repositoryAgreement;
 
-        static MockRuuviStationRepository()
+        public MockRuuviStationRepository(
+            IMapper mapper,
+            IHubContext<RuuviStationHub> context,
+            IMongoDataRepository<Route> repositoryGeometric,
+            IMongoDataRepository<Agreement> repositoryAgreement)
         {
+            _mapper = mapper;
+            _context = context;
+            _repositoryAgreement = repositoryAgreement;
+            _repositoryGeometric = repositoryGeometric;
+
             var stations = _random.Next(50, 100);
             for (int i = 0; i < stations; i++)
             {
@@ -42,10 +60,7 @@ namespace AssetNXT.Repository
 
                 _stationCollections[station.DeviceId] = stationStates;
             }
-        }
 
-        public MockRuuviStationRepository(IHubContext<RuuviStationHub> hub)
-        {
             var thread = new Thread(() =>
             {
                 while (true)
@@ -54,9 +69,8 @@ namespace AssetNXT.Repository
                     {
                         var station = MockRuuviStation(stations.Last());
                         stations.Add(item: station);
-
-                        hub.Clients.All.SendAsync("GetNewRuuviStations", station).Wait();
-                        Thread.Sleep(TimeSpan.FromSeconds(0.1));
+                        SendRuuviStation(station);
+                        Thread.Sleep(100);
                     }
                 }
             });
@@ -93,12 +107,12 @@ namespace AssetNXT.Repository
 
         public Task<List<RuuviStation>> GetAllAsync()
         {
-            return Task.Run(() => GetAll());
+            return Task.FromResult(GetAll());
         }
 
         public RuuviStation GetObjectById(string id)
         {
-            // NESTED LOOPS X_X
+            // XXX: Nested loops !!!
             foreach (var (deviceId, stations) in _stationCollections)
             {
                 foreach (var station in stations)
@@ -133,7 +147,7 @@ namespace AssetNXT.Repository
 
         public void RemoveObjectById(string id)
         {
-            // NESTED LOOPS X_X
+            // XXX: Nested loops !!!
             foreach (var (deviceId, stations) in _stationCollections)
             {
                 foreach (var station in stations)
@@ -153,7 +167,7 @@ namespace AssetNXT.Repository
 
         public void UpdateObject(string id, RuuviStation station)
         {
-            // NESTED LOOPS X_X
+            // XXX: Nested loops !!!
             foreach (var (deviceId, stations) in _stationCollections)
             {
                 lock (stations)
@@ -258,6 +272,22 @@ namespace AssetNXT.Repository
 
                 Id = ancestor.Id
             };
+        }
+
+        private async void SendRuuviStation(RuuviStation station)
+        {
+            // XXX: Duplicate code present in controller...
+            // XXX: Service should be implemented for these kind of methods
+            var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(station);
+            var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement);
+            var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric);
+
+            List<ServiceAgreement> breachedAgreements = await serviceAgreement.IsBreachedCollection();
+            List<ServiceGeometric> breachedGeometrics = await serviceGeometric.IsBreachedCollection();
+            ruuviStationReadDto.ServiceAgreements = breachedAgreements;
+            ruuviStationReadDto.ServiceGeometrics = breachedGeometrics;
+
+            await _context.Clients.All.SendAsync("GetNewRuuviStations", ruuviStationReadDto);
         }
 
         private static int OneOrMinusOne() => (_random.Next(0, 2) * 2) - 1;
