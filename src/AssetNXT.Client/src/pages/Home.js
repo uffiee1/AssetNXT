@@ -35,7 +35,7 @@ export default class Home extends Component {
 
     async onSignalRConnection() {
         this.connection = new HubConnectionBuilder()
-            .withUrl("https://localhost:5001/livestations")
+            .withUrl("/livestations")
             .withAutomaticReconnect()
             .build();
 
