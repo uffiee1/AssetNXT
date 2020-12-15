@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from 'reactstrap';
-import { Map, TileLayer, Marker, Popup, Polyline, Circle } from 'react-leaflet';
+import { Map, TileLayer, Marker, Polyline, Circle } from 'react-leaflet';
 
 import './GeometricMap.css';
 
@@ -64,7 +63,6 @@ export default class GeometricMap extends Component {
         {this.props.boundaries.map((boundary, idx) => this.renderBoundary(boundary, idx))}
         {this.props.boundaries.map((boundary, idx) => this.renderMarker(boundary.position, idx))}
         <Polyline positions={this.props.boundaries.map(boundary => [boundary.position.lat, boundary.position.lng])} />
-
       </Map>
     );
   }
@@ -72,12 +70,12 @@ export default class GeometricMap extends Component {
   renderMarker(position, idx) {
     return (
       <Marker index={idx}
-        draggable={true}
         position={position}
         key={`marker-${idx}`}
         ondrag={this.dragHandler}
         ondragend={this.dragEndHandler}
         ondragstart={this.dragStartHandler}
+        draggable={this.props.draggable}
         onclick={this.clickHandler}>
       </Marker>
     );

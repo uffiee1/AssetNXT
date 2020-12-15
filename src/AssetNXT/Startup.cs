@@ -1,5 +1,6 @@
 using System;
 using AssetNXT.Hubs;
+using AssetNXT.Models.Data;
 using AssetNXT.Repository;
 using AssetNXT.Settings;
 
@@ -32,8 +33,11 @@ namespace AssetNXT
             ConfigureCrossOriginResourceSharing(services);
 
             // Scope
-            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            // services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
+            // XXX: Replace Singleton by Scoped/Transient
+            // XXX: Must first resolve issues with SignalR and MockRuuviStationRepository
+            // to avoid creating mutiple background workers that are all uploading to the SingalR Hub simultaneously
+            services.AddSingleton(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
+            services.AddSingleton(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

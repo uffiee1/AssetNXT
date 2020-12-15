@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Switch, Route, Router } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 import StationPage from './pages/StationPage';
-import ConstraintPage from './pages/ConstraintPage';
 import GeometricPage from './pages/GeometricPage';
-
+import ConstraintPage from './pages/ConstraintPage';
 
 export default class App extends Component {
   static displayName = App.name;

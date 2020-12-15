@@ -92,6 +92,33 @@ namespace AssetNXT.Controllers
             return NotFound();
         }
 
+        [HttpGet("all/{id}", Name = "GetAllByDeviceId")]
+        public async Task<IActionResult> GetAllByDeviceId(string id)
+        {
+            var stations = await _repositoryRuuviStation.GetAllAsync();
+            stations = stations.FindAll(doc => doc.DeviceId == id).ToList();
+
+            if (stations != null)
+            {
+                List<RuuviStationReadDto> listStationDtos = new List<RuuviStationReadDto>();
+                foreach (var station in stations)
+                {
+                    var stationDto = _mapper.Map<RuuviStationReadDto>(station);
+                    var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement);
+                    var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric);
+
+                    List<ServiceAgreement> breachedAgreements = await serviceAgreement.IsBreachedCollection();
+                    List<ServiceGeometric> breachedGeometrics = await serviceGeometric.IsBreachedCollection();
+                    stationDto.ServiceAgreements = breachedAgreements;
+                    stationDto.ServiceGeometrics = breachedGeometrics;
+                    listStationDtos.Add(stationDto);
+                }
+                return Ok(listStationDtos);
+            }
+
+            return NotFound();
+        }
+
         [HttpGet("tags/{id}", Name = "GetAllTagsByDeviceId")]
         public async Task<IActionResult> GetAllTagsByDeviceId(string id)
         {
@@ -116,12 +143,16 @@ namespace AssetNXT.Controllers
 
             await _repositoryRuuviStation.CreateObjectAsync(station);
 
-            // SignalR event
-            await _hub.Clients.All.SendAsync("GetNewRuuviStations", station);
-
             var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(station);
+            var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement);
+            var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric);
 
-            // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
+            List<ServiceAgreement> breachedAgreements = await serviceAgreement.IsBreachedCollection();
+            List<ServiceGeometric> breachedGeometrics = await serviceGeometric.IsBreachedCollection();
+            ruuviStationReadDto.ServiceAgreements = breachedAgreements;
+            ruuviStationReadDto.ServiceGeometrics = breachedGeometrics;
+
+            await _hub.Clients.All.SendAsync("GetNewRuuviStations", ruuviStationReadDto);
             return CreatedAtRoute(nameof(GetRuuviStationByDeviceId), new { Id = ruuviStationReadDto.Id }, ruuviStationReadDto);
         }
 
@@ -140,14 +171,25 @@ namespace AssetNXT.Controllers
                 stationModel.Tags.ForEach(tag => tag.UpdateAt = DateTime.UtcNow);
 
                 _repositoryRuuviStation.UpdateObject(id, stationModel);
-                return Ok(_mapper.Map<RuuviStationReadDto>(stationModel));
+
+                var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(station);
+                var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement);
+                var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric);
+
+                List<ServiceAgreement> breachedAgreements = await serviceAgreement.IsBreachedCollection();
+                List<ServiceGeometric> breachedGeometrics = await serviceGeometric.IsBreachedCollection();
+                ruuviStationReadDto.ServiceAgreements = breachedAgreements;
+                ruuviStationReadDto.ServiceGeometrics = breachedGeometrics;
+
+                await _hub.Clients.All.SendAsync("GetNewRuuviStations", ruuviStationReadDto);
+                return Ok(ruuviStationReadDto);
             }
 
             return NotFound();
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteRuuviStationByDeviceId(string id)
+        public async Task<IActionResult> DeleteRuuviStationByDeviceId(string id)
         {
             var stations = await GetAllObjectsAsync();
             var station = stations.Find(doc => doc.DeviceId == id);

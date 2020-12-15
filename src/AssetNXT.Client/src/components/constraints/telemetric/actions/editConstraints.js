@@ -8,6 +8,7 @@ export default class EditConstraints extends Component {
         this.state = {
             name: "",
             description: "",
+            tags : [],
             temperatureMin: "",
             temperatureMax: "",
             humidityMin: "",
@@ -20,6 +21,7 @@ export default class EditConstraints extends Component {
         this.setState({
             name: this.props.sla.name,
             description: this.props.sla.description,
+            tags: this.props.sla.tags,
             temperatureMin: this.props.sla.temperatureMin,
             temperatureMax: this.props.sla.temperatureMax,
             humidityMin: this.props.sla.humidityMin,
@@ -35,6 +37,7 @@ export default class EditConstraints extends Component {
             deviceId: this.props.sla.deviceId,
             name: this.state.name,
             description: this.state.description,
+            tags: this.state.tags,
             temperatureMin: this.state.temperatureMin,
             temperatureMax: this.state.temperatureMax,
             humidityMin: this.state.humidityMin,
