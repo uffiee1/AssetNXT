@@ -9,8 +9,6 @@ export default class AssetMarkerInfo extends Component {
 
   state = {
     index: 0,
-  
-
   }
 
   moveNext() {
@@ -36,9 +34,8 @@ export default class AssetMarkerInfo extends Component {
 
 
     render() {
-    var asset = this.props.asset.serviceAgreements[this.state.index] !== null?
-    this.props.asset.serviceAgreements[this.state.index]
-    : null
+    var agreement = this.props.asset.serviceAgreements[this.state.index] !== null
+      ? this.props.asset.serviceAgreements[this.state.index] : null
 
     return (
       <Container className="tooltip-container">
@@ -74,9 +71,9 @@ export default class AssetMarkerInfo extends Component {
             <Row><label className="tooltip-property">Pressure: </label></Row>
           </Col>
           <Col className="tooltip-column" xs="auto">
-            <Row><label className="tooltip-property-value">{Math.round(this.props.asset.tags[this.state.index].temperature)}&deg;C</label></Row>
-            <Row><label className="tooltip-property-value">{Math.round(this.props.asset.tags[this.state.index].humidity)}%</label></Row>
-            <Row><label className="tooltip-property-value">{Math.round(this.props.asset.tags[this.state.index].pressure)} Pa</label></Row>
+            <Row><label className={`tooltip-property-value ${!agreement || agreement.temperature ? "" : "text-danger"}`}>{Math.round(this.props.asset.tags[this.state.index].temperature)}&deg;C</label></Row>
+            <Row><label className={`tooltip-property-value ${!agreement || agreement.humidity ? "" : "text-danger"}`}>{Math.round(this.props.asset.tags[this.state.index].humidity)}%</label></Row>
+            <Row><label className={`tooltip-property-value ${!agreement || agreement.pressure ? "" : "text-danger"}`}>{Math.round(this.props.asset.tags[this.state.index].pressure)} Pa</label></Row>
           </Col>
 
           { this.props.asset.tags.length > 1 && 
@@ -92,8 +89,7 @@ export default class AssetMarkerInfo extends Component {
           <Col xs="auto" className="tooltip-column pl-0 pr-4"/>}
 
           <Col className="tooltip-icon" xs="auto">
-              {  asset != null ? ( 
-                !asset.humidity || !asset.pressure || !asset.temperature
+              {agreement != null ? (!agreement.humidity || !agreement.pressure || !agreement.temperature
               ? <i className="fa fa-exclamation-triangle fa-2x text-warning" /> 
               : <i className="fa fa-check-circle fa-2x text-success" />
                     ) : <i className="fa fa-check-circle fa-2x text-success" />
