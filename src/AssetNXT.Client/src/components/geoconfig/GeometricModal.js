@@ -6,6 +6,7 @@ import './GeometricModal.css'
 import GeometricMap from './GeometricMap';
 import GeometricForm from './GeometricForm';
 import GeometricTable from './GeometricTable';
+import TablePagination from "./TablePagination";
 
 export default class GeometricModal extends Component {
 
@@ -15,6 +16,16 @@ export default class GeometricModal extends Component {
     boundaryLatitude: 0,
     boundaryLongitude: 0,
     boundaryIndex: Number.NaN
+  }
+
+  constructor(props) {
+      super(props);
+      this.tableRef = React.createRef()
+      this.state = {
+          tablePageIndex: 0
+      };
+      this.setIndex = this.setIndex.bind(this);
+
   }
 
   render() {
@@ -65,11 +76,16 @@ export default class GeometricModal extends Component {
             </Row>
           </Col>
         </Row>
+          <div className={<TablePagination min={0} max={this.state.boundaries.length} index={this.state.tablePageIndex} setIndex={this.setIndex} /></div>
       </Container>
     );
   }
 
-  addBoundary = (boundary) => {
+  setIndex(value) {
+    this.setState({ tablePageIndex : value })
+  }
+
+addBoundary = (boundary) => {
     const {boundaries} = this.state;
     boundaries.push(boundary);
     this.setState({boundaries});
