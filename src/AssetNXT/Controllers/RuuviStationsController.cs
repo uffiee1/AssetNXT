@@ -59,8 +59,8 @@ namespace AssetNXT.Controllers
                 foreach (var station in stations)
                 {
                     var stationDto = _mapper.Map<RuuviStationReadDto>(station);
-                    var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement);
-                    var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric);
+                    var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement, this._serviceAgreementRepository);
+                    var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric, this._serviceGeometricRepository);
 
                     List<ServiceAgreement> breachedAgreements = await serviceAgreement.IsBreachedCollection();
                     List<ServiceGeometric> breachedGeometrics = await serviceGeometric.IsBreachedCollection();
@@ -83,8 +83,8 @@ namespace AssetNXT.Controllers
             if (station != null)
             {
                 var stationDto = _mapper.Map<RuuviStationReadDto>(station);
-                var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement);
-                var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric);
+                var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement, this._serviceAgreementRepository);
+                var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric, this._serviceGeometricRepository);
 
                 List<ServiceAgreement> breachedAgreements = await serviceAgreement.IsBreachedCollection();
                 List<ServiceGeometric> breachedGeometrics = await serviceGeometric.IsBreachedCollection();
@@ -108,8 +108,8 @@ namespace AssetNXT.Controllers
                 foreach (var station in stations)
                 {
                     var stationDto = _mapper.Map<RuuviStationReadDto>(station);
-                    var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement);
-                    var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric);
+                    var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement, this._serviceAgreementRepository);
+                    var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric, this._serviceGeometricRepository);
 
                     List<ServiceAgreement> breachedAgreements = await serviceAgreement.IsBreachedCollection();
                     List<ServiceGeometric> breachedGeometrics = await serviceGeometric.IsBreachedCollection();
@@ -148,8 +148,8 @@ namespace AssetNXT.Controllers
             await _repositoryRuuviStation.CreateObjectAsync(station);
 
             var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(station);
-            var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement);
-            var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric);
+            var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement, this._serviceAgreementRepository);
+            var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric, this._serviceGeometricRepository);
 
             List<ServiceAgreement> breachedAgreements = await serviceAgreement.IsBreachedCollection();
             List<ServiceGeometric> breachedGeometrics = await serviceGeometric.IsBreachedCollection();
@@ -177,8 +177,8 @@ namespace AssetNXT.Controllers
                 _repositoryRuuviStation.UpdateObject(id, stationModel);
 
                 var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(station);
-                var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement);
-                var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric);
+                var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement, this._serviceAgreementRepository);
+                var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric, this._serviceGeometricRepository);
 
                 List<ServiceAgreement> breachedAgreements = await serviceAgreement.IsBreachedCollection();
                 List<ServiceGeometric> breachedGeometrics = await serviceGeometric.IsBreachedCollection();
