@@ -27,19 +27,25 @@ namespace AssetNXT.Repository
 
         private readonly IMapper _mapper;
         private readonly IHubContext<RuuviStationHub> _context;
-        private readonly IMongoDataRepository<Route> _repositoryGeometric;
         private readonly IMongoDataRepository<Agreement> _repositoryAgreement;
+        private readonly IMongoDataRepository<ServiceAgreement> _serviceAgreementRepository;
+        private readonly IMongoDataRepository<Route> _repositoryGeometric;
+        private readonly IMongoDataRepository<ServiceGeometric> _serviceGeometricRepository;
 
         public MockRuuviStationRepository(
             IMapper mapper,
             IHubContext<RuuviStationHub> context,
             IMongoDataRepository<Route> repositoryGeometric,
-            IMongoDataRepository<Agreement> repositoryAgreement)
+            IMongoDataRepository<ServiceGeometric> serviceGeometricRepository,
+            IMongoDataRepository<Agreement> repositoryAgreement,
+            IMongoDataRepository<ServiceAgreement> serviceAgreementRepository)
         {
             _mapper = mapper;
             _context = context;
-            _repositoryAgreement = repositoryAgreement;
-            _repositoryGeometric = repositoryGeometric;
+            this._repositoryAgreement = repositoryAgreement;
+            this._serviceAgreementRepository = serviceAgreementRepository;
+            this._repositoryGeometric = repositoryGeometric;
+            this._serviceGeometricRepository = serviceGeometricRepository;
 
             var stations = _random.Next(50, 100);
             for (int i = 0; i < stations; i++)
@@ -279,8 +285,8 @@ namespace AssetNXT.Repository
             // XXX: Duplicate code present in controller...
             // XXX: Service should be implemented for these kind of methods
             var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(station);
-            var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement);
-            var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric);
+            var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement, this._serviceAgreementRepository);
+            var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric, this._serviceGeometricRepository);
 
             List<ServiceAgreement> breachedAgreements = await serviceAgreement.IsBreachedCollection();
             List<ServiceGeometric> breachedGeometrics = await serviceGeometric.IsBreachedCollection();
