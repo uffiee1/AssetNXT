@@ -11,21 +11,23 @@ namespace AssetNXT.Configurations
 {
     public class ServiceGeometricConfiguration : IServiceConfiguration<ServiceGeometric>
     {
-        private readonly IMongoDataRepository<Route> _repository;
+        private readonly IMongoDataRepository<Route> _geometricRepository;
+        private readonly IMongoDataRepository<ServiceGeometric> _serviceGeometricRepository;
         private RuuviStation _station;
         private List<ServiceGeometric> _collection;
 
-        public ServiceGeometricConfiguration(RuuviStation station, IMongoDataRepository<Route> repository)
+        public ServiceGeometricConfiguration(RuuviStation station, IMongoDataRepository<Route> geometricRepository, IMongoDataRepository<ServiceGeometric> serviceGeometricRepository)
         {
             this._station = station;
             this._collection = new List<ServiceGeometric>();
-            this._repository = repository;
+            this._geometricRepository = geometricRepository;
+            this._serviceGeometricRepository = serviceGeometricRepository;
         }
 
         public async Task<List<ServiceGeometric>> IsBreachedCollection()
         {
-            var constrains = await _repository.GetAllAsync();
-            var filterConstrains = constrains.ToList().Where(constrain => constrain.Devices.Any(d => d == _station.DeviceId)).ToList();
+            var constrains = await this._geometricRepository.GetAllAsync();
+            var filterConstrains = constrains.ToList().Where(constrain => constrain.Devices.Any(d => d == this._station.DeviceId)).ToList();
 
             foreach (var constrain in filterConstrains)
             {
@@ -33,17 +35,20 @@ namespace AssetNXT.Configurations
                 {
                     ServiceGeometric configuration = new ServiceGeometric();
 
-                    configuration.DeviceId = _station.DeviceId;
+                    configuration.DeviceId = this._station.DeviceId;
                     configuration.ConstrainName = constrain.Name;
-                    configuration.Boundary = IntersectsWith(_station.Location, boundary);
-                    configuration.UpdateAt = constrain.UpdatedAt;
-                    configuration.CreateAt = constrain.CreatedAt;
+                    configuration.Boundary = IntersectsWith(this._station.Location, boundary);
 
                     this._collection.Add(configuration);
+
+                    if (configuration.Boundary)
+                    {
+                        SaveConfiguration(configuration);
+                    }
                 }
             }
 
-            return _collection;
+            return this._collection;
         }
 
         public bool IntersectsWith(Location point, Boundary boundary)
@@ -52,6 +57,11 @@ namespace AssetNXT.Configurations
             var longitude = Math.Pow(point.Longitude - boundary.Location.Longitude, 2);
 
             return Math.Sqrt(longitude + latidtude) < boundary.Radius;
+        }
+
+        public void SaveConfiguration(object obj)
+        {
+            this._serviceGeometricRepository.CreateObject((ServiceGeometric)obj);
         }
     }
 }

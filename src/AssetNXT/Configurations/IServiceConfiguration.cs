@@ -7,5 +7,7 @@ namespace AssetNXT.Configurations
     public interface IServiceConfiguration<TConfiguration>
     {
         Task<List<TConfiguration>> IsBreachedCollection();
+
+        void SaveConfiguration(object obj);
     }
 }
