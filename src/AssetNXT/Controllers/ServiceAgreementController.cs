@@ -28,12 +28,12 @@ namespace AssetNXT.Controllers
             this._repositoryRuuviStation = repositoryRuuviStation;
             this._agreementRepository = agreementRepository;
             this._serviceAgreementRepository = serviceAgreementRepository;
-            _mapper = mapper;
+            this._mapper = mapper;
         }
 
         private async Task<List<RuuviStation>> GetAllObjectsAsync()
         {
-            var stations = await _repositoryRuuviStation.GetAllAsync();
+            var stations = await this._repositoryRuuviStation.GetAllAsync();
             return stations.GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();
         }
 
