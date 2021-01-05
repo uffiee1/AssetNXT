@@ -28,11 +28,11 @@ namespace AssetNXT.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllConstraints()
         {
-            var constraints = await _repository.GetAllAsync();
+            var constraints = await this._repository.GetAllAsync();
 
             if (constraints != null)
             {
-                return Ok(_mapper.Map<IEnumerable<AgreementReadDto>>(constraints));
+                return Ok(this._mapper.Map<IEnumerable<AgreementReadDto>>(constraints));
             }
 
             return NotFound();
@@ -41,11 +41,11 @@ namespace AssetNXT.Controllers
         [HttpGet("{id}", Name = "GetconstraintByObjectId")]
         public async Task<IActionResult> GetConstraintByObjectId(string id)
         {
-            var constraint = await _repository.GetObjectByIdAsync(id);
+            var constraint = await this._repository.GetObjectByIdAsync(id);
 
             if (constraint != null)
             {
-                return Ok(_mapper.Map<AgreementReadDto>(constraint));
+                return Ok(this._mapper.Map<AgreementReadDto>(constraint));
             }
 
             return NotFound();

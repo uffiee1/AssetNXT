@@ -26,8 +26,8 @@ namespace AssetNXT.Configurations
 
         public async Task<List<ServiceGeometric>> IsBreachedCollection()
         {
-            var constrains = await _geometricRepository.GetAllAsync();
-            var filterConstrains = constrains.ToList().Where(constrain => constrain.Devices.Any(d => d == _station.DeviceId)).ToList();
+            var constrains = await this._geometricRepository.GetAllAsync();
+            var filterConstrains = constrains.ToList().Where(constrain => constrain.Devices.Any(d => d == this._station.DeviceId)).ToList();
 
             foreach (var constrain in filterConstrains)
             {
@@ -35,9 +35,9 @@ namespace AssetNXT.Configurations
                 {
                     ServiceGeometric configuration = new ServiceGeometric();
 
-                    configuration.DeviceId = _station.DeviceId;
+                    configuration.DeviceId = this._station.DeviceId;
                     configuration.ConstrainName = constrain.Name;
-                    configuration.Boundary = IntersectsWith(_station.Location, boundary);
+                    configuration.Boundary = IntersectsWith(this._station.Location, boundary);
 
                     this._collection.Add(configuration);
 
@@ -48,7 +48,7 @@ namespace AssetNXT.Configurations
                 }
             }
 
-            return _collection;
+            return this._collection;
         }
 
         public bool IntersectsWith(Location point, Boundary boundary)

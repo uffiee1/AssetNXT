@@ -28,7 +28,7 @@ namespace AssetNXT.Configurations
         {
             var constrains = await _agreementRepository.GetAllAsync();
 
-            foreach (var tag in _tags)
+            foreach (var tag in this._tags)
             {
                 var constrain = constrains.ToList().Where(constrain => constrain.Tags.Any(t => t.Id == tag.Id)).FirstOrDefault();
 
@@ -36,7 +36,7 @@ namespace AssetNXT.Configurations
                 {
                     ServiceAgreement configuration = new ServiceAgreement();
 
-                    configuration.DeviceId = _station.DeviceId;
+                    configuration.DeviceId = this._station.DeviceId;
                     configuration.TagId = tag.Id;
                     configuration.IsActive = tag.IsActive;
                     configuration.CreateDate = tag.CreateDate;
