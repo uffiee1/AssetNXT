@@ -36,8 +36,6 @@ namespace AssetNXT.Configurations
                     configuration.DeviceId = _station.DeviceId;
                     configuration.ConstrainName = constrain.Name;
                     configuration.Boundary = IntersectsWith(_station.Location, boundary);
-                    configuration.UpdateAt = constrain.UpdatedAt;
-                    configuration.CreateAt = constrain.CreatedAt;
 
                     this._collection.Add(configuration);
                 }
@@ -52,6 +50,11 @@ namespace AssetNXT.Configurations
             var longitude = Math.Pow(point.Longitude - boundary.Location.Longitude, 2);
 
             return Math.Sqrt(longitude + latidtude) < boundary.Radius;
+        }
+
+        public void SaveConfiguration(object obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

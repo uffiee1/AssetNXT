@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AssetNXT.Repository;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace AssetNXT.Models.Core
 {
-    public class ServiceGeometric
+    [BsonCollection("service_geometric_configurations")]
+    public class ServiceGeometric : Document
     {
+        [BsonElement]
         public string DeviceId { get; set; }
 
+        [BsonElement]
         public string ConstrainName { get; set; }
 
+        [BsonElement]
         public bool Boundary { get; set; }
-
-        public DateTime CreateAt { get; set; }
-
-        public DateTime UpdateAt { get; set; }
     }
 }
