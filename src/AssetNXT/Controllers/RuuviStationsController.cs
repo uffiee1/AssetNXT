@@ -23,18 +23,22 @@ namespace AssetNXT.Controllers
     public class RuuviStationsController : ControllerBase
     {
         private readonly IMongoDataRepository<Agreement> _repositoryAgreement;
+        private readonly IMongoDataRepository<ServiceAgreement> _serviceAgreementRepository;
         private readonly IMongoDataRepository<Route> _repositoryGeometric;
+        private readonly IMongoDataRepository<ServiceGeometric> _serviceGeometricRepository;
         private readonly IMongoDataRepository<RuuviStation> _repositoryRuuviStation;
         private readonly IHubContext<RuuviStationHub> _hub;
         private readonly IMapper _mapper;
 
-        public RuuviStationsController(IMongoDataRepository<Route> repositoryGeometric, IMongoDataRepository<Agreement> repositoryAgreement, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper, IHubContext<RuuviStationHub> hub)
+        public RuuviStationsController(IMongoDataRepository<Route> repositoryGeometric, IMongoDataRepository<ServiceGeometric> serviceGeometricRepository, IMongoDataRepository<Agreement> repositoryAgreement, IMongoDataRepository<ServiceAgreement> serviceAgreementRepository, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper, IHubContext<RuuviStationHub> hub)
         {
-            _repositoryRuuviStation = repositoryRuuviStation;
-            _repositoryAgreement = repositoryAgreement;
-            _repositoryGeometric = repositoryGeometric;
-            _mapper = mapper;
-            _hub = hub;
+            this._repositoryRuuviStation = repositoryRuuviStation;
+            this._repositoryAgreement = repositoryAgreement;
+            this._serviceAgreementRepository = serviceAgreementRepository;
+            this._repositoryGeometric = repositoryGeometric;
+            this._serviceGeometricRepository = serviceGeometricRepository;
+            this._mapper = mapper;
+            this._hub = hub;
         }
 
         private async Task<List<RuuviStation>> GetAllObjectsAsync()
