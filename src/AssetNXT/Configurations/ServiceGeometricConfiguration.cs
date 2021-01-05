@@ -11,20 +11,22 @@ namespace AssetNXT.Configurations
 {
     public class ServiceGeometricConfiguration : IServiceConfiguration<ServiceGeometric>
     {
-        private readonly IMongoDataRepository<Route> _repository;
+        private readonly IMongoDataRepository<Route> _geometricRepository;
+        private readonly IMongoDataRepository<ServiceGeometric> _serviceGeometricRepository;
         private RuuviStation _station;
         private List<ServiceGeometric> _collection;
 
-        public ServiceGeometricConfiguration(RuuviStation station, IMongoDataRepository<Route> repository)
+        public ServiceGeometricConfiguration(RuuviStation station, IMongoDataRepository<Route> geometricRepository, IMongoDataRepository<ServiceGeometric> serviceGeometricRepository)
         {
             this._station = station;
             this._collection = new List<ServiceGeometric>();
-            this._repository = repository;
+            this._geometricRepository = geometricRepository;
+            this._serviceGeometricRepository = serviceGeometricRepository;
         }
 
         public async Task<List<ServiceGeometric>> IsBreachedCollection()
         {
-            var constrains = await _repository.GetAllAsync();
+            var constrains = await _geometricRepository.GetAllAsync();
             var filterConstrains = constrains.ToList().Where(constrain => constrain.Devices.Any(d => d == _station.DeviceId)).ToList();
 
             foreach (var constrain in filterConstrains)
@@ -38,6 +40,11 @@ namespace AssetNXT.Configurations
                     configuration.Boundary = IntersectsWith(_station.Location, boundary);
 
                     this._collection.Add(configuration);
+
+                    if (configuration.Boundary)
+                    {
+                        SaveConfiguration(configuration);
+                    }
                 }
             }
 
@@ -54,7 +61,7 @@ namespace AssetNXT.Configurations
 
         public void SaveConfiguration(object obj)
         {
-            throw new NotImplementedException();
+            this._serviceGeometricRepository.CreateObject((ServiceGeometric)obj);
         }
     }
 }

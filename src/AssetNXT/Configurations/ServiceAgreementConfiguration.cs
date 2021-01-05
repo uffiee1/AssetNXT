@@ -45,6 +45,11 @@ namespace AssetNXT.Configurations
                     configuration.Temperature = (tag.Temperature >= constrain.TemperatureMin && tag.Temperature <= constrain.TemperatureMax) ? true : false;
 
                     this._collection.Add(configuration);
+
+                    if (configuration.Humidity || configuration.Pressure || configuration.Temperature)
+                    {
+                        SaveConfiguration(configuration);
+                    }
                 }
             }
 
