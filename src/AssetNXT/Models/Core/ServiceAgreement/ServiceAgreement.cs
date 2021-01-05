@@ -8,7 +8,6 @@ namespace AssetNXT.Models.Core.ServiceAgreement
     [BsonCollection("service_agreement_configurations")]
     public class ServiceAgreement : Document
     {
-
         [BsonElement]
         public string DeviceId { get; set; }
 

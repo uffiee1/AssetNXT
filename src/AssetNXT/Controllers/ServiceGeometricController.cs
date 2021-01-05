@@ -16,13 +16,15 @@ namespace AssetNXT.Controllers
     [ApiController]
     public class ServiceGeometricController : ControllerBase
     {
-        private readonly IMongoDataRepository<Route> _repositoryConstrain;
+        private readonly IMongoDataRepository<Route> _geometricRepository;
+        private readonly IMongoDataRepository<ServiceGeometric> _serviceGeometricRepository;
         private readonly IMongoDataRepository<RuuviStation> _repositoryRuuviStation;
         private readonly IMapper _mapper;
 
-        public ServiceGeometricController(IMongoDataRepository<Route> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
+        public ServiceGeometricController(IMongoDataRepository<Route> geometricRepository, IMongoDataRepository<ServiceGeometric> serviceGeometricRepository, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
         {
-            this._repositoryConstrain = repositoryConstrain;
+            this._geometricRepository = geometricRepository;
+            this._serviceGeometricRepository = serviceGeometricRepository;
             this._repositoryRuuviStation = repositoryRuuviStation;
             _mapper = mapper;
         }
@@ -41,7 +43,7 @@ namespace AssetNXT.Controllers
 
             if (station != null)
             {
-                var geometricAgreement = new ServiceGeometricConfiguration(station, _repositoryConstrain);
+                var geometricAgreement = new ServiceGeometricConfiguration(station, this._geometricRepository, this._serviceGeometricRepository);
 
                 var breachedStations = await geometricAgreement.IsBreachedCollection();
                 return Ok(_mapper.Map<IEnumerable<ServiceGeometricReadDto>>(breachedStations));
