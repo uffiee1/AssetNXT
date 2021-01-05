@@ -26,7 +26,7 @@ namespace AssetNXT.Configurations
 
         public async Task<List<ServiceAgreement>> IsBreachedCollection()
         {
-            var constrains = await _agreementRepository.GetAllAsync();
+            var constrains = await this._agreementRepository.GetAllAsync();
 
             foreach (var tag in this._tags)
             {

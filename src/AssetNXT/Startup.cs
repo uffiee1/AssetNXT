@@ -29,7 +29,7 @@ namespace AssetNXT
         {
             ConfigureSwaggerServices(services);
             ConfigureDatabaseServices(services);
-            // ConfigureSpaFilesServices(services);
+            ConfigureSpaFilesServices(services);
             ConfigureCrossOriginResourceSharing(services);
 
             // Scope
@@ -47,7 +47,7 @@ namespace AssetNXT
             // instance”, so technically this is correct behaviour (Even though it’s likely to cause issues)
 
             services.AddSingleton(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            // services.AddSingleton(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
+            services.AddSingleton(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -131,7 +131,7 @@ namespace AssetNXT
             });
 
             // Client SPA
-            /*app.UseSpaStaticFiles();
+            app.UseSpaStaticFiles();
             app.UseStaticFiles();
 
             app.UseSpa(spa =>
@@ -141,7 +141,7 @@ namespace AssetNXT
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
-            });*/
+            });
 
             // Swagger config
             app.UseSwagger();
