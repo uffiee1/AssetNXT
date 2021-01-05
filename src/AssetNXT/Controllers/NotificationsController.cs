@@ -20,8 +20,8 @@ namespace AssetNXT.Controllers
 
         public NotificationsController(IMongoDataRepository<Notification> repository, IMapper mapper)
         {
-            _mapper = mapper;
-            _repository = repository;
+            this._mapper = mapper;
+            this._repository = repository;
         }
 
         private async Task<List<Notification>> GetAllObjectsAsync()

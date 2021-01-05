@@ -21,8 +21,8 @@ namespace AssetNXT.Controllers
 
         public AgreementsController(IMongoDataRepository<Agreement> repository, IMapper mapper)
         {
-            _mapper = mapper;
-            _repository = repository;
+            this._mapper = mapper;
+            this._repository = repository;
         }
 
         [HttpGet]
@@ -54,13 +54,13 @@ namespace AssetNXT.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateConstraint(AgreementCreateDto constraintCreateDto)
         {
-            var constraint = _mapper.Map<Agreement>(constraintCreateDto);
+            var constraint = this._mapper.Map<Agreement>(constraintCreateDto);
 
             if (constraint != null)
             {
-                await _repository.CreateObjectAsync(constraint);
+                await this._repository.CreateObjectAsync(constraint);
 
-                return Ok(_mapper.Map<AgreementReadDto>(constraint));
+                return Ok(this._mapper.Map<AgreementReadDto>(constraint));
             }
 
             return NotFound();
@@ -69,15 +69,15 @@ namespace AssetNXT.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateConstraintByObjectId(string id, AgreementCreateDto constraintCreateDto)
         {
-            var constraintModel = _mapper.Map<Agreement>(constraintCreateDto);
-            var constraint = await _repository.GetObjectByIdAsync(id);
+            var constraintModel = this._mapper.Map<Agreement>(constraintCreateDto);
+            var constraint = await this._repository.GetObjectByIdAsync(id);
 
             if (constraint != null)
             {
                 constraintModel.UpdatedAt = DateTime.UtcNow;
                 constraintModel.Id = new ObjectId(id);
-                await _repository.UpdateObjectAsync(id, constraintModel);
-                return Ok(_mapper.Map<AgreementReadDto>(constraintModel));
+                await this._repository.UpdateObjectAsync(id, constraintModel);
+                return Ok(this._mapper.Map<AgreementReadDto>(constraintModel));
             }
 
             return NotFound();
@@ -86,11 +86,11 @@ namespace AssetNXT.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteConstraintByObjectId(string id)
         {
-            var constraintModel = await _repository.GetObjectByIdAsync(id);
+            var constraintModel = await this._repository.GetObjectByIdAsync(id);
 
             if (constraintModel != null)
             {
-                await _repository.RemoveObjectAsync(constraintModel);
+                await this._repository.RemoveObjectAsync(constraintModel);
                 return Ok("Successfully deleted from collection!");
             }
 
