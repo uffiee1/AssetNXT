@@ -20,24 +20,24 @@ namespace AssetNXT.Controllers
 
         public NotificationsController(IMongoDataRepository<Notification> repository, IMapper mapper)
         {
-            _mapper = mapper;
-            _repository = repository;
+            this._mapper = mapper;
+            this._repository = repository;
         }
 
         private async Task<List<Notification>> GetAllObjectsAsync()
         {
-            var stations = await _repository.GetAllAsync();
+            var stations = await this._repository.GetAllAsync();
             return stations.GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();  // Groups By DeviceId
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllNotifications()
         {
-            var notifications = await _repository.GetAllAsync();
+            var notifications = await this._repository.GetAllAsync();
 
             if (notifications != null)
             {
-                return Ok(_mapper.Map<IEnumerable<NotificationReadDto>>(notifications));
+                return Ok(this._mapper.Map<IEnumerable<NotificationReadDto>>(notifications));
             }
 
             return NotFound();
@@ -51,7 +51,7 @@ namespace AssetNXT.Controllers
 
             if (notification != null)
             {
-                return Ok(_mapper.Map<NotificationReadDto>(notification));
+                return Ok(this._mapper.Map<NotificationReadDto>(notification));
             }
 
             return NotFound();
@@ -60,9 +60,9 @@ namespace AssetNXT.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateNotification(NotificationCreateDto notificationCreateDto)
         {
-            var notification = _mapper.Map<Notification>(notificationCreateDto);
+            var notification = this._mapper.Map<Notification>(notificationCreateDto);
 
-            await _repository.CreateObjectAsync(notification);
+            await this._repository.CreateObjectAsync(notification);
 
             var notificationReadDto = _mapper.Map<NotificationReadDto>(notification);
 

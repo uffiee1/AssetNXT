@@ -1,15 +1,15 @@
 ﻿using System.Threading.Tasks;
-using AssetNXT.Hubs.Clients;
 using AssetNXT.Models.Data;
 using Microsoft.AspNetCore.SignalR;
 
 namespace AssetNXT.Hubs
 {
-    public class RuuviStationHub : Hub<IRuuviStationClient>
+    public class RuuviStationHub : Hub
     {
-        public async Task SendRuuviStation(RuuviStation station)
+        public Task ReceiveRuuviStation(RuuviStation station)
         {
-            await Clients.All.ReceiveRuuviStation(station);
+            // boradcast request
+            return Clients.All.SendAsync("GetNewRuuviStations", station);
         }
     }
 }

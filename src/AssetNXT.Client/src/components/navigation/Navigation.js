@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./Navigation.css" 
-import logo from "../images/logo.png"
+import "./Navigation.css";
+import logo from "../images/logo.png";
 import {
   Navbar,
   NavbarToggler,
@@ -11,63 +11,66 @@ import {
   NavbarBrand,
   Row,
   Container,
-  Col
+  Col,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
-    const [topbarIsOpen, setTopbarOpen] = useState(true);
-    const toggleTopbar = () => {
-      setTopbarOpen(!topbarIsOpen);
-    }
-    
-    return (
-        <Navbar color="light" light className="navbar shadow-sm m-1 p-2 bg-white rounded" expand="md" >
-            <NavbarBrand>
-                <NavLink tag={Link} to={"/"}>
-                    <Container fluid className="banner-container">
-                        <Row className="banner-container-row">
-                            <Col className="banner-image-container">
-                                <img className="img-fluid" src={logo} />
-                            </Col>
-                        </Row>
-                    </Container>
-                </NavLink>
-            </NavbarBrand>
-                
-            <NavbarToggler onClick={toggleTopbar} />
+  const [topbarIsOpen, setTopbarOpen] = useState(true);
+  const toggleTopbar = () => {
+    setTopbarOpen(!topbarIsOpen);
+  };
 
-            <Collapse isOpen={topbarIsOpen} navbar>
-                <Nav className="mr-auto" navbar>
-                    
-                    <NavItem  className="mx-3">
-                        <NavLink tag={Link} to={"/"}>
-                            Home
-                        </NavLink>
-                    </NavItem>
-                    
-                    <NavItem className="mx-3">
-                        <NavLink tag={Link} to={"/constrains"}>
-                            Constrains
-                        </NavLink>
-                    </NavItem>
+  return (
+    <Navbar
+      color="light"
+      light
+      className="navbar shadow-sm m-1 p-2 bg-white rounded"
+      expand="md"
+    >
+      <NavbarBrand>
+        <NavLink tag={Link} to={"/"}>
+          <Container fluid className="banner-container">
+            <Row className="banner-container-row">
+              <Col className="banner-image-container">
+                <img className="img-fluid" src={logo} alt="logo" />
+              </Col>
+            </Row>
+          </Container>
+        </NavLink>
+      </NavbarBrand>
 
-                    <NavItem  className="mx-3">
-                        <NavLink tag={Link} to={"/notifications"}>
-                            Notifications
-                        </NavLink>
-                    </NavItem>
-                    
-                    <NavItem  className="mx-3">
-                        <NavLink tag={Link} to={"/geo"}>
-                            Geometrics
-                        </NavLink>
-                    </NavItem>
+      <NavbarToggler onClick={toggleTopbar} />
 
-                </Nav>
-            </Collapse>
-        </Navbar>
-    );
-}
+      <Collapse isOpen={topbarIsOpen} navbar>
+        <Nav className="mr-auto" navbar>
+          <NavItem className="mx-3">
+            <NavLink tag={Link} to={"/"}>
+              Home
+            </NavLink>
+          </NavItem>
+
+          <NavItem className="mx-3">
+            <NavLink tag={Link} to={"/constraints"}>
+              Constraints
+            </NavLink>
+          </NavItem>
+
+          <NavItem className="mx-3">
+            <NavLink tag={Link} to={"/notifications"}>
+              Notifications
+            </NavLink>
+          </NavItem>
+
+          <NavItem className="mx-3">
+            <NavLink tag={Link} to={"/geo"}>
+              Geometrics
+            </NavLink>
+          </NavItem>
+        </Nav>
+      </Collapse>
+    </Navbar>
+  );
+};
 
 export default Navigation;

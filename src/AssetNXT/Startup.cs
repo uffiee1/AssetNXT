@@ -1,5 +1,6 @@
 using System;
 using AssetNXT.Hubs;
+using AssetNXT.Models.Data;
 using AssetNXT.Repository;
 using AssetNXT.Settings;
 
@@ -26,23 +27,36 @@ namespace AssetNXT
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers()
-                .AddNewtonsoftJson(options =>
-                {
-                    var contractResolver = new CamelCasePropertyNamesContractResolver();
-                    options.SerializerSettings.ContractResolver = contractResolver;
-                });
-
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
             ConfigureSwaggerServices(services);
             ConfigureDatabaseServices(services);
             ConfigureSpaFilesServices(services);
             ConfigureCrossOriginResourceSharing(services);
 
             // Scope
-            services.AddScoped(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
-            // services.AddScoped(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
+            // XXX: Replace Singleton by Scoped or Transient
+            // XXX: Must first resolve issues with SignalR and MockRuuviStationRepository
+            // to avoid creating mutiple background workers that are all uploading to the SingalR Hub simultaneously
+
+            // AAA: When we make the parent service a singleton, that means that the child service is unable to be created per page load.
+            // In our case IMongoDataRepository as a parent is used as a SignalR, Mock and ServiceConfigurations instances.
+            // AAA: So, Does the solution require to use Transient for the SignalR?
+            // AAA: It’s still going to give us some unintended behaviour because the transient child is not going to be created “everytime” as we might first
+            // think. Sure, it will be created everytime it’s “requested”, but that will only be once (for the parent).
+
+            // I think the logic behind this not throwing an exception, but scoped will, is that transient is “everytime this service is requested, create a new
+            // instance”, so technically this is correct behaviour (Even though it’s likely to cause issues)
+
+            services.AddSingleton(typeof(IMongoDataRepository<>), typeof(MongoDataRepository<>));
+            services.AddSingleton(typeof(IMongoDataRepository<RuuviStation>), typeof(MockRuuviStationRepository));
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    var contractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.ContractResolver = contractResolver;
+                });
 
             // Controllers Serialization
             services.AddControllers().AddNewtonsoftJson(s => { s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
@@ -86,10 +100,10 @@ namespace AssetNXT
             {
                 options.AddPolicy("ClientPermission", policy =>
                 {
-                    policy.AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .WithOrigins("http://localhost:3000")
-                        .AllowCredentials();
+                    policy.SetIsOriginAllowed(origin => true)
+                     .AllowAnyHeader()
+                     .AllowAnyMethod()
+                     .AllowCredentials();
                 });
             });
         }
@@ -101,17 +115,22 @@ namespace AssetNXT
                 app.UseDeveloperExceptionPage();
             }
 
+            // SignalR
+            app.UseCors("ClientPermission");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<RuuviStationHub>("/hubs/stations");
+                endpoints.MapHub<RuuviStationHub>("/livestations");
             });
 
-            //Client SPA
+            // Client SPA
             app.UseSpaStaticFiles();
             app.UseStaticFiles();
 
@@ -131,9 +150,6 @@ namespace AssetNXT
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
             });
-
-            // SignalR
-            app.UseCors("ClientPermission");
         }
     }
 }

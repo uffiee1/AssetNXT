@@ -1,0 +1,36 @@
+.table-container,
+.table-container > .row,
+.table-container > .row > * {
+    height: 100%
+}
+
+  .table-container > .row > * {
+      display: flex;
+      flex-direction: column;
+  }
+
+    .table-container > .row > * > :last-child {
+        min-height: 0;
+    }
+
+.table-head {
+    color: white;
+    background-color: #324457;
+}
+
+.table-body {
+    height: 100%;
+    overflow: auto;
+}
+
+  .table-body > .row {
+      background-color: white;
+  }
+
+    .table-body > .row:hover {
+        filter: brightness(85%);
+    }
+
+    .table-body > .row:nth-child(even) {
+        background-color: whitesmoke;
+    }
