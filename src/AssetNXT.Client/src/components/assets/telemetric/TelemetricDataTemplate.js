@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Container, Row, Col } from 'reactstrap';
 
 import './TelemetricDataTemplate.css';
+import DatePicker from "../../date/DatePicker";
 import TelemetricDataList from "./TelemetricDataList";
 import TelemetricLineGraph from "./graphs/TelemetricLineGraph";
-import DatePicker from "../../date/DatePicker";
 
 export default class TelemetricDataTemplate extends Component {
 
@@ -23,40 +23,37 @@ export default class TelemetricDataTemplate extends Component {
 
   render() {
     return (
-      <Container className="data-template-container" fluid>
-        <Row className="data-template-row">
-          <Col lg="8" className="data-template-col">
-            <Row className="no-gutters">
-              <Col>
-                <TelemetricLineGraph stations={this.props.stations}
-                  telemetricData={this.props.telemetricData}
-                  telemetricName={this.props.telemetricName}
-                  telemetricId={this.props.telemetricId}
+      <div className="telmetric-data-template">
+        <Row noGutters>
+          <Col xs="12" lg="8">
+            <div className="d-flex h-100 flex-column">
+              <h3>Statistics:</h3>
+              <div className="flex-grow-1">
+                <TelemetricLineGraph {...this.props}
                   minDate={this.state.minDate}
-                  maxDate={this.state.maxDate}
-                />
-              </Col>
-            </Row>
-            <Row className="no-gutters">
-              <Col>
+                  maxDate={this.state.maxDate} />
+              </div>
+              <div className="flex-grow-0">
                 <DatePicker
                   minDate={this.state.minDate}
                   maxDate={this.state.maxDate}
                   minDateChanged={this.onMinDateChanged}
                   maxDateChanged={this.onMaxDateChanged} />
-              </Col>
-            </Row>
+              </div>
+            </div>
           </Col>
-          <Col lg="4" className="data-template-col">
-            <TelemetricDataList stations={this.props.stations}
-              telemetricData={this.props.telemetricData}
-              telemetricName={this.props.telemetricName}
-              telemetricId={this.props.telemetricId}
-              minDate={this.state.minDate}
-              maxDate={this.state.maxDate} />
+          <Col xs="12" lg="4">
+            <div className="d-flex h-100 flex-column">
+              <h3> Measurements: </h3>
+              <div className="flex-grow-1">
+                <TelemetricDataList {...this.props}
+                  minDate={this.state.minDate}
+                  maxDate={this.state.maxDate} />
+              </div>
+            </div>
           </Col>
         </Row>
-      </Container>
+      </div>
     );
   }
 }

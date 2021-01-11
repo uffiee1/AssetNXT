@@ -8,44 +8,25 @@ import TelemetricDataListItem from "./TelemetricDataListItem";
 
 export default class TelemetricDataList extends Component {
   render() {
+
+    const {
+      telemetricLabels,
+      telemetricDataSource} = this.props;
+
     return (
       <Container className="telemetric-list-container">
         <Row className="telemetric-list-row">
           <Col className="telemetric-list-column">
-            {this.props.stations
-              .filter(
-                (station) =>
-                  (!this.props.minDate || station.time > this.props.minDate) &&
-                  (!this.props.maxDate || station.time < this.props.maxDate)
-              )
-              .map((station, idx) => {
-                return (
-                  <TelemetricDataListItem
-                    key={idx}
-                    station={station}
-                    telemetric={
-                      this.props.telemetricData[
-                        this.props.stations.indexOf(station)
-                      ]
-                    }
-                  />
-                );
-              })}
-            {/* {this.props.stations.map(station => {
-
-              console.log(`minDate: ${this.props.minDate}`);
-              console.log(`maxDate: ${this.props.maxDate}`);
-              console.log(`station: ${station.time}`);
-              console.log(`ranged min: ${station.time > this.props.minDate}`);
-              console.log(`ranged max: ${station.time < this.props.maxDate}`);
-
-              if ((!this.props.minDate || station.time > this.props.minDate) &&
-                  (!this.props.maxDate || station.time < this.props.maxDate)) {        
-              
-                return <TelemetricDataListItem station={station} 
-                  telemetric={this.props.telemetricData[this.props.stations.indexOf(station)]} />
-              }}
-            )} */}
+            {telemetricDataSource
+              .filter((source) =>
+                (!this.props.minDate || source.time > this.props.minDate) &&
+                (!this.props.maxDate || source.time < this.props.maxDate))
+              .map((source, idx) =>
+                <TelemetricDataListItem
+                  key={idx}
+                  telemetricSource={source}
+                  telemetric={telemetricLabels[idx]} />
+              )}
           </Col>
         </Row>
       </Container>

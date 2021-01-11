@@ -90,28 +90,26 @@
     <Content Include="src\components\assets\telemetric\graphs\TelemetricLineGraph.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\assets\telemetric\TelemetricDataList.css">
+    <Content Include="src\components\assets\telemetric\TelemetricDashboard.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\assets\telemetric\TelemetricDataList.js">
+    <Content Include="src\components\assets\telemetric\TelemetricDashboard.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\assets\telemetric\TelemetricDataListItem.css">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\assets\telemetric\TelemetricDataListItem.js">
-      <SubType>Code</SubType>
-    </Content>
+    <Content Include="src\components\assets\telemetric\TelemetricDataList.css" />
+    <Content Include="src\components\assets\telemetric\TelemetricDataList.js" />
+    <Content Include="src\components\assets\telemetric\TelemetricDataListItem.css" />
+    <Content Include="src\components\assets\telemetric\TelemetricDataListItem.js" />
     <Content Include="src\components\assets\telemetric\TelemetricDataTemplate.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\assets\telemetric\TelemetricDataTemplate.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\assets\telemetric\TelemetricTabs.css">
+    <Content Include="src\components\assets\telemetric\TelemetricView.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\assets\telemetric\TelemetricTabs.js">
+    <Content Include="src\components\assets\telemetric\TelemetricView.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\constraints\geometrics\modal\GeoApplyModal.js" />
