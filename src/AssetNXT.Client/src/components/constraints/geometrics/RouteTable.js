@@ -16,7 +16,6 @@ export default class RouteTable extends Component {
       <Container fluid className="table-container">
         <Row>
           <Col>
-
             <Row>
               <Col className="table-head">
                 <Row className="p-3">
