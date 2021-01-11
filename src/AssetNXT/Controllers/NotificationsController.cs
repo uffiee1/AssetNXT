@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Dtos;
@@ -7,6 +8,7 @@ using AssetNXT.Repository;
 
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace AssetNXT.Controllers
 {
@@ -68,6 +70,37 @@ namespace AssetNXT.Controllers
 
             // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
             return CreatedAtRoute(nameof(GetNotificationByDeviceId), new { Id = notificationReadDto.Id }, notificationReadDto);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateNotificationByObjectId(string id, NotificationCreateDto notificationCreateDto)
+        {
+            var notificationModel = this._mapper.Map<Notification>(notificationCreateDto);
+            var notification = await this._repository.GetObjectByIdAsync(id);
+
+            if (notification != null)
+            {
+                notificationModel.UpdatedAt = DateTime.UtcNow;
+                notificationModel.Id = new ObjectId(id);
+                await this._repository.UpdateObjectAsync(id, notificationModel);
+                return Ok(this._mapper.Map<Notification>(notificationModel));
+            }
+
+            return NotFound();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteNotificationByObjectId(string id)
+        {
+            var notification = await this._repository.GetObjectByIdAsync(id);
+
+            if (notification != null)
+            {
+                await this._repository.RemoveObjectAsync(notification);
+                return Ok("Successfully deleted from collection!");
+            }
+
+            return NotFound();
         }
     }
 }
