@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
 // Url needs to be changed when hosted in the cloud.
-const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
+const baseUrl = "http://assetnxt.australiaeast.azurecontainer.io/";
 axios.defaults.baseURL = `${baseUrl}/api`;
 
 const responseBody = (response: AxiosResponse) => response.data;
