@@ -25,19 +25,6 @@ export default class AssetList extends Component {
       <Container className="asset-list-container">
         <Row className="asset-list-row">
           <Col className="asset-list-column">
-            {/* {this.props.assets.map((asset, idx) => {
-              if (queryInactive || asset.deviceId.indexOf(query) > -1) {
-                return (
-                  <AssetListItem
-                    key={idx}
-                    title={asset.deviceId}
-                    location={asset.location}
-                    description={asset.eventId}
-                    assetSelected={this.onAssetSelected}
-                  ></AssetListItem>
-                );
-              } 
-            })} */}
 
             {this.props.assets
               .filter(
@@ -48,7 +35,7 @@ export default class AssetList extends Component {
                   key={idx}
                   title={asset.deviceId}
                   location={asset.location}
-                  description={asset.eventId}
+                  description={asset.location.display_name}
                   assetSelected={this.onAssetSelected}
                 ></AssetListItem>
               ))}

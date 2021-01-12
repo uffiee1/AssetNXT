@@ -66,8 +66,6 @@ export default class TelemetricView extends Component {
       componentDataSnapshot: TelemetricDataSnapshot,
       componentDataTemplate: TelemetricDataTemplate } = this.props;
 
-    console.log('constraints', constraints);
-
     const { tagId, tagParam, tagParamName } = this.state;
     if (!tagId || !tagParam) {
       return <div>No data available...</div>

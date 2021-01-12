@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 
 import './TelemetricDataTemplate.css';
 import DatePicker from "../../date/DatePicker";
 import TelemetricDataList from "./TelemetricDataList";
 import TelemetricLineGraph from "./graphs/TelemetricLineGraph";
-import { Hidden } from "@material-ui/core";
 
 export default class TelemetricDataTemplate extends Component {
 
