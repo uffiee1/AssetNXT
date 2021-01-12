@@ -33,8 +33,8 @@ export default class GeometricPage extends Component {
     return contents;
   }
 
-  async fetchRouteData() {
-    const response = await agent.Geometric.routes();
-    this.setState({ loading: false, routes: response });
+    async fetchRouteData() {
+        const response = await agent.Routes.getRoutes();
+        this.setState({ loading: false, routes: response });
   }
 }
