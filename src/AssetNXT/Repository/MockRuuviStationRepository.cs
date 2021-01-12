@@ -27,19 +27,25 @@ namespace AssetNXT.Repository
 
         private readonly IMapper _mapper;
         private readonly IHubContext<RuuviStationHub> _context;
-        private readonly IMongoDataRepository<Route> _repositoryGeometric;
         private readonly IMongoDataRepository<Agreement> _repositoryAgreement;
+        private readonly IMongoDataRepository<ServiceAgreement> _serviceAgreementRepository;
+        private readonly IMongoDataRepository<Route> _repositoryGeometric;
+        private readonly IMongoDataRepository<ServiceGeometric> _serviceGeometricRepository;
 
         public MockRuuviStationRepository(
             IMapper mapper,
             IHubContext<RuuviStationHub> context,
             IMongoDataRepository<Route> repositoryGeometric,
-            IMongoDataRepository<Agreement> repositoryAgreement)
+            IMongoDataRepository<ServiceGeometric> serviceGeometricRepository,
+            IMongoDataRepository<Agreement> repositoryAgreement,
+            IMongoDataRepository<ServiceAgreement> serviceAgreementRepository)
         {
-            _mapper = mapper;
-            _context = context;
-            _repositoryAgreement = repositoryAgreement;
-            _repositoryGeometric = repositoryGeometric;
+            this._mapper = mapper;
+            this._context = context;
+            this._repositoryAgreement = repositoryAgreement;
+            this._serviceAgreementRepository = serviceAgreementRepository;
+            this._repositoryGeometric = repositoryGeometric;
+            this._serviceGeometricRepository = serviceGeometricRepository;
 
             var stations = _random.Next(50, 100);
             for (int i = 0; i < stations; i++)
@@ -58,14 +64,14 @@ namespace AssetNXT.Repository
                     stationStates.Add(item: station);
                 }
 
-                _stationCollections[station.DeviceId] = stationStates;
+                this._stationCollections[station.DeviceId] = stationStates;
             }
 
             var thread = new Thread(() =>
             {
                 while (true)
                 {
-                    foreach (var (deviceId, stations) in _stationCollections)
+                    foreach (var (deviceId, stations) in this._stationCollections)
                     {
                         var station = MockRuuviStation(stations.Last());
                         stations.Add(item: station);
@@ -81,7 +87,7 @@ namespace AssetNXT.Repository
 
         public void CreateObject(RuuviStation station)
         {
-            _stationCollections.AddOrUpdate(station.DeviceId, new List<RuuviStation> { station }, (deviceId, stations) =>
+            this._stationCollections.AddOrUpdate(station.DeviceId, new List<RuuviStation> { station }, (deviceId, stations) =>
             {
                 lock (stations)
                 {
@@ -99,7 +105,7 @@ namespace AssetNXT.Repository
 
         public List<RuuviStation> GetAll()
         {
-            var stations = _stationCollections.Values.SelectMany(x => x);
+            var stations = this._stationCollections.Values.SelectMany(x => x);
             stations = stations.OrderByDescending(x => x.UpdatedAt).ThenByDescending(x => x.CreatedAt);
 
             return stations.ToList();
@@ -113,7 +119,7 @@ namespace AssetNXT.Repository
         public RuuviStation GetObjectById(string id)
         {
             // XXX: Nested loops !!!
-            foreach (var (deviceId, stations) in _stationCollections)
+            foreach (var (deviceId, stations) in this._stationCollections)
             {
                 foreach (var station in stations)
                 {
@@ -148,13 +154,13 @@ namespace AssetNXT.Repository
         public void RemoveObjectById(string id)
         {
             // XXX: Nested loops !!!
-            foreach (var (deviceId, stations) in _stationCollections)
+            foreach (var (deviceId, stations) in this._stationCollections)
             {
                 foreach (var station in stations)
                 {
                     if (station.Id == new MongoDB.Bson.ObjectId(id))
                     {
-                        _stationCollections[deviceId].Remove(station);
+                        this._stationCollections[deviceId].Remove(station);
                     }
                 }
             }
@@ -168,7 +174,7 @@ namespace AssetNXT.Repository
         public void UpdateObject(string id, RuuviStation station)
         {
             // XXX: Nested loops !!!
-            foreach (var (deviceId, stations) in _stationCollections)
+            foreach (var (deviceId, stations) in this._stationCollections)
             {
                 lock (stations)
                 {
@@ -176,7 +182,7 @@ namespace AssetNXT.Repository
                     {
                         if (stations[i].Id == new MongoDB.Bson.ObjectId(id))
                         {
-                            _stationCollections[deviceId][i] = station;
+                            this._stationCollections[deviceId][i] = station;
                         }
                     }
                 }
@@ -278,16 +284,16 @@ namespace AssetNXT.Repository
         {
             // XXX: Duplicate code present in controller...
             // XXX: Service should be implemented for these kind of methods
-            var ruuviStationReadDto = _mapper.Map<RuuviStationReadDto>(station);
-            var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryAgreement);
-            var serviceGeometric = new ServiceGeometricConfiguration(station, _repositoryGeometric);
+            var ruuviStationReadDto = this._mapper.Map<RuuviStationReadDto>(station);
+            var serviceAgreement = new ServiceAgreementConfiguration(station, this._repositoryAgreement, this._serviceAgreementRepository);
+            var serviceGeometric = new ServiceGeometricConfiguration(station, this._repositoryGeometric, this._serviceGeometricRepository);
 
             List<ServiceAgreement> breachedAgreements = await serviceAgreement.IsBreachedCollection();
             List<ServiceGeometric> breachedGeometrics = await serviceGeometric.IsBreachedCollection();
             ruuviStationReadDto.ServiceAgreements = breachedAgreements;
             ruuviStationReadDto.ServiceGeometrics = breachedGeometrics;
 
-            await _context.Clients.All.SendAsync("GetNewRuuviStations", ruuviStationReadDto);
+            await this._context.Clients.All.SendAsync("GetNewRuuviStations", ruuviStationReadDto);
         }
 
         private static int OneOrMinusOne() => (_random.Next(0, 2) * 2) - 1;

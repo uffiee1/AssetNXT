@@ -32,11 +32,11 @@ namespace Ruuvi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllRoutes()
         {
-            var routes = await _repository.GetAllAsync();
+            var routes = await this._repository.GetAllAsync();
 
             if (routes != null)
             {
-                return Ok(_mapper.Map<IEnumerable<RouteReadDto>>(routes));
+                return Ok(this._mapper.Map<IEnumerable<RouteReadDto>>(routes));
             }
 
             return NotFound();
@@ -59,11 +59,11 @@ namespace Ruuvi.Controllers
         [HttpGet("{id}", Name = "GetRouteById")]
         public async Task<IActionResult> GetRouteById(string id)
         {
-            var route = await _repository.GetObjectByIdAsync(id);
+            var route = await this._repository.GetObjectByIdAsync(id);
 
             if (route != null)
             {
-                return Ok(_mapper.Map<RouteReadDto>(route));
+                return Ok(this._mapper.Map<RouteReadDto>(route));
             }
 
             return NotFound();
@@ -72,13 +72,13 @@ namespace Ruuvi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRoute(RouteCreateDto routeCreateDto)
         {
-            var route = _mapper.Map<Route>(routeCreateDto);
+            var route = this._mapper.Map<Route>(routeCreateDto);
 
             if (route != null)
             {
-                await _repository.CreateObjectAsync(route);
+                await this._repository.CreateObjectAsync(route);
 
-                var routeReadDto = _mapper.Map<RouteReadDto>(route);
+                var routeReadDto = this._mapper.Map<RouteReadDto>(route);
 
                 // https://docs.microsoft.com/en-us/dotnet/api/system.web.http.apicontroller.createdatroute?view=aspnetcore-2.2
                 return CreatedAtRoute(nameof(GetRouteById), new { Id = routeReadDto.Id }, routeReadDto);
@@ -90,15 +90,15 @@ namespace Ruuvi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateRouteByObjectId(string id, RouteCreateDto routeCreateDto)
         {
-            var routeModel = _mapper.Map<Route>(routeCreateDto);
-            var route = await _repository.GetObjectByIdAsync(id);
+            var routeModel = this._mapper.Map<Route>(routeCreateDto);
+            var route = await this._repository.GetObjectByIdAsync(id);
 
             if (route != null)
             {
                 routeModel.UpdatedAt = DateTime.UtcNow;
                 routeModel.Id = new ObjectId(id);
-                await _repository.UpdateObjectAsync(id, routeModel);
-                return Ok(_mapper.Map<RouteReadDto>(routeModel));
+                await this._repository.UpdateObjectAsync(id, routeModel);
+                return Ok(this._mapper.Map<RouteReadDto>(routeModel));
             }
 
             return NotFound();
@@ -107,11 +107,11 @@ namespace Ruuvi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteRouteByObjectId(string id)
         {
-            var routeModel = await _repository.GetObjectByIdAsync(id);
+            var routeModel = await this._repository.GetObjectByIdAsync(id);
 
             if (routeModel != null)
             {
-                await _repository.RemoveObjectAsync(routeModel);
+                await this._repository.RemoveObjectAsync(routeModel);
                 return Ok("Successfully deleted from collection!");
             }
 

@@ -18,20 +18,22 @@ namespace AssetNXT.Controllers
     [ApiController]
     public class ServiceAgreementController : ControllerBase
     {
-        private readonly IMongoDataRepository<Agreement> _repositoryConstrain;
+        private readonly IMongoDataRepository<Agreement> _agreementRepository;
+        private readonly IMongoDataRepository<ServiceAgreement> _serviceAgreementRepository;
         private readonly IMongoDataRepository<RuuviStation> _repositoryRuuviStation;
         private readonly IMapper _mapper;
 
-        public ServiceAgreementController(IMongoDataRepository<Agreement> repositoryConstrain, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
+        public ServiceAgreementController(IMongoDataRepository<Agreement> agreementRepository, IMongoDataRepository<ServiceAgreement> serviceAgreementRepository, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
         {
             this._repositoryRuuviStation = repositoryRuuviStation;
-            this._repositoryConstrain = repositoryConstrain;
-            _mapper = mapper;
+            this._agreementRepository = agreementRepository;
+            this._serviceAgreementRepository = serviceAgreementRepository;
+            this._mapper = mapper;
         }
 
         private async Task<List<RuuviStation>> GetAllObjectsAsync()
         {
-            var stations = await _repositoryRuuviStation.GetAllAsync();
+            var stations = await this._repositoryRuuviStation.GetAllAsync();
             return stations.GroupBy(doc => new { doc.DeviceId }, (key, group) => group.First()).ToList();
         }
 
@@ -43,7 +45,7 @@ namespace AssetNXT.Controllers
 
             if (station != null)
             {
-                var serviceAgreement = new ServiceAgreementConfiguration(station, _repositoryConstrain);
+                var serviceAgreement = new ServiceAgreementConfiguration(station, this._agreementRepository, this._serviceAgreementRepository);
 
                 var breachedStations = await serviceAgreement.IsBreachedCollection();
                 return Ok(_mapper.Map<IEnumerable<ServiceAgreementReadDto>>(breachedStations));
