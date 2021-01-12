@@ -37,8 +37,6 @@ export default class AssetMarkerInfo extends Component {
 
     const { asset } = this.props;
     var tag = asset.tags[this.state.index];
-    //var agreement = this.props.asset.serviceAgreements[] !== null
-    //  ? this.props.asset.serviceAgreements[this.state.index] : null
     var agreements = asset.serviceAgreements
       .filter(agreement => agreement.tagId === tag.id);
 
@@ -94,9 +92,10 @@ export default class AssetMarkerInfo extends Component {
             <Col xs="auto" className="tooltip-column pl-0 pr-4" />}
 
           <Col className="tooltip-icon" xs="auto">
-            {!!agreements ? (agreements.some(agreement => agreement.humidity) || 
-                             agreements.some(agreement => agreement.pressure) || 
-                             agreements.some(agreement => agreement.temperature)
+            {!!agreements ? 
+              (agreements.some(agreement => !agreement.humidity) || 
+               agreements.some(agreement => !agreement.pressure) || 
+               agreements.some(agreement => !agreement.temperature)
               ? <i className="fa fa-exclamation-triangle fa-2x text-warning" />
               : <i className="fa fa-check-circle fa-2x text-success" />
             ) : <i className="fa fa-check-circle fa-2x text-success" />

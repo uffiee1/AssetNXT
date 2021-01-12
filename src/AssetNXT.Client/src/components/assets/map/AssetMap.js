@@ -37,7 +37,10 @@ export default class AssetMap extends Component {
       ? new L.Icon.Default()
       : new L.Icon({
         iconUrl: MarkerRed,
-        iconAnchor: new L.Point(13, 39)
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
       });
 
     return icon;
@@ -77,13 +80,13 @@ export default class AssetMap extends Component {
   }
 
   renderBoundaries(boundaries) {
-    return boundaries.map((boundary, idx) => 
-      <Circle 
+    return boundaries.map((boundary, idx) =>
+      <Circle
         key={`boundary-${idx}`}
         radius={boundary.radius}
         center={[boundary.location.latitude,
-                 boundary.location.longitude]}/>
-      );
+        boundary.location.longitude]} />
+    );
   }
 
   render() {
