@@ -64,7 +64,8 @@ export default class TelemetricDashboard extends Component {
         </Row>
         <Row noGutters>
           <Col xs="12" lg="4">
-            <Button color='primary' block onClick={() => telemetricParameterChanged("temperature")}>
+            <Button color='primary' block 
+              onClick={() => telemetricParameterChanged({param:"temperature", paramName:"Temperature"})}>
               <h3 className="d-flex flex-column">
                 <span>Temperature</span>
                 <span>{formatter.format(temperature)}&deg;C</span>
@@ -72,7 +73,8 @@ export default class TelemetricDashboard extends Component {
             </Button>
           </Col>
           <Col xs="12" lg="4">
-            <Button color='primary' block onClick={() => telemetricParameterChanged("humidity")}>
+            <Button color='primary' block 
+              onClick={() => telemetricParameterChanged({param: "humidity", paramName: "Humidity"})}>
               <h3 className="d-flex flex-column">
                 <span>Humidity</span>
                 <span>{formatter.format(humidity)}%</span>
@@ -80,7 +82,8 @@ export default class TelemetricDashboard extends Component {
             </Button>
           </Col>
           <Col xs="12" lg="4">
-            <Button color='primary' block onClick={() => telemetricParameterChanged("pressure")}>
+            <Button color='primary' block 
+              onClick={() => telemetricParameterChanged({param: "pressure", paramName: "Pressure"})}>
               <h3 className="d-flex flex-column">
                 <span>Pressure</span>
                 <span>{pressure} Pa</span>

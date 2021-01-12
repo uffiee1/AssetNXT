@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from "react";
-import { Row, Col } from "reactstrap";
+import React, { Component } from "react";
 
 import './TelemetricView.css';
 import './TelemetricDashboard.css';
@@ -11,7 +10,7 @@ export default class TelemetricView extends Component {
   state = {
     tagId: undefined,
     tagParam: 'temperature',
-    telemetricParamName: 'Temperature'
+    tagParamName: 'Temperature'
   }
 
   componentDidMount() {
@@ -91,7 +90,7 @@ export default class TelemetricView extends Component {
               telemetricData={telemetrics}
               telemetricLabels={telemetricLabels}
               telemetricSelectionChanged={e => this.setState({ tagId: e })}
-              telemetricParameterChanged={e => this.setState({ tagParam: e })} />
+              telemetricParameterChanged={e => this.setState({ tagParam: e.param, tagParamName: e.paramName })}/>
           </div>
           <div className="d-flex flex-column flex-grow-1 p-4">
             <TelemetricDataTemplate
@@ -102,7 +101,7 @@ export default class TelemetricView extends Component {
               telemetricDataSource={stations}
               telemetricLabels={telemetricLabels}
               telemetricSelectionChanged={e => this.setState({ tagId: e })}
-              telemetricParameterChanged={e => this.setState({ tagParam: e })} />
+              telemetricParameterChanged={e => this.setState({ tagParam: e.param, tagParamName: e.paramName })}/>
           </div>
         </div>
         <div className="d-flex flex-column">

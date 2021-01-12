@@ -56,7 +56,7 @@ export default class TelemetricLineGraph extends Component {
       return {
         labels, datasets: [{
           fill: true,
-          label: { telemetricDataName },
+          label: telemetricDataName,
           backgroundColor: 'rgba(75,192,192,0.3)',
           borderColor: 'rgba(75,192,192,1)',
           borderCapStyle: 'butt',
