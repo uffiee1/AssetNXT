@@ -43,7 +43,7 @@ export default class TelemetricView extends Component {
 
       switch (tagParam.toLowerCase()) {
         case 'temperature':
-          return `${formatter.format(tag[tagParam])} \u00B0C`;
+          return `${formatter.format(tag[tagParam])}\u00B0C`;
         case 'humidity':
           return `${formatter.format(tag[tagParam])}%`;
         case 'pressure':
@@ -54,75 +54,74 @@ export default class TelemetricView extends Component {
     });
 
     return {
-      tags, telemetrics, telemetricLabels, 
+      tags, telemetrics, telemetricLabels,
       boundaries: routes.flatMap(route => route.points)
     };
   }
 
   render() {
 
-    const { stations,
+    const {
+      stations,
+      constraints,
       componentDataSnapshot: TelemetricDataSnapshot,
       componentDataTemplate: TelemetricDataTemplate } = this.props;
 
-    const { 
-      tagId, tagParam, 
-      telemetricParamName } = this.state;
+    console.log('constraints', constraints);
 
+    const { tagId, tagParam, tagParamName } = this.state;
     if (!tagId || !tagParam) {
       return <div>No data available...</div>
     }
 
-    const { tags, telemetrics, telemetricLabels, boundaries } 
-    = this.getComponentData(tagId, tagParam);
+    const { tags, telemetrics, telemetricLabels, boundaries }
+      = this.getComponentData(tagId, tagParam);
 
     if (!tags || tags.length === 0) {
       return <div>No data available...</div>
     }
 
     return (
-      <Fragment>
-        <div className="telemetric-view">
-          <div className="d-flex flex-column">
-            <div className="flex-grow-0 p-4">
-              <TelemetricDataSnapshot
-                tags={tags}
-                tagId={tagId}
-                telemetricData={telemetrics}
-                telemetricDataSource={stations}
-                telemetricSelectionChanged={e => this.setState({ tagId: e })}
-                telemetricParameterChanged={e => this.setState({ tagParam: e })} />
-            </div>
-
-            <div className="flex-grow-1 p-4">
-              <TelemetricDataTemplate
-                telemetricData={telemetrics}
-                telemetricDataPath={tagParam}
-                telemetricDataSource={stations}
-                telemetricLabels={telemetricLabels}
-                telemetricDataName={telemetricParamName}
-                telemetricSelectionChanged={e => this.setState({ tagId: e })}
-                telemetricParameterChanged={e => this.setState({ tagParam: e })} />
-            </div>
+      <div className="telemetric-view">
+        <div className="d-flex flex-column">
+          <div className="d-flex flex-column flex-grow-0 p-4">
+            <TelemetricDataSnapshot
+              tags={tags}
+              tagId={tagId}
+              telemetricData={telemetrics}
+              telemetricLabels={telemetricLabels}
+              telemetricSelectionChanged={e => this.setState({ tagId: e })}
+              telemetricParameterChanged={e => this.setState({ tagParam: e })} />
           </div>
-          <div className="d-flex flex-column">
-            <div className="flex-grow-1 p-4">
-              <div className="d-flex flex-column box-card h-100">
-                <h3>Geometrics:</h3>
-                <div className="flex-grow-1">
-                  <AssetMap
-                    path
-                    zoom={20}
-                    assets={stations}
-                    assetMarkerTemplate={AssetMarkerInfo}
-                    boundaries={boundaries}>
-                  </AssetMap>
-                </div>
+          <div className="d-flex flex-column flex-grow-1 p-4">
+            <TelemetricDataTemplate
+              constraints={constraints[tagId]}
+              telemetricData={telemetrics}
+              telemetricDataPath={tagParam}
+              telemetricDataName={tagParamName}
+              telemetricDataSource={stations}
+              telemetricLabels={telemetricLabels}
+              telemetricSelectionChanged={e => this.setState({ tagId: e })}
+              telemetricParameterChanged={e => this.setState({ tagParam: e })} />
+          </div>
+        </div>
+        <div className="d-flex flex-column">
+          <div className="d-flex flex-column flex-grow-1 p-4">
+            <div className="d-flex flex-grow-1 flex-column box-card">
+              <h3>Geometrics:</h3>
+              <div className="d-flex flex-column flex-grow-1">
+                <AssetMap
+                  path
+                  zoom={20}
+                  assets={stations}
+                  assetMarkerTemplate={AssetMarkerInfo}
+                  boundaries={boundaries}>
+                </AssetMap>
               </div>
             </div>
           </div>
         </div>
-      </Fragment>
+      </div>
     );
   }
 }

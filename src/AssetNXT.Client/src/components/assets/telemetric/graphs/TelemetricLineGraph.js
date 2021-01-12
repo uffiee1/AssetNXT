@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
+import 'chartjs-plugin-annotation';
 
 import './TelemetricLineGraph.css';
 
@@ -8,14 +9,15 @@ export default class TelemetricLineGraph extends Component {
   render() {
 
     const {
-      telemetricId,
+      constraints,
       telemetricData,
       telemetricLabels,
       telemetricDataPath,
+      telemetricDataName,
       telemetricDataSource } = this.props;
 
     const options = {
-      response: true,
+      responsive: true,
       maintainAspectRatio: false,
       scales: {
         xAxes: [{
@@ -35,7 +37,7 @@ export default class TelemetricLineGraph extends Component {
       tooltips: {
         callbacks: {
           label: function (tooltippItem) {
-            return telemetricLabels[tooltippItem.datasetIndex];
+            return telemetricLabels[tooltippItem.index];
           }
         }
       }
@@ -54,6 +56,7 @@ export default class TelemetricLineGraph extends Component {
       return {
         labels, datasets: [{
           fill: true,
+          label: { telemetricDataName },
           backgroundColor: 'rgba(75,192,192,0.3)',
           borderColor: 'rgba(75,192,192,1)',
           borderCapStyle: 'butt',

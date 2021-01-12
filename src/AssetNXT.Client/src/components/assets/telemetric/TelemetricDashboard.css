@@ -13,3 +13,7 @@
 .telemetric-view-dashboard > .row > .col-auto {
     padding: 0rem 2rem;
 }
+
+.telemetric-view-dashboard > .row > .col-12 {
+    padding: 1rem 2rem;
+}

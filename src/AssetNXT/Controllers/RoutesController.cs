@@ -48,11 +48,6 @@ namespace Ruuvi.Controllers
             var routes = await _repository.GetAllAsync();
             if (routes != null)
             {
-                var test = routes
-                    .Where(x => x.Devices != null)
-                    .Where(x => x.Devices.Contains(id))
-                    .ToList();
-
                 return Ok(_mapper.Map<IEnumerable<RouteReadDto>>(
                     routes.Where(x => x.Devices != null)
                           .Where(x => x.Devices.Contains(id))));

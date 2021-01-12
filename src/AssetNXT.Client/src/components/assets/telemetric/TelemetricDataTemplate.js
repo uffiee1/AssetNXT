@@ -5,6 +5,7 @@ import './TelemetricDataTemplate.css';
 import DatePicker from "../../date/DatePicker";
 import TelemetricDataList from "./TelemetricDataList";
 import TelemetricLineGraph from "./graphs/TelemetricLineGraph";
+import { Hidden } from "@material-ui/core";
 
 export default class TelemetricDataTemplate extends Component {
 
@@ -23,12 +24,13 @@ export default class TelemetricDataTemplate extends Component {
 
   render() {
     return (
-      <div className="telmetric-data-template">
+      <div className="telemetric-data-template">
         <Row noGutters>
           <Col xs="12" lg="8">
             <div className="d-flex h-100 flex-column">
               <h3>Statistics:</h3>
-              <div className="flex-grow-1">
+              <div className="flex-grow-1"
+                style={{ overflow: 'hidden' }}>
                 <TelemetricLineGraph {...this.props}
                   minDate={this.state.minDate}
                   maxDate={this.state.maxDate} />

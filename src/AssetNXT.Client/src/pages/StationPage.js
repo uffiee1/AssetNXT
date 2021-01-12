@@ -13,20 +13,23 @@ export default class StationPage extends Component {
 
   state = {
     loadingRoutes: true,
-    loadingStations: true
+    loadingStations: true,
+    loadingConstraints: true
   }
 
   componentDidMount() {
     this.fetchRoutesData();
     this.fetchStationData();
+    this.fetchConstraintData();
   }
 
-  renderComponent(stations, routes) {
+  renderComponent(stations, routes, constraints) {
 
     const telemetricView =
       <TelemetricView 
         routes={routes}
         stations={stations}
+        constraints={constraints}
         componentDataSnapshot={TelemetricDashboard}
         componentDataTemplate={TelemetricDataTemplate} />
 
@@ -37,10 +40,11 @@ export default class StationPage extends Component {
 
      var contents = 
        this.state.loadingRoutes || 
-       this.state.loadingStations
+       this.state.loadingStations ||
+       this.state.loadingConstraints
 
       ? <Layout dock={<p><em>Loading...</em></p>}/>
-      : this.renderComponent(this.state.stations, this.state.routes);
+      : this.renderComponent(this.state.stations, this.state.routes, this.state.constraints);
 
     return contents;
   }
@@ -71,5 +75,20 @@ export default class StationPage extends Component {
     console.log(data);
 
     this.setState({ loadingRoutes: false, routes: data });
+  }
+
+  async fetchConstraintData() {
+
+     const request = `api/constraints/device/${this.props.match.params.deviceId}`;
+
+    const response = await fetch(request);
+    console.log("Response:");
+    console.log(response);
+
+    const data = await response.json();
+    console.log("Data:");
+    console.log(data);
+
+    this.setState({ loadingConstraints: false, constraints: data });
   }
 }
