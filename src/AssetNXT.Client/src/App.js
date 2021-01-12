@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import StationPage from './pages/StationPage';
 import GeometricPage from './pages/GeometricPage';
 import ConstraintPage from './pages/ConstraintPage';
+import NotificationPage from './pages/NotificationPage';
 
 export default class App extends Component {
   static displayName = App.name;

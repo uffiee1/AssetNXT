@@ -162,6 +162,9 @@
     <Content Include="src\components\constraints\geometrics\RouteTable.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\notification\NotificationTable.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\search\Searchbar.css" />
     <Content Include="src\components\search\Searchbar.js" />
     <Content Include="src\index.js" />
@@ -169,6 +172,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\pages\GeometricPage.js" />
+    <Content Include="src\pages\NotificationPage.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\pages\StationPage.css">
       <SubType>Code</SubType>
     </Content>
@@ -200,6 +206,7 @@
     <Folder Include="src\components\date\" />
     <Folder Include="src\components\images\" />
     <Folder Include="src\components\navigation\" />
+    <Folder Include="src\components\notification\" />
     <Folder Include="src\components\search\" />
     <Folder Include="src\api\" />
     <Folder Include="src\pages\" />
