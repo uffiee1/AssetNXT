@@ -45,11 +45,12 @@ export default class AssetList extends Component {
               )
               .map((asset, idx) => (
                 <AssetListItem
-                  key={idx}
-                  title={asset.deviceId}
-                  location={asset.location}
-                  description={asset.eventId}
-                  assetSelected={this.onAssetSelected}
+                      key={idx}
+                      title={asset.deviceId}
+                      location={asset.location}
+                      description={asset.eventId}
+                      agreements={asset.serviceAgreements}
+                      assetSelected={this.onAssetSelected}
                 ></AssetListItem>
               ))}
           </Col>

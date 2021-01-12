@@ -17,15 +17,27 @@ export default class AssetListItem extends Component {
   }
 
   render() {
+
+    const { agreements } = this.props;
+    var breached = agreements && agreements.length > 0 && agreements.some(agreement =>
+      !agreement.humidity || !agreement.pressure || !agreement.temperature)
+
     return (
-      
+
       <Container className="asset-item-container">
         <Row className="asset-item-row"
-             onClick={this.onAssetSelected}>
+          onClick={this.onAssetSelected}>
 
           <Col className="asset-item-col">
             <Asset title={this.props.title}
-             description={this.props.description} />
+              description={this.props.description} />
+          </Col>
+
+          <Col className="asset-item-col" xs="auto">
+            {breached
+              ? <i className="fa fa-exclamation-triangle fa-lg text-warning" />
+              : <></>
+            }
           </Col>
 
         </Row>
