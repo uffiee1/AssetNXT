@@ -53,10 +53,11 @@ namespace AssetNXT.Configurations
 
         public bool IntersectsWith(Location point, Boundary boundary)
         {
-            var latidtude = Math.Pow(point.Latitude - boundary.Location.Latitude, 2);
-            var longitude = Math.Pow(point.Longitude - boundary.Location.Longitude, 2);
-
-            return Math.Sqrt(longitude + latidtude) < boundary.Radius;
+            var ky = 40000 / 360;
+            var kx = Math.Cos(Math.PI * point.Latitude / 180.0) * ky;
+            var dx = Math.Abs(boundary.Location.Longitude - point.Longitude) * kx;
+            var dy = Math.Abs(boundary.Location.Latitude - point.Latitude) * ky;
+            return Math.Sqrt((dx * dx) + (dy * dy)) <= boundary.Radius / 1000;
         }
 
         public void SaveConfiguration(object obj)

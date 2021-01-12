@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import Layout from '../components/Layout';
 import RouteConfig from '../components/constraints/geometrics/RouteConfig';
-import agent from "../api/agent";
 
-export default class GeometricPage extends Component {
+export default class GeometricPage extends Component
+{
   static displayName = GeometricPage.displayName
 
   state = {
@@ -19,22 +19,32 @@ export default class GeometricPage extends Component {
   renderComponent(routes) {
 
     var routeConfig =
-      <RouteConfig routes={routes}
-        stateHasChanged={() => this.fetchRouteData()} />
+      <RouteConfig routes={routes} 
+        stateHasChanged={() => this.fetchRouteData()}/>
 
-    return <Layout dock={routeConfig} />
+    return <Layout dock={routeConfig}/>
   }
 
   render() {
-    var contents = this.state.loading
-      ? <Layout dock={<p><em>Loading...</em></p>} />
+     var contents = this.state.loading
+      ? <Layout dock={<p><em>Loading...</em></p>}/>
       : this.renderComponent(this.state.routes);
 
     return contents;
   }
-
+  
   async fetchRouteData() {
-    const response = await agent.Geometric.routes();
-    this.setState({ loading: false, routes: response });
+
+    const request = `api/routes`;
+
+    const response = await fetch(request);
+    console.log("Response:");
+    console.log(response);
+
+    const data = await response.json();
+    console.log("Data:");
+    console.log(data);
+
+    this.setState({ loading: false, routes: data });
   }
 }

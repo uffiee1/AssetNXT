@@ -17,19 +17,24 @@ export default class AssetListItem extends Component {
   }
 
   render() {
+
     return (
+      <Row noGutters className="asset-item-row"
+        onClick={this.onAssetSelected}>
 
-      <Container className="asset-item-container">
-        <Row className="asset-item-row"
-          onClick={this.onAssetSelected}>
+        <Col className="asset-item-col">
+          <Asset title={this.props.title}
+            description={this.props.description} />
+        </Col>
 
-          <Col className="asset-item-col">
-            <Asset title={this.props.title}
-              description={this.props.description} />
-          </Col>
+        <Col className="asset-item-col" xs="auto">
+          {!!this.props.breached
+            ? <i className="fa fa-exclamation-triangle fa-lg text-warning" />
+            : <i className="fa fa-lg text-success" />
+          }
+        </Col>
 
-        </Row>
-      </Container>
+      </Row>
 
     );
   }

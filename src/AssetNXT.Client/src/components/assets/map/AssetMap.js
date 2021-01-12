@@ -29,9 +29,12 @@ export default class AssetMap extends Component {
   }
 
   getIcon(asset) {
-    const breached = asset.serviceAgreements.some(result =>
-      !result.humidity || !result.pressure || !result.temperature
-    );
+
+    console.log(asset);
+
+    const breached = 
+      (asset.serviceAgreements.length > 0 && asset.serviceAgreements.some(result => !result.humidity || !result.pressure || !result.temperature)) ||
+      (asset.serviceGeometrics.length > 0 && asset.serviceGeometrics.every(result => !result.boundary));
 
     const icon = !breached
       ? new L.Icon.Default()

@@ -92,7 +92,7 @@ export default class TelemetricView extends Component {
           </div>
           <div className="d-flex flex-column flex-grow-1 p-4">
             <TelemetricDataTemplate
-              constraints={constraints[tagId]}
+              constraints={constraints[tagId.toLowerCase()]}
               telemetricData={telemetrics}
               telemetricDataPath={tagParam}
               telemetricDataName={tagParamName}

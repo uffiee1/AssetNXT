@@ -5,7 +5,8 @@ import {
   Button,
   Dropdown,
   DropdownMenu,
-  DropdownItem,  DropdownToggle,
+  DropdownItem,
+  DropdownToggle,
 } from "reactstrap";
 
 export default class TelemetricDashboard extends Component {
@@ -28,9 +29,9 @@ export default class TelemetricDashboard extends Component {
       maximumFractionDigits: 2
     });
 
-    const temperature = telemetricData[telemetricData.length - 1].temperature;
-    const humidity = telemetricData[telemetricData.length - 1].humidity;
-    const pressure = telemetricData[telemetricData.length - 1].pressure;
+    const temperature = telemetricData[0].temperature;
+    const humidity = telemetricData[0].humidity;
+    const pressure = telemetricData[0].pressure;
 
     return (
       <div className="telemetric-view-dashboard">

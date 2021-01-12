@@ -52,13 +52,10 @@ export default class TelemetricLineGraph extends Component {
     const data = (canvas) => {
 
       const ctx = canvas.getContext("2d");
-
-
       if (!!constraints && constraints.length > 0) {
+
         const minValue = Math.min(constraints.map(constraint => constraint[telemetricDataPath + 'Min']))
         const maxValue = Math.max(constraints.map(constraint => constraint[telemetricDataPath + 'Max']))
-
-
 
         const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
         gradient.addColorStop(0.0, 'rgba(255, 0, 0, 1)');
