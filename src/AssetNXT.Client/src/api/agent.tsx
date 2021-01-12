@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
 // Url needs to be changed when hosted in the cloud.
-const baseUrl = "http://localhost:5000";
+const baseUrl = "http://assetnxt.australiaeast.azurecontainer.io/";
 axios.defaults.baseURL = `${baseUrl}/api`;
 
 const responseBody = (response: AxiosResponse) => response.data;
