@@ -58,7 +58,7 @@ export default class AssetMap extends Component {
     var query = this.props.query;
     var queryInactive = !this.props.query;
 
-    return assets.map((asset, idx) => {  
+    return assets.map((asset, idx) => {
       if (queryInactive || asset.deviceId.indexOf(query) > -1) {
 
         return <Marker
@@ -67,14 +67,14 @@ export default class AssetMap extends Component {
           position={this.getAssetLatLng(asset)}
           onclick={() => this.ensureInCenter(asset)}> {
 
-          AssetTemplate &&
-          <Popup autoPan={false}>
-            <AssetTemplate
-              asset={asset}
-              link={`/station/${asset.deviceId}/`} />
-          </Popup>
+            AssetTemplate &&
+            <Popup autoPan={false}>
+              <AssetTemplate
+                asset={asset}
+                link={`/station/${asset.deviceId}/`} />
+            </Popup>
 
-        }
+          }
         </Marker>
       }
     })

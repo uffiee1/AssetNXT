@@ -20,15 +20,15 @@ export default class StationPage extends Component {
 
     const telemetricTabs =
       <TelemetricTabs stations={stations}
-        telemetricTemplate={TelemetricDataTemplate}/>
+        telemetricTemplate={TelemetricDataTemplate} />
 
-    return <Layout dock={telemetricTabs}/>
+    return <Layout dock={telemetricTabs} />
   }
 
   render() {
 
-     var contents = this.state.loading
-      ? <Layout dock={<p><em>Loading...</em></p>}/>
+    var contents = this.state.loading
+      ? <Layout dock={<p><em>Loading...</em></p>} />
       : this.renderComponent(this.state.stations);
 
     return contents;

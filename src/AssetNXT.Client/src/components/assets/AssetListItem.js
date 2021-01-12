@@ -18,14 +18,14 @@ export default class AssetListItem extends Component {
 
   render() {
     return (
-      
+
       <Container className="asset-item-container">
         <Row className="asset-item-row"
-             onClick={this.onAssetSelected}>
+          onClick={this.onAssetSelected}>
 
           <Col className="asset-item-col">
             <Asset title={this.props.title}
-             description={this.props.description} />
+              description={this.props.description} />
           </Col>
 
         </Row>

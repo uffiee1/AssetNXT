@@ -12,7 +12,7 @@ export default class RouteTable extends Component {
   }
 
   render() {
-    return(
+    return (
       <Container fluid className="table-container">
         <Row>
           <Col>
@@ -29,16 +29,16 @@ export default class RouteTable extends Component {
             <Row>
               <Col className="table-body">
 
-                {this.props.routes &&  
-                 this.props.routes.map(
-                   (route, idx) =>
+                {this.props.routes &&
+                  this.props.routes.map(
+                    (route, idx) =>
 
-                    <Row className="p-3"
-                       onClick={e => this.invokeRouteSelected(route)}>
-                      <Col>{route.name}</Col>
-                      <Col>{route.description}</Col>
-                    </Row>
-                )}
+                      <Row className="p-3"
+                        onClick={e => this.invokeRouteSelected(route)}>
+                        <Col>{route.name}</Col>
+                        <Col>{route.description}</Col>
+                      </Row>
+                  )}
 
               </Col>
             </Row>

@@ -17,7 +17,7 @@ export default class TelemetricTabs extends Component {
       station.tags.forEach(tag => {
         dict[tag.id] = dict[tag.id] || []
         dict[tag.id].push(tag);
-      }) 
+      })
     );
 
     console.log(dict);
@@ -66,7 +66,7 @@ export default class TelemetricTabs extends Component {
     else {
       return (
         <Tabs selectedIndex={this.state.selectedIndex}
-          onSelect={index => this.setState({selectedIndex: index})}>
+          onSelect={index => this.setState({ selectedIndex: index })}>
 
           <TabList>{tabs}</TabList>
           {tabPanels.map(content => <TabPanel>{content}</TabPanel>)}
@@ -89,13 +89,13 @@ export default class TelemetricTabs extends Component {
           <Tab>Temperature</Tab>
         </TabList>
 
-        <TabPanel> { 
-          this.renderStationTabs(stationData, (k, v) => 
-            <TabPanelTemplate stations={stationData} 
+        <TabPanel> {
+          this.renderStationTabs(stationData, (k, v) =>
+            <TabPanelTemplate stations={stationData}
               telemetricData={this.getHumidities(v, k)}
               telemetricName={'humidity'}
-              telemetricId={k}/>
-        )}
+              telemetricId={k} />
+          )}
         </TabPanel>
 
         <TabPanel> {
@@ -103,8 +103,8 @@ export default class TelemetricTabs extends Component {
             <TabPanelTemplate stations={stationData}
               telemetricData={this.getPressures(v, k)}
               telemetricName={'pressure'}
-              telemetricId={k}/>
-        )}
+              telemetricId={k} />
+          )}
         </TabPanel>
 
         <TabPanel> {
@@ -112,8 +112,8 @@ export default class TelemetricTabs extends Component {
             <TabPanelTemplate stations={stationData}
               telemetricData={this.getTemperatures(v, k)}
               telemetricName={'temperature'}
-              telemetricId={k}/>
-        )}
+              telemetricId={k} />
+          )}
         </TabPanel>
       </Tabs>
     );

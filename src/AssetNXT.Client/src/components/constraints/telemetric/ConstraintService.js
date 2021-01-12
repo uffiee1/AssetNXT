@@ -340,8 +340,8 @@ export default class ConstraintService extends Component {
               </Col>
             </Row>
           ) : (
-            <p></p>
-          )}
+              <p></p>
+            )}
         </Container>
       </Container>
     );

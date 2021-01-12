@@ -11,12 +11,12 @@ export default class App extends Component {
 
   render() {
     return (
-        <Switch>
-            <Route path='/' exact component={Home} />
-            <Route path='/geo' exact component={GeometricPage} />
-            <Route path='/constraints' exact component={ConstraintPage} />
-            <Route path='/station/:deviceId' exact component={StationPage} />
-        </Switch>
+      <Switch>
+        <Route path='/' exact component={Home} />
+        <Route path='/geo' exact component={GeometricPage} />
+        <Route path='/constraints' exact component={ConstraintPage} />
+        <Route path='/station/:deviceId' exact component={StationPage} />
+      </Switch>
     );
   }
 }

@@ -7,7 +7,7 @@ export default class TelemetricDataListItem extends Component {
 
   render() {
     return (
-      
+
       <Container className="telemetric-item-container">
         <Row className="telemetric-item-row">
           <Col className="telemetric-item-col">

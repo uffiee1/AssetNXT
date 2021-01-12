@@ -25,7 +25,7 @@ export default class TelemetricDataList extends Component {
                     station={station}
                     telemetric={
                       this.props.telemetricData[
-                        this.props.stations.indexOf(station)
+                      this.props.stations.indexOf(station)
                       ]
                     }
                   />
