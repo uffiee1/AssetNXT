@@ -30,8 +30,6 @@ export default class AssetMap extends Component {
 
   getIcon(asset) {
 
-    console.log(asset);
-
     const breached = 
       (asset.serviceAgreements.length > 0 && asset.serviceAgreements.some(result => !result.humidity || !result.pressure || !result.temperature)) ||
       (asset.serviceGeometrics.length > 0 && asset.serviceGeometrics.every(result => !result.boundary));

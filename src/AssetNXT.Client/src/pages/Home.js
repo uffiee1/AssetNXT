@@ -46,11 +46,7 @@ export default class Home extends Component {
           console.log("Connected!");
 
           this.connection.on("GetNewRuuviStations", async (a) => {
-            try {
-              await this.fetchLocationData(a);
-            } catch (exception) {
-              console.log(exception);
-            }
+            await this.fetchLocationData(a);
             // Set the state of the assets with the updated information
             this.setState(state => {
               // filters the copied records
@@ -126,13 +122,11 @@ export default class Home extends Component {
       await this.fetchLocationData(station);
     });
 
-    console.log('station', data);
-
     this.setState({ loading: false, assets: data });
   }
 
   async fetchLocationData(station) {
-    //const request = `nonvalidurl/reverse?lat=${station.location.latitude}&lon=${station.location.longitude}&format=json`;
+    //const request = `nominatim-endpoint/reverse?lat=${station.location.latitude}&lon=${station.location.longitude}&format=json`;
     //const response = await fetch(request);
     //const data = await response.json();
 

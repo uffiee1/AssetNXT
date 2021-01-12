@@ -198,7 +198,7 @@ export default class RouteConfig extends Component {
         }
       })
     }
-    console.log(data);
+
     await fetch(request, {
       method: method,
       body: JSON.stringify(data),

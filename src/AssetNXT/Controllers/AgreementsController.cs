@@ -56,7 +56,7 @@ namespace AssetNXT.Controllers
                     .Select(x => x.Id)
                     .Distinct();
 
-                var constrainTable = tags.ToDictionary(k => k, v =>
+                var constrainTable = tags.ToDictionary(k => k.ToLower(), v =>
                     constrains.Where(x => x.Tags.Any(y => y.Id == v))
                                .Select(x => _mapper.Map<AgreementReadDto>(x)));
 

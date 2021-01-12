@@ -142,7 +142,6 @@ export default class GeometricModal extends Component {
 
   changeBoundaryRadius = (value) => {
 
-    console.log(value);
     this.setState({ boundaryRadius: value });
     if (!isNaN(this.state.boundaryIndex)) {
       const { boundaries, boundaryIndex } = this.state;

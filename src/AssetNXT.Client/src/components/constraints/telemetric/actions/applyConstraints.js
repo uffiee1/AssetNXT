@@ -33,7 +33,6 @@ export default class DeleteConstraints extends Component {
 
   renderSearchResults() {
     const listItems = this.state.filteredTags.map((tag, i) => {
-      console.log(this.state.setTags);
       if (i < 5 && !this.state.setTags.includes(tag)) {
         return (
           <Row className="mt-1">
@@ -102,7 +101,6 @@ export default class DeleteConstraints extends Component {
           isLoaded: true,
           tags: arr,
         });
-        console.log(result);
       });
   }
 
