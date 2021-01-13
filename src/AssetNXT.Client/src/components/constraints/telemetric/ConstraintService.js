@@ -19,6 +19,8 @@ import DeleteConstraints from "./actions/deleteConstraints";
 
 import "react-notifications-component/dist/theme.css";
 
+import agent from "../../../api/agent";
+
 export default class ConstraintService extends Component {
   constructor(props) {
     super(props);
@@ -53,7 +55,7 @@ export default class ConstraintService extends Component {
   }
 
   async fetchData() {
-    await fetch("api/constraints")
+    await fetch(`${agent.baseUrl}/api/constraints`)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -173,7 +175,7 @@ export default class ConstraintService extends Component {
         if (this.state.selected === slaTemplate) className = "p-3 selected";
         return (
           <>
-            <Row
+            <Row 
               className={className}
               onClick={() => this.setState({ selected: slaTemplate })}
             >

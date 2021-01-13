@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Map, TileLayer, Marker, Popup, Polyline, Circle } from "react-leaflet";
 
 import "./AssetMap.css";
-import MarkerRed from "../../images/marker-icon-red.png"
-import MarkerGold from "../../images/marker-icon-gold.png"
+import MarkerRed from "../../images/marker-icon-red.png";
 
 var L = require('leaflet');
 

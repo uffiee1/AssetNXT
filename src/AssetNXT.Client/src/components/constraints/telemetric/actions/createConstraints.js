@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Button, Input, Modal, ModalHeader, ModalBody, ModalFooter, Form, Label } from 'reactstrap';
 
+import agent from "../../../../api/agent";
+
 export default class CreateConstraints extends Component {
 
   constructor(props) {
@@ -34,7 +36,7 @@ export default class CreateConstraints extends Component {
       pressureMin: this.state.pressureMin,
       pressureMax: this.state.pressureMax,
     }
-    await fetch("api/constraints", {
+    await fetch(`${agent.baseUrl}/api/constraints`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

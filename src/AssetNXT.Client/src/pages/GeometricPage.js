@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import Layout from '../components/Layout';
 import RouteConfig from '../components/constraints/geometrics/RouteConfig';
 
+import agent from '../api/agent';
+
 export default class GeometricPage extends Component
 {
   static displayName = GeometricPage.displayName
@@ -35,13 +37,15 @@ export default class GeometricPage extends Component
   
   async fetchRouteData() {
 
-    const request = `api/routes`;
+    //const request = `api/routes`;
 
-    const response = await fetch(request);
+    //const response = await fetch(request);
+    const response = await agent.Routes.getRoutes();
     console.log("Response:");
     console.log(response);
 
-    const data = await response.json();
+    //const data = await response.json();
+    const data = await response;
     console.log("Data:");
     console.log(data);
 
