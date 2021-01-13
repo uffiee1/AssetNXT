@@ -1,0 +1,19 @@
+.telemetric-view {
+    flex-grow: 1;
+    min-height: 0%;
+    overflow-y: auto;
+}
+
+.telemetric-view > * {
+    min-height: 100%;
+}
+
+.telemetric-view > * .box-card {
+    padding: 2rem;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.telemetric-view > * .box-card .leaflet-container {
+    flex-grow: 1;
+}

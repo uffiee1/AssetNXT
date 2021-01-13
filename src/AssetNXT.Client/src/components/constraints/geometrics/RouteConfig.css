@@ -17,10 +17,6 @@
   .route-table > * {
       max-height: 100%;
    }
-   
-  .route-table > .col > * {
-      box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
-  }
 
 .aspect-box {
     padding-top: 100%;

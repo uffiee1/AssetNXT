@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Dtos.Core;
 using AssetNXT.Models.Core.ServiceAgreement;
+using AssetNXT.Models.Data;
 using AssetNXT.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +19,14 @@ namespace AssetNXT.Controllers
     public class AgreementsController : ControllerBase
     {
         private readonly IMongoDataRepository<Agreement> _repository;
+        private readonly IMongoDataRepository<RuuviStation> _repositoryRuuviStation;
         private readonly IMapper _mapper;
 
-        public AgreementsController(IMongoDataRepository<Agreement> repository, IMapper mapper)
+        public AgreementsController(IMongoDataRepository<Agreement> repository, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
         {
-            this._mapper = mapper;
-            this._repository = repository;
+            _mapper = mapper;
+            _repository = repository;
+            _repositoryRuuviStation = repositoryRuuviStation;
         }
 
         [HttpGet]
@@ -33,6 +37,30 @@ namespace AssetNXT.Controllers
             if (constraints != null)
             {
                 return Ok(this._mapper.Map<IEnumerable<AgreementReadDto>>(constraints));
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("device/{id}")]
+        public async Task<IActionResult> GetConstraintsByDeviceId(string id)
+        {
+            var constrains = await _repository.GetAllAsync();
+            if (constrains != null)
+            {
+                var stations = await _repositoryRuuviStation.GetAllAsync();
+                stations = stations.FindAll(doc => doc.DeviceId == id).ToList();
+
+                var tags = stations
+                    .SelectMany(x => x.Tags)
+                    .Select(x => x.Id)
+                    .Distinct();
+
+                var constrainTable = tags.ToDictionary(k => k.ToLower(), v =>
+                    constrains.Where(x => x.Tags.Any(y => y.Id == v))
+                               .Select(x => _mapper.Map<AgreementReadDto>(x)));
+
+                return Ok(constrainTable);
             }
 
             return NotFound();

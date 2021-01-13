@@ -1,4 +1,5 @@
 .asset-item-row {
+    flex-wrap: nowrap;
     padding: 0.5rem 1rem;
     border-bottom: 1px solid whitesmoke;
 }
@@ -12,8 +13,12 @@
       background-color: #dbdbd9;
   }
 
-.asset-item-col{
+.asset-item-col {
     display: flex;
     align-items: center;
     padding: 0px !important;
+}
+
+.asset-item-col.col {
+    min-width: 0;
 }

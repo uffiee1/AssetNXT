@@ -7,12 +7,12 @@ import './Asset.css';
 export default class Asset extends Component {
 
   render() {
-    return(
+    return (
       <Container className="asset-container">
         <Row className="asset-container-row">
 
           <Col className="asset-icon-container" xs="auto">
-            <i className="fa fa-truck fa-2x"/>
+            <i className="fa fa-truck fa-2x" />
           </Col>
 
           <Col className="asset-contents-container">

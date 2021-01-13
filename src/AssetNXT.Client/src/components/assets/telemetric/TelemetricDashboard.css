@@ -1,0 +1,19 @@
+.telemetric-view-dashboard {
+    padding: 2rem;
+    width: 100%;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.telemetric-view-dashboard > .row {
+    margin: 0rem -2rem
+}
+
+.telemetric-view-dashboard > .row > .col,
+.telemetric-view-dashboard > .row > .col-auto {
+    padding: 0rem 2rem;
+}
+
+.telemetric-view-dashboard > .row > .col-12 {
+    padding: 1rem 2rem;
+}

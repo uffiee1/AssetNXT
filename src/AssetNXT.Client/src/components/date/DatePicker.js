@@ -9,7 +9,7 @@ import {
 
 const DatePicker = (props) => {
   return (
-    <Container fluid className="mt-5">
+    <Container fluid>
       <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
         <Row>
           <Col xs="auto">

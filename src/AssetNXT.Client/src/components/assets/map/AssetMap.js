@@ -1,23 +1,13 @@
-import React, { Component } from 'react';
-import { Map, TileLayer, Marker, Popup, } from 'react-leaflet';
+import React, { Component } from "react";
+import { Map, TileLayer, Marker, Popup, Polyline, Circle } from "react-leaflet";
 
-import './AssetMap.css'
-import Asset from '../Asset';
+import "./AssetMap.css";
 import MarkerRed from "../../images/marker-icon-red.png"
 import MarkerGold from "../../images/marker-icon-gold.png"
 
 var L = require('leaflet');
 
 export default class AssetMap extends Component {
-
-  state = {
-    markers: [],
-  }
-
-  getAssetLatLng(asset) {
-    return [asset.location.latitude,
-    asset.location.longitude];
-  }
 
   componentDidMount() {
     this.renderLock = 0;
@@ -34,70 +24,90 @@ export default class AssetMap extends Component {
 
   }
 
-  returnIcon(asset) {
-    var isBreach = false;
-    var Red = new L.Icon({
-      iconUrl: MarkerRed,
-      iconAnchor: new L.Point(16, 16)
-    });
-    var Default = new L.Icon.Default();
-    asset.serviceAgreements.map(breach => {
-      if (!breach.humidity || !breach.pressure || !breach.temperature) {
-        isBreach = true
-      }
-    })
-    return isBreach ? Red : Default;
-  }
-
   shouldComponentUpdate() {
     return this.renderLock === 0;
   }
 
-  renderAssets(assets, AssetTemplate) {
+  getIcon(asset) {
 
-    var query = this.props.query;
-    var queryInactive = !this.props.query;
+    const breached = 
+      (asset.serviceAgreements.length > 0 && asset.serviceAgreements.some(result => !result.humidity || !result.pressure || !result.temperature)) ||
+      (asset.serviceGeometrics.length > 0 && asset.serviceGeometrics.every(result => !result.boundary));
 
-    return assets.map((asset, idx) => {  
-      if (queryInactive || asset.deviceId.indexOf(query) > -1) {
+    const icon = !breached
+      ? new L.Icon.Default()
+      : new L.Icon({
+        iconUrl: MarkerRed,
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+      });
 
-        return <Marker
-          key={`marker-${idx}`}
-          icon={this.returnIcon(asset)}
-          position={this.getAssetLatLng(asset)}
-          onclick={() => this.ensureInCenter(asset)}> {
-
-          AssetTemplate &&
-          <Popup autoPan={false}>
-            <AssetTemplate
-              asset={asset}
-              link={`/station/${asset.deviceId}/`} />
-          </Popup>
-
-        }
-        </Marker>
-      }
-    })
+    return icon;
   }
 
-  renderBoundaries() {
+  getAssetLatLng(asset) {
+    return [
+      asset.location.latitude,
+      asset.location.longitude];
+  }
+
+  renderAssets(assets, AssetMarkerTemplate) {
+    const { query } = this.props;
+    const queryInective = !query;
+
+    const assetMarkers = assets.filter(asset =>
+      queryInective || asset.deviceId.indexOf(query) > -1);
+
+    return assetMarkers.map((asset, idx) =>
+
+      <Marker
+        key={`marker-${idx}`}
+        icon={this.getIcon(asset)}
+        position={this.getAssetLatLng(asset)}
+        onClick={() => this.ensureInCenter(asset)}> {
+
+          !!AssetMarkerTemplate &&
+          <Popup autoPan={false}>
+            <AssetMarkerTemplate
+              asset={asset}
+              link={`/station/${asset.deviceId}/`}>
+            </AssetMarkerTemplate>
+          </Popup>
+        }
+      </Marker>
+    );
+  }
+
+  renderBoundaries(boundaries) {
+    return boundaries.map((boundary, idx) =>
+      <Circle
+        key={`boundary-${idx}`}
+        radius={boundary.radius}
+        center={[boundary.location.latitude,
+        boundary.location.longitude]} />
+    );
   }
 
   render() {
 
-    var assets = this.props.assets;
-    var assetTemplate = this.props.assetMarkerTemplate;
+    const { zoom, center, path } = this.props;
+    const { assets, assetMarkerTemplate, boundaries } = this.props;
 
     return (
-      <Map zoom={this.props.zoom}
-        center={this.props.center}
+      <Map
+        zoom={zoom}
+        center={center}
         ref={e => this.mapInstance = e}>
 
         <TileLayer tileSize={512} zoomOffset={-1}
           url='https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=HfiQgsMsSnorjEs2Sxek'
           attribution='&amp;copy <a href="https://www.maptiler.com/copyright/">Maptiler</a> contributors' />
 
-        {assetTemplate && this.renderAssets(assets, assetTemplate)}
+        {boundaries && this.renderBoundaries(boundaries)}
+        {assets && this.renderAssets(assets, assetMarkerTemplate)}
+        {path && <Polyline positions={assets.map(asset => this.getAssetLatLng(asset))} />}
 
       </Map>
     );

@@ -70,7 +70,6 @@
     
   </ItemGroup>
 
-   <Import Project="targets.props" />
   <Import Project="..\..\common.props" />
   <Import Project="..\..\stylecop.props" /> 
 

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AssetNXT.Dtos.Core;
 using AssetNXT.Models.Core;
+using AssetNXT.Models.Data;
 using AssetNXT.Repository;
 
 using AutoMapper;
@@ -17,12 +19,14 @@ namespace Ruuvi.Controllers
     public class RoutesController : ControllerBase
     {
         private readonly IMongoDataRepository<Route> _repository;
+        private readonly IMongoDataRepository<RuuviStation> _repositoryRuuviStation;
         private readonly IMapper _mapper;
 
-        public RoutesController(IMongoDataRepository<Route> repository, IMapper mapper)
+        public RoutesController(IMongoDataRepository<Route> repository, IMongoDataRepository<RuuviStation> repositoryRuuviStation, IMapper mapper)
         {
-            this._mapper = mapper;
-            this._repository = repository;
+            _mapper = mapper;
+            _repository = repository;
+            _repositoryRuuviStation = repositoryRuuviStation;
         }
 
         [HttpGet]
@@ -33,6 +37,20 @@ namespace Ruuvi.Controllers
             if (routes != null)
             {
                 return Ok(this._mapper.Map<IEnumerable<RouteReadDto>>(routes));
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("device/{id}")]
+        public async Task<IActionResult> GetRoutesByDeviceId(string id)
+        {
+            var routes = await _repository.GetAllAsync();
+            if (routes != null)
+            {
+                return Ok(_mapper.Map<IEnumerable<RouteReadDto>>(
+                    routes.Where(x => x.Devices != null)
+                          .Where(x => x.Devices.Contains(id))));
             }
 
             return NotFound();

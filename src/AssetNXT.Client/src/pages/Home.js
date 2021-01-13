@@ -11,114 +11,127 @@ import Searchbar from "../components/search/Searchbar";
 export default class Home extends Component {
   static displayName = Home.displayName
 
-    state = {
-        zoom: this.props.zoom || 14,
-        assets: [],
-        loading: true,
-        settingsModal: false,
-        connection: null
+  state = {
+    zoom: this.props.zoom || 14,
+    assets: [],
+    loading: true,
+    settingsModal: false,
+    connection: null
+  }
+
+  constructor(props) {
+    super(props);
+    this.searchQuery = this.searchQuery.bind(this);
+    this.onAssetAdded = this.onAssetAdded.bind(this);
+    this.onAssetRemoved = this.onAssetRemoved.bind(this);
+    this.onAssetSelected = this.onAssetSelected.bind(this);
+    this.onSignalRConnection = this.onSignalRConnection.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchStationData();
+    this.onSignalRConnection();
+  }
+
+  async onSignalRConnection() {
+    this.connection = new HubConnectionBuilder()
+      .withUrl("/livestations")
+      .withAutomaticReconnect()
+      .build();
+
+    if (this.connection) {
+      this.connection
+        .start()
+        .then((result) => {
+          console.log("Connected!");
+
+          this.connection.on("GetNewRuuviStations", async (a) => {
+            await this.fetchLocationData(a);
+            // Set the state of the assets with the updated information
+            this.setState(state => {
+              // filters the copied records
+              state.assets = state.assets.map(function (obj) {
+                return obj.deviceId !== a.deviceId ? obj : a;
+              });
+              return state.assets;
+            });
+
+          });
+        })
+        .catch((e) => console.log("Connection failed: ", e));
     }
+  }
 
-    constructor(props) {
-        super(props);
-        this.searchQuery = this.searchQuery.bind(this);
-        this.onAssetAdded = this.onAssetAdded.bind(this);
-        this.onAssetRemoved = this.onAssetRemoved.bind(this);
-        this.onAssetSelected = this.onAssetSelected.bind(this);
-        this.onSignalRConnection = this.onSignalRConnection.bind(this);
-    }
+  searchQuery(query) {
+    this.setState({ query: query })
+  }
 
-    componentDidMount() {
-       this.fetchStationData();
-       this.onSignalRConnection();
-    }
+  onAssetAdded(asset) {
 
-    async onSignalRConnection() {
-        this.connection = new HubConnectionBuilder()
-            .withUrl("/livestations")
-            .withAutomaticReconnect()
-            .build();
+  }
 
-        if (this.connection) {
-            this.connection
-                .start()
-                .then((result) => {
-                    console.log("Connected!");
+  onAssetRemoved(asset) {
+  }
 
-                    this.connection.on("GetNewRuuviStations", (a) => {
+  onAssetSelected(asset) {
+    this.mapInstance.ensurePopupClosed();
+    this.mapInstance.ensureInCenter(asset);
+  }
 
-                        // Set the state of the assets with the updated information
-                        this.setState(state => {
-                            // filters the copied records
-                            state.assets = state.assets.map(function (obj) {
-                                return obj.deviceId !== a.deviceId ? obj : a;
-                            });
-                            return state.assets;
-                        });
+  renderComponent(assets) {
 
-                    });
-                })
-                .catch((e) => console.log("Connection failed: ", e));
-        }
-    }
+    var assetMap =
+      <AssetMap assets={assets}
+        assetMarkerTemplate={AssetMarkerInfo}
+        ref={e => this.mapInstance = e}
+        zoom={this.state.zoom}
+        query={this.state.query} />
 
-    searchQuery(query) {
-        this.setState({ query: query})
-    }
+    var assetList =
+      <AssetList assets={assets}
+        assetSelected={this.onAssetSelected}
+        query={this.state.query} />
 
-    onAssetAdded(asset) {
+    var assetSearch =
+      <Searchbar searchQuery={this.searchQuery} />
 
-    }
+    return <Layout dockLeft={assetList} dock={assetMap} search={assetSearch} />
+  }
 
-    onAssetRemoved(asset) {
-    }
+  render() {
 
-    onAssetSelected(asset) {
-        this.mapInstance.ensurePopupClosed();
-        this.mapInstance.ensureInCenter(asset);
-    }
+    var contents = this.state.loading
+      ? <Layout dock={<p><em>Loading...</em></p>} />
+      : this.renderComponent(this.state.assets);
 
-    renderComponent(assets) {
-    
-        var assetMap = 
-          <AssetMap assets={assets} 
-            assetMarkerTemplate={AssetMarkerInfo}
-                ref={e => this.mapInstance = e}
-                zoom={this.state.zoom}
-                query={this.state.query}/>
+    return contents;
+  }
 
-        var assetList = 
-          <AssetList assets={assets}
-                assetSelected={this.onAssetSelected}
-                query={this.state.query} />
+  async fetchStationData() {
+    const request = 'api/stations';
 
-        var assetSearch = 
-            <Searchbar searchQuery={this.searchQuery} />
+    const response = await fetch(request);
+    console.log("Fetch Stations Response:");
+    console.log(response);
 
-        return <Layout dockLeft={assetList} dock={assetMap} search={assetSearch} />
-    }
+    const data = await response.json();
+    console.log("Fetch Stations Data:");
+    console.log(data);
 
-    render() {
+    data.forEach(async station => {
+      await this.fetchLocationData(station);
+    });
 
-         var contents = this.state.loading
-          ? <Layout dock={<p><em>Loading...</em></p>}/>
-          : this.renderComponent(this.state.assets);
+    this.setState({ loading: false, assets: data });
+  }
 
-        return contents;
-    }
+  async fetchLocationData(station) {
+    //const request = `nominatim-endpoint/reverse?lat=${station.location.latitude}&lon=${station.location.longitude}&format=json`;
+    //const response = await fetch(request);
+    //const data = await response.json();
 
-    async fetchStationData() {
-        const request = 'api/stations';
-
-        const response = await fetch(request);
-        //console.log("Fetch Stations Response:");
-        //console.log(response);
-
-        const data = await response.json();
-        //console.log("Fetch Stations Data:");
-        //console.log(data);
-
-        this.setState({ loading: false, assets: data });
-    }
-    
+    //station.location = {
+    //  ...station.location, ...data
+    //}
+  }
 }

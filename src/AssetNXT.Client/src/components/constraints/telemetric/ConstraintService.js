@@ -57,7 +57,6 @@ export default class ConstraintService extends Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log(result);
           this.setState({
             isLoaded: true,
             slaTemplates: result,
@@ -153,7 +152,6 @@ export default class ConstraintService extends Component {
         });
       } else {
         this.state.slaTemplates.map((sla, i) => {
-          console.log(this.state.setTags);
           if (
             arr.length < 5 &&
             sla.name.toLowerCase().includes(event.target.value.toLowerCase())
@@ -340,8 +338,8 @@ export default class ConstraintService extends Component {
               </Col>
             </Row>
           ) : (
-            <p></p>
-          )}
+              <p></p>
+            )}
         </Container>
       </Container>
     );

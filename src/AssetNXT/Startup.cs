@@ -118,7 +118,7 @@ namespace AssetNXT
             // SignalR
             app.UseCors("ClientPermission");
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

@@ -4,22 +4,22 @@ import './SettingsButton.css';
 
 export default class SettingsButton extends React.Component {
 
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
-    render() {
-        return (
-            <Container className="settings-item-container">
-                <Row className="settings-item-row"
-                    onClick={this.props.setSettingsModal}>
+  render() {
+    return (
+      <Container className="settings-item-container">
+        <Row className="settings-item-row"
+          onClick={this.props.setSettingsModal}>
 
-                    <Col className="settings-item-col">
-                        <i class="fas fa-cogs fa-2x"></i>
-                    </Col>
+          <Col className="settings-item-col">
+            <i class="fas fa-cogs fa-2x"></i>
+          </Col>
 
-                </Row>
-            </Container>
-        );
-    }
+        </Row>
+      </Container>
+    );
+  }
 }

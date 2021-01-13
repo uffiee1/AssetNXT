@@ -200,7 +200,7 @@ namespace AssetNXT.Repository
             {
                 Time = DateTime.UtcNow,
                 EventId = NewSeededGuid().ToString().Substring(0, 18),
-                DeviceId = NewSeededGuid().ToString().Substring(0, 18),
+                DeviceId = NewSeededDeviceName(),
 
                 Location = new Location
                 {
@@ -258,7 +258,7 @@ namespace AssetNXT.Repository
                 Humidity = _random.NextDouble() * 100,
                 Temperature = _random.NextDouble() + _random.Next(-5, 10),
 
-                Id = NewSeededGuid().ToString().Substring(0, 8)
+                Id = NewSeededName()
             };
         }
 
@@ -304,6 +304,21 @@ namespace AssetNXT.Repository
             _random.NextBytes(buffer: bytes);
 
             return new Guid(bytes);
+        }
+
+        private static string NewSeededName()
+        {
+            var bytes = new byte[6];
+            _random.NextBytes(buffer: bytes);
+
+            var result = string.Concat(bytes.Select(x => string.Format("{0}:", x.ToString("X2"))).ToArray());
+            return result.TrimEnd(':');
+        }
+
+        private static string NewSeededDeviceName()
+        {
+            var namePrefixes = new[] { "Cargo Van", "Truck", "Jeep", "Plane", "Bicycle", "Scooter" };
+            return $"Nr. {_random.Next(9999):D4}, {namePrefixes[_random.Next(namePrefixes.Length)]}";
         }
     }
 }
