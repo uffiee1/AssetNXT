@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import NotificationTable from "../components/notification/NotificationTable";
 import Layout from "../components/Layout";
 
