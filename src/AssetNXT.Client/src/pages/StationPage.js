@@ -51,7 +51,7 @@ export default class StationPage extends Component {
   }
 
   async fetchStationData() {
-    const request = `api/stations/all/${this.props.match.params.deviceId}`;
+    const request = `${agent.baseUrl}/api/stations/all/${this.props.match.params.deviceId}`;
 
     const response = await fetch(request);
     console.log("Response:");
