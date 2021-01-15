@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Badge, Input, Button } from "reactstrap";
 // import TablePagination  from "../components/constraints/telemetric/TablePagination";
+import agent from "../../api/agent";
 
 export default class NotificationTable extends Component {
 
@@ -125,7 +126,7 @@ export default class NotificationTable extends Component {
   }
 
   async fetchNotificationData() {
-    await fetch("api/notifications")
+    await fetch(`${agent.baseUrl}/api/notifications`)
       .then((res) => res.json())
       .then(
         (result) => {

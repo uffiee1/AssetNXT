@@ -8,6 +8,8 @@ import AssetMap from '../components/assets/map/AssetMap';
 import AssetMarkerInfo from "../components/assets/map/AssetMarkerInfo";
 import Searchbar from "../components/search/Searchbar";
 
+import agent from "../api/agent";
+
 export default class Home extends Component {
   static displayName = Home.displayName
 
@@ -35,7 +37,8 @@ export default class Home extends Component {
 
   async onSignalRConnection() {
     this.connection = new HubConnectionBuilder()
-      .withUrl("/livestations")
+      //.withUrl("/livestations")
+      .withUrl(`${agent.baseUrl}/livestations`)
       .withAutomaticReconnect()
       .build();
 
@@ -108,13 +111,15 @@ export default class Home extends Component {
   }
 
   async fetchStationData() {
-    const request = 'api/stations';
+    // const request = 'api/stations';
 
-    const response = await fetch(request);
+    // const response = await fetch(request);
+    const response = await agent.Stations.getStations();
     console.log("Fetch Stations Response:");
     console.log(response);
 
-    const data = await response.json();
+    //const data = await response.json;
+    const data = await response;
     console.log("Fetch Stations Data:");
     console.log(data);
 

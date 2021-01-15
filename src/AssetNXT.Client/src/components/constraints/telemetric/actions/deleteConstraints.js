@@ -9,11 +9,13 @@ import {
   Form,
 } from "reactstrap";
 
+import agent from "../../../../api/agent";
+
 export default class DeleteConstraints extends Component {
   async deleteData(e) {
     e.preventDefault();
     this.props.setIndex(0);
-    await fetch("api/constraints/" + this.props.sla.id, {
+    await fetch(`${agent.baseUrl}/api/constraints/${this.props.sla.id}`, {
       method: "DELETE",
     }).then((response) => {
       if (response.ok) {

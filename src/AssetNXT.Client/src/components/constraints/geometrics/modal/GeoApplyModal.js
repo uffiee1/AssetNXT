@@ -11,6 +11,8 @@ import {
   Input,
 } from "reactstrap";
 
+import agent from "../../../../api/agent";
+
 export default class DeleteConstrains extends Component {
   state = {
     isLoaded: false,
@@ -91,7 +93,7 @@ export default class DeleteConstrains extends Component {
   }
 
   async fetchStations() {
-    await fetch("/api/stations/")
+    await fetch(`${agent.baseUrl}/api/stations`)
       .then((res) => res.json())
       .then((result) => {
         this.setState({

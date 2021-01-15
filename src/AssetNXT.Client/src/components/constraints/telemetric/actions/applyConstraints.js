@@ -11,6 +11,8 @@ import {
   Input,
 } from "reactstrap";
 
+import agent from "../../../../api/agent";
+
 export default class DeleteConstraints extends Component {
   state = {
     isLoaded: false,
@@ -88,7 +90,7 @@ export default class DeleteConstraints extends Component {
   }
 
   async fetchStations() {
-    await fetch("/api/stations/")
+    await fetch(`${agent.baseUrl}/api/stations`)
       .then((res) => res.json())
       .then((result) => {
         let arr = [];
@@ -115,7 +117,7 @@ export default class DeleteConstraints extends Component {
     await this.postData(data);
   }
   async postData(sla) {
-    await fetch("api/constraints/" + this.state.sla.id, {
+    await fetch(`${agent.baseUrl}/api/constraints/${this.state.sla.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

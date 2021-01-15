@@ -7,6 +7,7 @@ import TelemetricView from "../components/assets/telemetric/TelemetricView";
 import TelemetricDashboard from "../components/assets/telemetric/TelemetricDashboard";
 import TelemetricDataTemplate from "../components/assets/telemetric/TelemetricDataTemplate";
 
+import agent from "../api/agent";
 
 export default class StationPage extends Component {
   static displayName = StationPage.displayName
@@ -50,7 +51,7 @@ export default class StationPage extends Component {
   }
 
   async fetchStationData() {
-    const request = `api/stations/all/${this.props.match.params.deviceId}`;
+    const request = `${agent.baseUrl}/api/stations/all/${this.props.match.params.deviceId}`;
 
     const response = await fetch(request);
     console.log("Response:");
@@ -64,13 +65,15 @@ export default class StationPage extends Component {
   }
 
   async fetchRoutesData() {
-    const request = `api/routes/device/${this.props.match.params.deviceId}`;
+    //const request = `${agent.baseUrl}/api/routes/device/${this.props.match.params.deviceId}`;
 
-    const response = await fetch(request);
+    //const response = await fetch(request);
+    const response = await agent.Routes.getRoutesByDeviceId(this.props.match.params.deviceId);
     console.log("Response:");
     console.log(response);
 
-    const data = await response.json();
+    //const data = await response.json();
+    const data = await response;
     console.log("Data:");
     console.log(data);
 
@@ -78,14 +81,15 @@ export default class StationPage extends Component {
   }
 
   async fetchConstraintData() {
+    //const request = `api/constraints/device/${this.props.match.params.deviceId}`;
 
-    const request = `api/constraints/device/${this.props.match.params.deviceId}`;
-
-    const response = await fetch(request);
+    //const response = await fetch(request);
+    const response = await agent.Telemetric.getConstrainsByDeviceId(this.props.match.params.deviceId);
     console.log("Response:");
     console.log(response);
 
-    const data = await response.json();
+    //const data = await response.json();
+    const data = await response;
     console.log("Data:");
     console.log(data);
 

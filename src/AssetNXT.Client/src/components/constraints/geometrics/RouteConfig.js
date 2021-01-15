@@ -10,6 +10,8 @@ import GeometricMap from './modal/GeometricMap';
 import GeometricModal from './modal/GeometricModal';
 import GeoApplyModal from './modal/GeoApplyModal';
 
+import agent from '../../../api/agent';
+
 export default class RouteConfig extends Component {
   state = {
     route: null,
@@ -135,14 +137,16 @@ export default class RouteConfig extends Component {
     route.boundaries = route.boundaries.map(
       boundary => ({ ...boundary, colour: 'dodgerblue' }));
 
-    await this.submitRoute('api/routes', 'POST', route);
+    //await this.submitRoute('api/routes', 'POST', route);
+    await this.submitRoute(`${agent.baseUrl}/api/routes`, 'POST', route);
     this.invokeCreateToggle();
     this.invokeStateHasChanged();
   }
 
   applyRoute = async (route) => {
     route.boundaries = this.state.boundaries;
-    await this.submitRoute(`api/routes/${this.state.route.id}`, 'PUT', route);
+    //await this.submitRoute(`api/routes/${this.state.route.id}`, 'PUT', route);
+    await this.submitRoute(`${agent.baseUrl}/api/routes/${this.state.route.id}`, 'PUT', route);
   }
 
   updateRoute = async (route) => {
@@ -153,14 +157,16 @@ export default class RouteConfig extends Component {
     this.setState({ boundaries: [] });
     this.setState({ boundaries: route.boundaries });
 
-    await this.submitRoute(`api/routes/${this.state.route.id}`, 'PUT', route);
+    //await this.submitRoute(`api/routes/${this.state.route.id}`, 'PUT', route);
+    await this.submitRoute(`${agent.baseUrl}/api/routes/${this.state.route.id}`, 'PUT', route);
     this.invokeUpdateToggle();
     this.invokeStateHasChanged();
   }
 
-  deleteRoute = async (route) => {
+  deleteRoute = async () => {
+    //await fetch(`api/routes/${this.state.route.id}`, { method: 'DELETE' });
+    await agent.Routes.deleteRoute(this.state.route.id);
 
-    await fetch(`api/routes/${this.state.route.id}`, { method: 'DELETE' });
     this.setState({ route: null, boundaries: [] });
     this.invokeStateHasChanged();
   }
@@ -182,7 +188,6 @@ export default class RouteConfig extends Component {
   }
 
   submitRoute = async (request, method, route) => {
-
     const data = {
       name: route.name,
       devices: route.devices,
@@ -236,6 +241,5 @@ export default class RouteConfig extends Component {
         });
       }
     });
-
   }
 }
