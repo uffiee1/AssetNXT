@@ -81,7 +81,7 @@ export default class StationPage extends Component {
   }
 
   async fetchConstraintData() {
-    //const request = `api/constraints/device/${this.props.match.params.deviceId}`;
+    //const request = `${agent.baseUrl}/api/constraints/device/${this.props.match.params.deviceId}`;
 
     //const response = await fetch(request);
     const response = await agent.Telemetric.getConstrainsByDeviceId(this.props.match.params.deviceId);
