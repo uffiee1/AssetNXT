@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = require("axios");
 // Url needs to be changed when hosted in the cloud.
-var baseUrl = "https://assetnxt.azurewebsites.net";
-//const baseUrl = "http://localhost:5000";
+// const baseUrl = "https://assetnxt.azurewebsites.net";
+var baseUrl = "http://localhost:5000";
 axios_1.default.defaults.baseURL = baseUrl + "/api";
 var responseBody = function (response) { return response.data; };
 var requests = {
